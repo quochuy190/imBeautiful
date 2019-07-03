@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/include2"
+        layout="@layout/app_bar_all" />
+
+    <android.support.v4.widget.NestedScrollView
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include2">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="20dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/ll_avata"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/app_main"
+                android:padding="@dimen/pading_edt_register"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/img_avata_ctv_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginRight="@dimen/pading_edt_register"
+                    android:src="@drawable/icon_avata_default"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.2" />
+
+                <TextView
+                    android:id="@+id/txt_name_ctv_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="1dp"
+                    android:text="Nguyễn Quốc Huy"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/txt_user_ctv_detail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_user_ctv_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:padding="1dp"
+                    android:text="Mã user: xxx"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_name_ctv_detail" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/icon_info"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/pading_icon"
+                android:src="@drawable/ic_info"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_avata"
+                app:layout_constraintWidth_percent="0.08" />
+
+            <TextView
+                android:id="@+id/txt_title_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_icon"
+                android:padding="1dp"
+                android:text="Mã user: xxx"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/icon_info"
+                app:layout_constraintStart_toEndOf="@+id/icon_info"
+                app:layout_constraintTop_toTopOf="@+id/icon_info" />
+
+            <ImageView
+                android:id="@+id/icon_edit_info"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginRight="@dimen/margin_top_fragment_order"
+                android:src="@drawable/ic_edit_info"
+                app:layout_constraintBottom_toBottomOf="@id/icon_info"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/icon_info"
+                app:layout_constraintWidth_percent="0.05" />
+
+            <TextView
+                android:id="@+id/txt_lable_name_ctv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:gravity="center_vertical"
+                android:padding="1dp"
+                android:text="Họ và tên:"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/icon_info" />
+
+            <EditText
+                android:id="@+id/edt_name_ctv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:backgroundTint="@color/white"
+
+                android:gravity="right|center_vertical"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:padding="1dp"
+                android:paddingEnd="@dimen/pading_icon"
+                android:paddingRight="@dimen/pading_icon"
+                android:text="Nguyễn Thành Chương"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_lable_name_ctv"
+                app:layout_constraintTop_toBottomOf="@id/icon_info" />
+
+            <View
+                android:id="@+id/view_name"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_bg_ctv_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_name_ctv" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/txt_lable_phone_ctv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:gravity="center_vertical"
+                android:padding="1dp"
+                android:text="Số điện thoại:"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_name_ctv" />
+
+            <EditText
+                android:visibility="gone"
+                android:id="@+id/edt_phone_ctv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:backgroundTint="@color/white"
+                android:focusable="false"
+                android:gravity="right|center_vertical"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:padding="1dp"
+                android:paddingEnd="@dimen/pading_icon"
+                android:paddingRight="@dimen/pading_icon"
+                android:text="0942148362"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_lable_phone_ctv"
+                app:layout_constraintTop_toBottomOf="@id/txt_lable_name_ctv" />
+
+            <View
+                android:visibility="gone"
+                android:id="@+id/view_phone"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_bg_ctv_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_phone_ctv" />
+
+            <TextView
+                android:id="@+id/txt_lable_birthday_ctv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:gravity="center_vertical"
+                android:padding="1dp"
+                android:text="Ngày sinh:"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintTop_toTopOf="@id/edt_birthday_ctv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/edt_birthday_ctv" />
+
+            <EditText
+                android:id="@+id/edt_birthday_ctv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:backgroundTint="@color/white"
+                android:focusable="false"
+                android:gravity="right|center_vertical"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:padding="1dp"
+                android:paddingEnd="@dimen/pading_icon"
+                android:paddingRight="@dimen/pading_icon"
+                android:text="10/01/1990"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_lable_birthday_ctv"
+                app:layout_constraintTop_toBottomOf="@id/txt_lable_phone_ctv" />
+
+            <View
+                android:id="@+id/view_birthday"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_bg_ctv_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_gender_ctv" />
+
+            <TextView
+                android:id="@+id/txt_lable_gender_ctv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:gravity="center_vertical"
+                android:padding="1dp"
+                android:text="Giới tính:"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edt_gender_ctv"
+                app:layout_constraintBottom_toBottomOf="@id/edt_gender_ctv" />
+
+            <EditText
+                android:id="@+id/edt_gender_ctv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:backgroundTint="@color/white"
+                android:focusable="false"
+                android:gravity="right|center_vertical"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:padding="1dp"
+                android:paddingEnd="@dimen/pading_icon"
+                android:paddingRight="@dimen/pading_icon"
+                android:text="Nam"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_lable_gender_ctv"
+                app:layout_constraintTop_toBottomOf="@id/txt_lable_birthday_ctv" />
+
+            <View
+                android:id="@+id/view_gender"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_bg_ctv_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_birthday_ctv" />
+
+            <TextView
+                android:id="@+id/txt_lable_email_ctv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:gravity="center_vertical"
+                android:padding="1dp"
+                android:text="Email:"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edt_email_ctv"
+                app:layout_constraintBottom_toBottomOf="@id/edt_email_ctv" />
+
+            <EditText
+                android:id="@+id/edt_email_ctv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:backgroundTint="@color/white"
+                android:gravity="right|center_vertical"
+
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:padding="1dp"
+                android:paddingEnd="@dimen/pading_icon"
+                android:paddingRight="@dimen/pading_icon"
+                android:text="quochuy.@gmail"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_lable_email_ctv"
+                app:layout_constraintTop_toBottomOf="@id/edt_gender_ctv" />
+
+            <View
+                android:id="@+id/view_email"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_bg_ctv_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_email_ctv" />
+            <View
+                android:id="@+id/view_city"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_bg_ctv_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_city_ctv" />
+            <View
+                android:id="@+id/view_district"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_bg_ctv_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_district_ctv"/>
+            <EditText
+                android:paddingEnd="@dimen/pading_icon"
+                android:paddingRight="@dimen/pading_icon"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:backgroundTint="@color/white"
+                android:id="@+id/edt_address_ctv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:gravity="center_vertical"
+                android:padding="1dp"
+                android:hint="Địa chỉ: ..."
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_district" />
+            <TextView
+                android:id="@+id/txt_city_ctv_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:gravity="center_vertical"
+                android:padding="@dimen/pading_txt_item_order"
+                android:text="Tỉnh/Thành phố: "
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_email_ctv" />
+            <TextView
+
+                android:id="@+id/txt_city_ctv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:gravity="center_vertical|right"
+                android:padding="@dimen/pading_txt_item_order"
+
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_city_ctv_lable"
+                app:layout_constraintTop_toBottomOf="@id/edt_email_ctv" />
+            <TextView
+                android:id="@+id/txt_district_ctv_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:gravity="center_vertical"
+                android:padding="@dimen/pading_txt_item_order"
+                android:text="Quận/Huyện: "
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_city" />
+            <TextView
+                android:id="@+id/txt_district_ctv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:gravity="center_vertical|right"
+                android:padding="@dimen/pading_txt_item_order"
+
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_district_ctv_lable"
+                app:layout_constraintTop_toBottomOf="@id/view_city" />
+
+            <Button
+                android:id="@+id/btn_update_info"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/pading_icon"
+                android:background="@drawable/spr_btn_fragment_order"
+                android:text="Cập nhật"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                app:layout_constraintDimensionRatio="4.5:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_address_ctv"
+                app:layout_constraintWidth_percent="0.3" />
+
+            <View
+                android:id="@+id/view_address"
+                android:layout_width="0dp"
+                android:layout_height="2.5dp"
+                android:layout_marginTop="@dimen/margin_top_fragment_order"
+                android:background="@color/gray_bg_ctv_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_update_info" />
+            <!--    //Tài khoản ngân hàng-->
+            <ImageView
+                android:id="@+id/icon_bank"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/pading_icon"
+                android:src="@drawable/ic_bank"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_address"
+                app:layout_constraintWidth_percent="0.08" />
+
+            <TextView
+                android:id="@+id/txt_title_bank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_icon"
+                android:padding="1dp"
+                android:text="Tài khoản ngân hàng"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/icon_bank"
+                app:layout_constraintStart_toEndOf="@+id/icon_bank"
+                app:layout_constraintTop_toTopOf="@+id/icon_bank" />
+
+            <ImageView
+                android:id="@+id/icon_edit_bank"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginRight="@dimen/margin_top_fragment_order"
+                android:src="@drawable/ic_edit_info"
+                app:layout_constraintBottom_toBottomOf="@id/icon_bank"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/icon_bank"
+                app:layout_constraintWidth_percent="0.05" />
+
+            <TextView
+                android:id="@+id/txt_lable_number_bank_ctv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:gravity="center_vertical"
+                android:padding="1dp"
+                android:text="Số tài khoản:"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/edt_number_bank_ctv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/edt_number_bank_ctv" />
+
+            <EditText
+                android:id="@+id/edt_number_bank_ctv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:backgroundTint="@color/white"
+
+                android:gravity="right|center_vertical"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:padding="1dp"
+                android:paddingEnd="@dimen/pading_icon"
+                android:paddingRight="@dimen/pading_icon"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_lable_number_bank_ctv"
+                app:layout_constraintTop_toBottomOf="@id/icon_bank" />
+
+            <View
+                android:id="@+id/view_number_bank"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_bg_ctv_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_number_bank_ctv" />
+
+            <TextView
+                android:id="@+id/txt_lable_name_bank_ctv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:gravity="center_vertical"
+                android:padding="1dp"
+                android:text="Tên tài khoản:"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/edt_name_bank_ctv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/edt_name_bank_ctv" />
+
+            <EditText
+                android:id="@+id/edt_name_bank_ctv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:backgroundTint="@color/white"
+
+                android:gravity="right|center_vertical"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:padding="1dp"
+                android:paddingEnd="@dimen/pading_icon"
+                android:paddingRight="@dimen/pading_icon"
+
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_lable_name_bank_ctv"
+                app:layout_constraintTop_toBottomOf="@id/edt_number_bank_ctv" />
+
+            <View
+                android:id="@+id/view_name_bank"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_bg_ctv_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_name_bank_ctv" />
+
+            <TextView
+                android:id="@+id/txt_chinhanh_bank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:gravity="center_vertical"
+                android:padding="1dp"
+                android:text="Chi nhánh:"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/edt_chinhanh_bank"
+                app:layout_constraintTop_toTopOf="@+id/edt_chinhanh_bank" />
+            <EditText
+                android:id="@+id/edt_chinhanh_bank"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pading_icon"
+                android:backgroundTint="@color/white"
+                android:gravity="right|center_vertical"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:padding="1dp"
+                android:paddingEnd="@dimen/pading_icon"
+                android:paddingRight="@dimen/pading_icon"
+
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_chinhanh_bank"
+                app:layout_constraintTop_toBottomOf="@id/edt_name_bank_ctv" />
+            <Button
+
+                android:id="@+id/btn_update_bank"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/pading_icon"
+                android:background="@drawable/spr_btn_fragment_order"
+                android:text="Cập nhật"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                app:layout_constraintDimensionRatio="4.5:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_chinhanh_bank"
+                app:layout_constraintWidth_percent="0.3" />
+            <View
+                android:layout_marginTop="@dimen/pading_icon"
+                android:id="@+id/view_chinhanh_bank"
+                android:layout_width="0dp"
+                android:layout_height="2.5dp"
+                android:background="@color/gray_bg_ctv_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_update_bank" />
+
+            <ImageView
+                android:id="@+id/icon_reset_pass"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/pading_icon"
+                android:src="@drawable/ic_reset_pass"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_chinhanh_bank"
+                app:layout_constraintWidth_percent="0.08" />
+
+            <TextView
+                android:background="@drawable/spr_item_language"
+                android:id="@+id/txt_title_reset_pass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_icon"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:padding="@dimen/pading_icon"
+                android:text="Reset mật khẩu cho CTV"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/icon_reset_pass"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/icon_reset_pass"
+                app:layout_constraintTop_toTopOf="@+id/icon_reset_pass" />
+
+            <View
+                android:id="@+id/view_reset_pass"
+                android:layout_width="0dp"
+                android:layout_height="2.5dp"
+                android:layout_marginTop="@dimen/pading_icon"
+                android:background="@color/gray_bg_ctv_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/icon_reset_pass" />
+
+            <ImageView
+                android:id="@+id/icon_bonus"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/pading_icon"
+                android:src="@drawable/ic_bonus_ctvpng"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_reset_pass"
+                app:layout_constraintWidth_percent="0.08" />
+
+            <TextView
+                android:id="@+id/txt_title_bonus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_icon"
+                android:padding="1dp"
+                android:text="Số dư hoa hồng hiện tai: 3500đ"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/icon_bonus"
+                app:layout_constraintStart_toEndOf="@+id/icon_bonus"
+                app:layout_constraintTop_toTopOf="@+id/icon_bonus" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/margin_top_fragment_order"
+                android:background="@drawable/spr_txt_title_fragment_home"
+                android:text="Cập nhật số dư"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+
+                app:layout_constraintDimensionRatio="5:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/icon_bonus"
+                app:layout_constraintWidth_percent="0.4" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="neo.vn.imbeautiful">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".activity.login.ActivityIntroduce"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".activity.login.Activity_Webview"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".activity.charts.ActivityReportCTVDetail"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".activity.charts.ActivityChartListCTV"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".activity.notify.ActivityNotify"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".activity.commission.ActivityGetRequestPay"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.charts.ActivityReportDefault"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.order.ActivityAddOrder"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.order.ActivityHistoryOrderDetail"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.charts.Activity_Chart_By_Products"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.charts.ActivityChartMenu"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.products.ActivityCart"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.commission.ActivityHhDetail"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.login.ActivityLogin"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.login.SplashScreen"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.login.ActivityRegister"></activity>
+        <activity android:name=".activity.login.ActivityConfirmOTP"></activity>
+        <activity android:name=".activity.login.Menu_Search.ActivityListCity"></activity>
+        <activity
+            android:name=".activity.products.ActivityListCategoryProduct"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.products.ActivityProductDetail"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".activity.collaborators.FragmentListCTV"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.collaborators.ActivityCtvDetail"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.products.ActivityListProduct"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.login.Menu_Search.ActivityDistrict"></activity>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider337561266956305"
+            android:exported="true" />
+
+        <meta-data android:name="com.facebook.accountkit.ApplicationName"
+            android:value="@string/app_name" />
+
+        <meta-data android:name="com.facebook.accountkit.ClientToken"
+            android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
+        <activity
+            android:name="com.facebook.accountkit.ui.AccountKitActivity" />
+
+        <meta-data android:name="com.facebook.accountkit.FacebookAppEventsEnabled"
+            android:value="false"/>
+
+
+    </application>
+
+</manifest>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="@dimen/pading_icon"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/spr_bg_item_product_home"
+    android:padding="@dimen/pading_icon">
+
+    <TextView
+        android:id="@+id/txt_name_ctv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp1"
+        android:textColor="@color/txt_introduce"
+        android:textSize="@dimen/txt_15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_usercode_ctv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp1"
+        android:textColor="@color/txt_introduce"
+        android:textSize="@dimen/txt_15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_name_ctv" />
+
+    <ImageView
+        android:id="@+id/img_time"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/stoker_edt"
+        android:src="@drawable/ic_time"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_usercode_ctv"
+        app:layout_constraintWidth_percent="0.07" />
+
+    <TextView
+        android:id="@+id/txt_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/pading_icon"
+        android:padding="@dimen/dp1"
+        android:textColor="@color/txt_introduce"
+        android:textSize="@dimen/txt_14sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/img_time"
+        app:layout_constraintStart_toEndOf="@+id/img_time"
+        app:layout_constraintTop_toTopOf="@+id/img_time" />
+
+    <ImageView
+        android:id="@+id/img_monney"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/stoker_edt"
+        android:src="@drawable/ic_monney"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_time"
+        app:layout_constraintWidth_percent="0.07" />
+
+    <TextView
+        android:id="@+id/txt_sodu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/pading_icon"
+        android:padding="@dimen/dp1"
+        android:textColor="@color/txt_introduce"
+        android:textSize="@dimen/txt_14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/img_monney"
+        app:layout_constraintStart_toEndOf="@+id/img_monney"
+        app:layout_constraintTop_toTopOf="@+id/img_monney" />
+
+    <TextView
+        android:textStyle="bold"
+        android:text="Yêu cầu rút: "
+        android:id="@+id/txt_balance_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/pading_icon"
+        android:padding="@dimen/dp1"
+        android:textColor="@color/txt_introduce"
+        android:textSize="@dimen/txt_15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_monney" />
+
+    <TextView
+        android:id="@+id/txt_num_rut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/pading_icon"
+        android:padding="@dimen/dp1"
+        android:textColor="@color/orange"
+        android:textSize="@dimen/txt_15sp"
+        app:layout_constraintStart_toEndOf="@+id/txt_balance_title"
+        app:layout_constraintTop_toBottomOf="@+id/img_monney" />
+</android.support.constraint.ConstraintLayout>

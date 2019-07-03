@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_top_introduce"
+        android:src="@drawable/logo"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.4" />
+    <TextView
+        android:textStyle="bold"
+        android:id="@+id/txt_title"
+        android:textSize="@dimen/txt_content_im_beautiful"
+        android:textColor="@color/txt_introduce"
+        android:text="Kích hoạt tài khoản"
+        android:layout_marginTop="@dimen/margin_login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        app:layout_constraintBottom_toTopOf="@id/edt_otp_code"
+        android:gravity="center"
+        app:layout_constraintWidth_percent="0.8"
+        android:id="@+id/txt_content"
+        android:textSize="@dimen/txt_content_im_beautiful"
+        android:textColor="@color/app_main"
+        android:text="Kích hoạt tài khoản"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/edt_otp_code"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spr_edt_otp"
+        android:hint="Nhập mã kích hoạt"
+        android:imeOptions="actionNext"
+        android:inputType="textCapWords"
+        android:padding="@dimen/pading_edt_register"
+        android:textColor="@color/txt_introduce"
+        android:textColorHint="@color/txt_introduce"
+        android:textCursorDrawable="@color/txt_introduce"
+        android:textSize="@dimen/txt_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline_center_ver"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_center_ver"
+        app:layout_constraintWidth_percent="0.8" />
+    <TextView
+        android:gravity="center"
+        app:layout_constraintWidth_percent="0.8"
+        android:id="@+id/txt_sent_otp_again"
+        android:textSize="@dimen/txt_content_im_beautiful"
+        android:textColor="@color/app_main"
+        android:text="Gửi lại mã kích hoạt"
+        android:layout_marginTop="@dimen/margin_login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edt_otp_code"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_center_ver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <Button
+
+        android:id="@+id/btn_login"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_top_introduce"
+        android:background="@drawable/spr_btn_login"
+        android:text="Đăng nhập"
+        android:textColor="@color/white"
+        android:textSize="@dimen/txt_btn_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_sent_otp_again"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <TextView
+        android:id="@+id/txt_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_top_introduce"
+        android:text="Chưa có tài khoản? Đăng ký"
+        android:textColor="@color/app_main"
+        android:textSize="@dimen/txt_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+</android.support.constraint.ConstraintLayout>

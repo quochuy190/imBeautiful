@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="1dp"
+    android:background="@drawable/spr_item_language"
+    android:padding="@dimen/margin_top_fragment_order">
+
+    <ImageView
+        android:id="@+id/icon_notify"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/dp7"
+        android:src="@drawable/ic_chart_time"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.12" />
+
+    <TextView
+        android:id="@+id/txt_notify_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp1"
+        android:singleLine="true"
+        android:text="Thông tin CTV"
+        android:textColor="@color/app_main"
+        android:textSize="@dimen/txt_15sp"
+        app:layout_constraintBottom_toTopOf="@+id/txt_notify_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/icon_notify"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_notify_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp1"
+        android:singleLine="true"
+        android:text="12/12/2019  09:30"
+        android:textColor="@color/txt_introduce"
+        android:textSize="@dimen/txt_13sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/icon_notify"
+        app:layout_constraintTop_toBottomOf="@+id/txt_notify_name" />
+</android.support.constraint.ConstraintLayout>

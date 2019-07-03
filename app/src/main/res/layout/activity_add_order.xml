@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include3"
+        layout="@layout/app_bar_all" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/pading_icon"
+        app:layout_constraintBottom_toTopOf="@+id/btn_add_order"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include3">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txt_title_add_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/stoker_edt"
+                android:gravity="center"
+                android:padding="@dimen/stoker_edt"
+                android:text="Nhập thông tin khách hàng"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_lable_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_icon"
+                android:gravity="center_vertical"
+                android:padding="1dp"
+                android:text="Họ và tên"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/edt_fullname_customer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/edt_fullname_customer" />
+
+            <EditText
+                android:id="@+id/edt_fullname_customer"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/pading_icon"
+                android:background="@drawable/spr_edt_add_order"
+                android:gravity="center_vertical"
+                android:hint="- Họ tên khách hàng"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName|textCapWords"
+                android:padding="@dimen/pading_icon"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintDimensionRatio="6.5:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_title_add_order"
+                app:layout_constraintWidth_percent="0.65" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_icon"
+                android:gravity="center_vertical"
+                android:padding="1dp"
+                android:text="Số điện thoại"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/edt_phone_customer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/edt_phone_customer" />
+
+            <EditText
+                android:id="@+id/edt_phone_customer"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/pading_icon"
+                android:background="@drawable/spr_edt_add_order"
+                android:gravity="center_vertical"
+                android:hint="- Số ĐT khách hàng"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:padding="@dimen/pading_icon"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintDimensionRatio="6.5:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_fullname_customer"
+                app:layout_constraintWidth_percent="0.65" />
+
+            <TextView
+                android:id="@+id/txt_lable_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_icon"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="Tỉnh/thành phố"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintBottom_toBottomOf="@id/ll_city_spinner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ll_city_spinner" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/ll_city_spinner"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/pading_icon"
+                android:background="@drawable/spr_date_view_order"
+                app:layout_constraintDimensionRatio="6.5:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_phone_customer"
+                app:layout_constraintWidth_percent="0.65">
+
+                <TextView
+                    android:id="@+id/txt_city"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pading_icon"
+                    android:hint="- Chọn Tỉnh/thành phố"
+                    android:padding="2dp"
+                    android:textColor="@color/txt_introduce"
+                    android:textSize="@dimen/txt_15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/img_down"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/img_down"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/spr_btn_down_view_order"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_down"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/txt_lable_district"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_icon"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="Quận/huyện"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintBottom_toBottomOf="@id/ll_filter_district"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ll_filter_district" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/ll_filter_district"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/pading_icon"
+                android:background="@drawable/spr_date_view_order"
+                app:layout_constraintDimensionRatio="6.5:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_city_spinner"
+                app:layout_constraintWidth_percent="0.65">
+
+                <TextView
+                    android:id="@+id/txt_district"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pading_icon"
+                    android:hint="- Chọn Quận/huyện"
+                    android:padding="2dp"
+                    android:textColor="@color/txt_introduce"
+                    android:textSize="@dimen/txt_15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/img_down_district"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/img_down_district"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/spr_btn_down_view_order"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_down"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/txt_lable_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_icon"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="Địa chỉ"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintBottom_toBottomOf="@id/edt_address_customer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edt_address_customer" />
+
+            <EditText
+                android:id="@+id/edt_address_customer"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/pading_icon"
+                android:background="@drawable/spr_edt_add_order"
+                android:gravity="center_vertical"
+                android:hint="- Địa chỉ"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords"
+
+                android:padding="@dimen/pading_icon"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintDimensionRatio="6.5:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_filter_district"
+                app:layout_constraintWidth_percent="0.65" />
+
+            <View
+                android:id="@+id/view_address"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pading_icon"
+                android:layout_marginTop="@dimen/pading_icon"
+                android:background="@color/bg_fragment_home"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_address_customer" />
+
+            <ImageView
+                android:padding="@dimen/pading_icon"
+                android:id="@+id/ic_car"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="@dimen/pading_icon"
+                android:src="@drawable/icon_car"
+                app:layout_constraintDimensionRatio="2:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_address"
+                app:layout_constraintWidth_percent="0.2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_top_fragment_order"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="Chính sách vận chuyển"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintBottom_toBottomOf="@id/ic_car"
+                app:layout_constraintStart_toEndOf="@+id/ic_car"
+                app:layout_constraintTop_toTopOf="@+id/ic_car" />
+
+            <TextView
+                android:id="@+id/txt_transport"
+                android:textStyle="italic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_icon"
+                android:padding="@dimen/dp1"
+                android:paddingRight="@dimen/pading_icon"
+                android:text="Miễn phí ship khu vực nội thành, ..."
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ic_car" />
+            <View
+                android:id="@+id/view_transport"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pading_icon"
+                android:layout_marginTop="@dimen/pading_icon"
+                android:background="@color/bg_fragment_home"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_transport" />
+
+            <TextView
+                android:id="@+id/txt_title_price"
+                android:textStyle="italic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_icon"
+                android:padding="@dimen/stoker_edt"
+                android:paddingRight="@dimen/pading_icon"
+                android:text="Tổng tiền: "
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view_transport" />
+
+            <TextView
+                android:id="@+id/txt_price"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_icon"
+                android:padding="@dimen/stoker_edt"
+                android:paddingRight="@dimen/pading_icon"
+                android:text=""
+                android:textColor="@color/orange"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintStart_toEndOf="@+id/txt_title_price"
+                app:layout_constraintTop_toBottomOf="@+id/view_transport" />
+
+            <TextView
+                android:id="@+id/txt_title_commission"
+                android:textStyle="italic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_icon"
+                android:padding="@dimen/stoker_edt"
+                android:paddingRight="@dimen/pading_icon"
+                android:text="Hoa hồng: "
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_price" />
+
+            <TextView
+                android:id="@+id/txt_commission"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pading_icon"
+                android:padding="@dimen/stoker_edt"
+                android:paddingRight="@dimen/pading_icon"
+                android:text=""
+                android:textColor="@color/green_title_table"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintStart_toEndOf="@+id/txt_title_commission"
+                app:layout_constraintTop_toBottomOf="@+id/txt_price" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/btn_add_order"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/margin_top_fragment_order"
+        android:background="@drawable/spr_btn_update_sodu"
+        android:text="Tạo đơn hàng"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="4:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.4" />
+
+</android.support.constraint.ConstraintLayout>

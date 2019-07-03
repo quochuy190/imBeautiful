@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/spr_bg_app_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_top_introduce"
+        android:src="@drawable/icon_avata_default"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.3" />
+
+    <ImageView
+        android:id="@+id/img_title"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/creat_account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.03"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_logo" />
+
+    <View
+        android:id="@+id/view_title"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_title"
+        app:layout_constraintWidth_percent="0.25" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_marginTop="@dimen/margin_top_edt_register"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/txt_change_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_title">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/edt_fullname_register"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spr_edt_register"
+                android:hint="Họ tên của bạn"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName|textCapWords"
+                android:padding="@dimen/pading_edt_register"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_user"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.8" />
+
+            <EditText
+                android:id="@+id/edt_phone_register"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_edt_register"
+                android:background="@drawable/spr_edt_register"
+                android:hint="Số điện thoại của bạn"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:padding="@dimen/pading_edt_register"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_user"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_fullname_register"
+                app:layout_constraintWidth_percent="0.8" />
+
+            <EditText
+                android:id="@+id/edt_email_register"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_edt_register"
+                android:background="@drawable/spr_edt_register"
+                android:hint="Email"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:padding="@dimen/pading_edt_register"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_user"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_phone_register"
+                app:layout_constraintWidth_percent="0.8" />
+
+            <EditText
+                android:focusable="false"
+                android:id="@+id/edt_city_register"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_edt_register"
+                android:background="@drawable/spr_edt_register"
+                android:hint="Tỉnh/thành phố"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:padding="@dimen/pading_edt_register"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_user"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_email_register"
+                app:layout_constraintWidth_percent="0.8" />
+
+            <EditText
+                android:focusable="false"
+                android:id="@+id/edt_district_register"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_edt_register"
+                android:background="@drawable/spr_edt_register"
+                android:hint="Quận/huyện"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:padding="@dimen/pading_edt_register"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_user"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_city_register"
+                app:layout_constraintWidth_percent="0.8" />
+
+            <EditText
+                android:id="@+id/edt_address_register"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_edt_register"
+                android:background="@drawable/spr_edt_register"
+                android:hint="Địa chỉ"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:padding="@dimen/pading_edt_register"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_user"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_district_register"
+                app:layout_constraintWidth_percent="0.8" />
+
+            <EditText
+                android:id="@+id/edt_pass_register"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_edt_register"
+                android:background="@drawable/spr_edt_register"
+                android:hint="Mật khẩu (dài hơn 6 ký tự)"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                android:padding="@dimen/pading_edt_register"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_user"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_address_register"
+                app:layout_constraintWidth_percent="0.8" />
+
+            <EditText
+                android:id="@+id/edt_pass_confirm_register"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_edt_register"
+                android:background="@drawable/spr_edt_register"
+                android:hint="Xác nhận mật khẩu"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:padding="@dimen/pading_edt_register"
+                android:textColor="@color/txt_introduce"
+                android:textColorHint="@color/txt_introduce_hide"
+                android:textCursorDrawable="@color/txt_introduce"
+                android:textSize="@dimen/txt_user"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_pass_register"
+                app:layout_constraintWidth_percent="0.8" />
+
+            <ImageView
+                android:id="@+id/img_done"
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/margin_top_edt_register"
+                android:layout_marginBottom="@dimen/margin_top_edt_register"
+                android:src="@drawable/spr_button_done_register"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_pass_confirm_register"
+                app:layout_constraintWidth_percent="0.2" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/txt_change_login"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/txt_change_login"
+        android:textColor="@color/white_click"
+        android:textSize="@dimen/txt_user"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.07"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>

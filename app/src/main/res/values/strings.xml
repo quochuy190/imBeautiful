@@ -1,0 +1,39 @@
+<resources>
+    <string name="FACEBOOK_APP_ID">337561266956305</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">7ea289f782cc09485cd4d005b8fe5665</string>
+    <string name="app_name">imBeautiful</string>
+    <string name="facebook_app_id">337561266956305</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+
+    <string name="title_home">Trang chủ</string>
+    <string name="title_order">Đơn hàng</string>
+    <string name="title_product">Sản phẩm</string>
+    <string name="title_ducuments">Hoa hồng</string>
+    <!--base-->
+    <string name="txt_loading_dialog">Đang tải. Vui lòng đợi...</string>
+    <string name="error_network">Lỗi kết nối</string>
+    <string name="error">Lỗi</string>
+    <string name="error_network_message">Lỗi kết nối, vui lòng kiểm tra mạng và thử lại</string>
+    <!--activity introduce-->
+    <string name="title_im_beautiful">I am Beautiful Shop</string>
+    <string name="txt_content_im_beautiful">Chúng tôi phân phối sỉ và lẻ trên Toàn quốc các dòng mỹ phẩm nổi tiếng các hãng: Tom Ford
+    , Mac, Shu, The Face Shop, Skinfood, Cellio, Geo Lamy, Etude House...
+    \n\nRất cảm ơn quý khách đã tín nhiệm và hợp tác với chúng tôi trong thời gian qua và chúng tôi không ngừng cố gắng nhiều hơn nữa để
+     nâng cao chất lượng dịch vụ hơn nữa
+    \n\nTrân trọng cảm ơn!
+    \n\n-I am Beautiful</string>
+    <string name="txt_change_login">Đăng nhập TẠI ĐÂY nếu đã có tài khoản</string>
+    <string name="txt_title_input_money">Nhập vào số tiền bạn muốn thanh toán cho CTV</string>
+</resources>

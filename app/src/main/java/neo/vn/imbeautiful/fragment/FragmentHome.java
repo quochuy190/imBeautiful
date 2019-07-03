@@ -1,0 +1,390 @@
+package neo.vn.imbeautiful.fragment;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import neo.vn.imbeautiful.R;
+import neo.vn.imbeautiful.activity.commission.InterfaceCommission;
+import neo.vn.imbeautiful.activity.commission.PresenterCommission;
+import neo.vn.imbeautiful.activity.login.ActivityLogin;
+import neo.vn.imbeautiful.activity.order.InterfaceOrder;
+import neo.vn.imbeautiful.activity.order.PresenterOrder;
+import neo.vn.imbeautiful.activity.products.ActivityProductDetail;
+import neo.vn.imbeautiful.activity.products.InterfaceProduct;
+import neo.vn.imbeautiful.activity.products.PresenterProduct;
+import neo.vn.imbeautiful.adapter.AdapterListProductHome;
+import neo.vn.imbeautiful.adapter.AdapterNewsHome;
+import neo.vn.imbeautiful.base.BaseFragment;
+import neo.vn.imbeautiful.callback.ClickDialog;
+import neo.vn.imbeautiful.callback.ItemClickListener;
+import neo.vn.imbeautiful.config.Constants;
+import neo.vn.imbeautiful.models.ErrorApi;
+import neo.vn.imbeautiful.models.MessageEvent;
+import neo.vn.imbeautiful.models.News;
+import neo.vn.imbeautiful.models.ObjLogin;
+import neo.vn.imbeautiful.models.ObjOrder;
+import neo.vn.imbeautiful.models.Products;
+import neo.vn.imbeautiful.models.respon_api.ResponGetCat;
+import neo.vn.imbeautiful.models.respon_api.ResponGetCommission;
+import neo.vn.imbeautiful.models.respon_api.ResponGetLisCTV;
+import neo.vn.imbeautiful.models.respon_api.ResponGetProduct;
+import neo.vn.imbeautiful.models.respon_api.ResponHistoryOrder;
+import neo.vn.imbeautiful.models.respon_api.ResponSubProduct;
+import neo.vn.imbeautiful.untils.KeyboardUtil;
+import neo.vn.imbeautiful.untils.SharedPrefs;
+import neo.vn.imbeautiful.untils.StringUtil;
+
+public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
+        InterfaceOrder.View, InterfaceCommission.View {
+    private static final String TAG = "FragmentHome";
+    public static FragmentHome fragment;
+    private List<Products> mList;
+    private AdapterListProductHome adapterService;
+    @BindView(R.id.recycle_product)
+    RecyclerView recycle_product;
+    @BindView(R.id.img_right_home)
+    ImageView img_right_home;
+    @BindView(R.id.ll_fragment_home)
+    ConstraintLayout ll_fragment_home;
+    RecyclerView.LayoutManager mLayoutManager;
+    boolean isDoubleClick;
+    PresenterProduct mPresenter;
+    private PresenterOrder mPresenterOrder;
+    private PresenterCommission mPresenterCommission;
+    Calendar myCalendar_to = Calendar.getInstance();
+    Calendar myCalendar_from = Calendar.getInstance();
+    @BindView(R.id.txt_count_order_home)
+    TextView txt_count_order_home;
+    @BindView(R.id.txt_title)
+    TextView txt_title;
+    @BindView(R.id.txt_viewall_product)
+    TextView txt_viewall_product;
+    @BindView(R.id.img_right_next_home_one)
+    ImageView img_right_next_home_one;
+
+
+    public static FragmentHome getInstance() {
+        if (fragment == null) {
+            synchronized (FragmentHome.class) {
+                if (fragment == null)
+                    fragment = new FragmentHome();
+            }
+        }
+        return fragment;
+    }
+
+    public void fragmentBackTack() {
+        if (isDoubleClick) {
+            getActivity().finish();
+            return;
+        }
+        this.isDoubleClick = true;
+        Toast.makeText(getContext(), "Chạm lần nữa để thoát", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isDoubleClick = false;
+            }
+        }, 2000);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        KeyboardUtil.hideSoftKeyboard(getActivity());
+        mPresenter = new PresenterProduct(this);
+        mPresenterOrder = new PresenterOrder(this);
+        mPresenterCommission = new PresenterCommission(this);
+        get_all_history();
+        init();
+        initEvent();
+        initData();
+        initNew();
+    }
+
+    private void initEvent() {
+        txt_viewall_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new MessageEvent("product",
+                        Float.parseFloat("1"), 0));
+            }
+        });
+        img_right_next_home_one.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new MessageEvent("product",
+                        Float.parseFloat("1"), 0));
+            }
+        });
+        ll_fragment_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        txt_count_order_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new MessageEvent("home",
+                        Float.parseFloat("1"), 0));
+            }
+        });
+        img_right_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mObjLogin != null && mObjLogin.getGROUPS() != null) {
+                    if (mObjLogin.getGROUPS().equals("3")) {
+                        showDialogLoading();
+                        mPresenterOrder.api_get_order_history(sUsername, sToDate,
+                                sFromDate, "", "1", "1", "50");
+                    }
+                }
+            }
+        });
+    }
+
+    private String sFromDate = "", sToDate = "";
+    String sUsername;
+    ObjLogin mObjLogin;
+
+    public void get_all_history() {
+        int dayOfMonth = myCalendar_from.get(Calendar.DAY_OF_MONTH);
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        sFromDate = sdf.format(myCalendar_from.getTime());
+        myCalendar_to.add(Calendar.DAY_OF_MONTH, -30);
+        sToDate = sdf.format(myCalendar_to.getTime());
+    }
+
+    private void initData() {
+        txt_count_order_home.setText("0 đơn");
+        mObjLogin = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USER_LOGIN, ObjLogin.class);
+        sUsername = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USERNAME, String.class);
+        if (sUsername != null) {
+            showDialogLoading();
+            mPresenter.api_get_product_cat_detail(sUsername, "", "",
+                    "1", "50");
+            if (mObjLogin != null && mObjLogin.getGROUPS() != null) {
+                if (mObjLogin.getGROUPS().equals("3")) {
+                    txt_title.setText("Số đơn hàng đang chờ xử lý");
+                    mPresenterOrder.api_get_order_history(sUsername, sToDate,
+                            sFromDate, "", "1", "1", "50");
+                } else if (mObjLogin.getGROUPS().equals("5")) {
+                    txt_title.setText("Số dư hoa hồng hiện tại");
+                    mPresenterCommission.api_get_withdrawal_history(sUsername, sUsername, sToDate, sFromDate,
+                            "1", "50");
+                }
+            }
+        }
+
+    }
+
+
+    private void init() {
+        mList = new ArrayList<>();
+        adapterService = new AdapterListProductHome(mList, getContext());
+        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recycle_product.setNestedScrollingEnabled(false);
+        recycle_product.setHasFixedSize(true);
+        recycle_product.setLayoutManager(mLayoutManager);
+        recycle_product.setItemAnimator(new DefaultItemAnimator());
+        recycle_product.setAdapter(adapterService);
+
+        adapterService.setOnIListener(new ItemClickListener() {
+            @Override
+            public void onClickItem(int position, Object item) {
+                Intent intent = new Intent(getContext(), ActivityProductDetail.class);
+                Products obj = (Products) item;
+                intent.putExtra(Constants.KEY_SEND_OBJ_PRODUCTS, obj);
+                startActivity(intent);
+            }
+        });
+    }
+
+    AdapterNewsHome adapterNew;
+    RecyclerView.LayoutManager mLayoutManagerProduct;
+    List<News> mLisnew;
+    @BindView(R.id.rcv_news_home)
+    RecyclerView recycle_lis_product;
+
+    private void initNew() {
+        mLisnew = new ArrayList<>();
+        mLisnew.add(new News("abc"));
+        mLisnew.add(new News("abc"));
+        mLisnew.add(new News("abc"));
+        adapterNew = new AdapterNewsHome(mLisnew, getContext());
+        mLayoutManagerProduct = new GridLayoutManager(getContext(), 1);
+        recycle_lis_product.setHasFixedSize(true);
+        recycle_lis_product.setLayoutManager(mLayoutManagerProduct);
+        recycle_lis_product.setItemAnimator(new DefaultItemAnimator());
+        recycle_lis_product.setAdapter(adapterNew);
+        adapterNew.notifyDataSetChanged();
+        adapterNew.setOnIListener(new ItemClickListener() {
+            @Override
+            public void onClickItem(int position, Object item) {
+               /* Intent intent = new Intent(getContext(), ActivityProductDetail.class);
+                Products obj = (Products) item;
+                intent.putExtra(Constants.KEY_SEND_OBJ_PRODUCTS, obj);
+                startActivity(intent);*/
+
+            }
+        });
+    }
+
+    @Override
+    public void show_error_api() {
+
+    }
+
+    @Override
+    public void show_get_commission(ResponGetCommission obj) {
+
+    }
+
+    @Override
+    public void show_get_withdrawal(ResponGetCommission obj) {
+
+    }
+
+
+    @Override
+    public void show_get_withdrawal_history(ResponGetCommission obj) {
+        if (obj.getsERROR().equals("0000")) {
+            if (obj.getmList() != null) {
+                if (obj.getmList().get(0) != null) {
+                    txt_count_order_home.setText(StringUtil.conventMonney(obj.getmList().get(0).getTOTAL_HH()));
+                } else {
+                    txt_count_order_home.setText("0 đ");
+                }
+            }
+        } else if (obj.getsERROR().equals("0002")) {
+            showDialogComfirm("Thông báo", obj.getsRESULT(), false, new ClickDialog() {
+                @Override
+                public void onClickYesDialog() {
+                    startActivity(new Intent(getActivity(), ActivityLogin.class));
+                }
+
+                @Override
+                public void onClickNoDialog() {
+
+                }
+            });
+        }
+    }
+
+    @Override
+    public void show_get_request_withdrawal(ErrorApi obj) {
+
+    }
+
+    @Override
+    public void show_update_comission(ErrorApi obj) {
+
+    }
+
+    @Override
+    public void show_update_withdrawal(ErrorApi obj) {
+
+    }
+
+    @Override
+    public void show_order_history(ResponHistoryOrder obj) {
+        if (obj != null && obj.getsERROR().equals("0000")) {
+            if (obj.getTOTAL_ORDER() != null) {
+                txt_count_order_home.setText(obj.getTOTAL_ORDER() + " đơn");
+            }
+        }
+    }
+
+    @Override
+    public void show_order_history_detail(ObjOrder obj) {
+
+    }
+
+    @Override
+    public void show_order_history_detail_pd(ResponGetProduct obj) {
+
+    }
+
+    @Override
+    public void show_edit_order_product(ErrorApi obj) {
+
+    }
+
+    @Override
+    public void show_order_product(ErrorApi obj) {
+
+    }
+
+    @Override
+    public void show_product_cat(ResponGetCat obj) {
+
+    }
+
+    @Override
+    public void show_product_sub_product(ResponSubProduct obj) {
+
+    }
+
+    @Override
+    public void show_product_sub_product_child(ResponSubProduct obj) {
+
+    }
+
+    @Override
+    public void show_product_cat_detail(ResponGetProduct obj) {
+        hideDialogLoading_delay();
+        if (obj != null && obj.getsERROR().equals("0000")) {
+            mList.clear();
+            mList.addAll(obj.getmList());
+            adapterService.notifyDataSetChanged();
+        } else if (obj.getsERROR().equals("0002")) {
+            showDialogComfirm("Thông báo", obj.getsRESULT(), false, new ClickDialog() {
+                @Override
+                public void onClickYesDialog() {
+                    startActivity(new Intent(getContext(), ActivityLogin.class));
+                    getActivity().finish();
+                }
+
+                @Override
+                public void onClickNoDialog() {
+
+                }
+            });
+        } else showAlertDialog("Thông báo", obj.getsRESULT());
+    }
+}
