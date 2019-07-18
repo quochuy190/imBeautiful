@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cv_date_end"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -62,9 +62,9 @@
             app:layout_constraintDimensionRatio="2:1.8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:background="@drawable/spr_date_view_order"
         android:id="@+id/cv_date_start"
         android:layout_width="0dp"
@@ -104,7 +104,7 @@
             app:layout_constraintDimensionRatio="2:1.8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/txt_lable_filter"
@@ -119,7 +119,7 @@
         app:layout_constraintStart_toStartOf="@+id/cv_date_start"
         app:layout_constraintTop_toTopOf="@+id/ll_filter_CTV" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ll_filter_CTV"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -158,7 +158,7 @@
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:id="@+id/view_filter"
@@ -170,7 +170,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll_filter_CTV" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ll_tab_layout_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -219,9 +219,9 @@
             app:layout_constraintTop_toTopOf="@+id/icon_content_share" />
 
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ll_tab_layout_face"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -271,9 +271,9 @@
             app:layout_constraintTop_toTopOf="@+id/icon_face_share" />
 
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_chart"
         android:layout_marginTop="@dimen/pading_icon"
         android:layout_width="0dp"
@@ -283,5 +283,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_tab_layout_content">
 
-    </android.support.v4.view.ViewPager>
-</android.support.constraint.ConstraintLayout>
+    </androidx.viewpager.widget.ViewPager>
+</androidx.constraintlayout.widget.ConstraintLayout>

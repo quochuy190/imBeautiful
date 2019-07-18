@@ -1,8 +1,5 @@
 package neo.vn.imbeautiful.activity.products;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -10,12 +7,12 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+import androidx.core.widget.NestedScrollView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -65,7 +62,8 @@ import okhttp3.Response;
  * Time: 17:00
  * Version: 1.0
  */
-public class ActivityProductDetail extends BaseActivity implements InterfaceProperties.View, TaskCompleted {
+public class ActivityProductDetail extends BaseActivity
+        implements InterfaceProperties.View, TaskCompleted {
     private static final String TAG = "ActivityProductDetail";
     @BindView(R.id.view_product_detail)
     ViewPager view_pager;
@@ -167,9 +165,6 @@ public class ActivityProductDetail extends BaseActivity implements InterfaceProp
            /* showDialogLoading();
             mPresenterProperties.api_get_properties(sUserName, mProduct.getID_PRODUCT_PROPERTIES());*/
             mLisImage = new ArrayList<>();
-            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("imBeautiful", mProduct.getCONTENT_FB());
-            clipboard.setPrimaryClip(clip);
             boolean isClick = false;
             for (Products obj : mList) {
                 if (obj.getCODE_PRODUCT().equals(mProduct.getCODE_PRODUCT())) {

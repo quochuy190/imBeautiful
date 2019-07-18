@@ -1,14 +1,16 @@
 package neo.vn.imbeautiful.fragment.product_detail;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import android.text.Html;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,9 +28,6 @@ import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.ShareVideo;
 import com.facebook.share.widget.ShareDialog;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -143,7 +142,7 @@ public class FragmenFacebookProductDetail extends BaseFragment {
                 mList.add(mProduct.getIMG3());
             }
             if (mProduct.getCONTENT_FB() != null) {
-                txt_des_up_face.setText("Mô tả: " + mProduct.getCONTENT_FB());
+                txt_des_up_face.setText(Html.fromHtml(mProduct.getCONTENT_FB()));
             } else
                 txt_des_up_face.setText("Mô tả: ...");
 
@@ -202,6 +201,9 @@ public class FragmenFacebookProductDetail extends BaseFragment {
         btn_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("imBeautiful", txt_des_up_face.getText().toString());
+                clipboard.setPrimaryClip(clip);
                 share_multil_image();
             }
         });

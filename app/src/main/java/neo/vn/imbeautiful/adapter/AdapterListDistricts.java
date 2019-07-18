@@ -1,7 +1,7 @@
 package neo.vn.imbeautiful.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +14,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import neo.vn.imbeautiful.R;
 import neo.vn.imbeautiful.callback.ItemClickListener;
-import neo.vn.imbeautiful.models.City;
 import neo.vn.imbeautiful.models.Districts;
 import neo.vn.imbeautiful.untils.StringUtil;
 

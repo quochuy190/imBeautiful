@@ -3,13 +3,13 @@ package neo.vn.imbeautiful.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +50,6 @@ import neo.vn.imbeautiful.models.ObjOrder;
 import neo.vn.imbeautiful.models.Products;
 import neo.vn.imbeautiful.models.respon_api.ResponGetCat;
 import neo.vn.imbeautiful.models.respon_api.ResponGetCommission;
-import neo.vn.imbeautiful.models.respon_api.ResponGetLisCTV;
 import neo.vn.imbeautiful.models.respon_api.ResponGetProduct;
 import neo.vn.imbeautiful.models.respon_api.ResponHistoryOrder;
 import neo.vn.imbeautiful.models.respon_api.ResponSubProduct;
@@ -198,6 +197,7 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
             showDialogLoading();
             mPresenter.api_get_product_cat_detail(sUsername, "", "",
                     "1", "50");
+
             if (mObjLogin != null && mObjLogin.getGROUPS() != null) {
                 if (mObjLogin.getGROUPS().equals("3")) {
                     txt_title.setText("Số đơn hàng đang chờ xử lý");

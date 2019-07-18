@@ -2,11 +2,19 @@ package neo.vn.imbeautiful.activity.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.facebook.accountkit.AccessToken;
+import com.facebook.accountkit.AccountKit;
+import com.facebook.accountkit.AccountKitLoginResult;
+import com.facebook.accountkit.ui.AccountKitActivity;
+import com.facebook.accountkit.ui.AccountKitConfiguration;
+import com.facebook.accountkit.ui.LoginType;
 
 import butterknife.BindView;
 import neo.vn.imbeautiful.App;
@@ -157,10 +165,21 @@ public class ActivityRegister extends BaseActivity
             showDialogNotify("Thông báo", "Xác nhận mật khẩu không chính xác.");
             return;
         }
+        AccessToken accessToken = AccountKit.getCurrentAccessToken();
+        // phoneLogin(edt_otp_code);
+        if (accessToken != null) {
+            goToMyLoggedInActivity();
+            //Handle Returning User
+        } else {
+            //Handle new or logged out user
+            phoneLogin(null);
+        }
+    }
+
+    private void goToMyLoggedInActivity() {
         showDialogLoading();
         mPresenter.api_register(edt_fullname.getText().toString(), edt_phone.getText().toString(), edt_email.getText().toString(),
                 objCity.getMATP(), objDistrict.getMAQH(), edt_address.getText().toString(), edt_pass.getText().toString());
-
     }
 
     @Override
@@ -184,6 +203,38 @@ public class ActivityRegister extends BaseActivity
                 } else
                     edt_district.setText("");
                 break;
+        }
+        if (requestCode == APP_REQUEST_CODE) { // confirm that this response matches your request
+            AccountKitLoginResult loginResult = data.getParcelableExtra(AccountKitLoginResult.RESULT_KEY);
+            String toastMessage;
+            if (loginResult.getError() != null) {
+                toastMessage = loginResult.getError().getErrorType().getMessage();
+                //   showErrorActivity(loginResult.getError());
+            } else if (loginResult.wasCancelled()) {
+                toastMessage = "Login Cancelled";
+            } else {
+                if (loginResult.getAccessToken() != null) {
+                    toastMessage = "Success:" + loginResult.getAccessToken().getAccountId();
+                } else {
+                    toastMessage = String.format(
+                            "Success:%s...",
+                            loginResult.getAuthorizationCode().substring(0, 10));
+                }
+                goToMyLoggedInActivity();
+                // If you have an authorization code, retrieve it from
+                // loginResult.getAuthorizationCode()
+                // and pass it to your server and exchange it for an access token.
+
+                // Success! Start your next activity...
+
+            }
+
+            // Surface the result to your user in an appropriate way.
+            Toast.makeText(
+                    this,
+                    "Success!",
+                    Toast.LENGTH_LONG)
+                    .show();
         }
     }
 
@@ -215,5 +266,21 @@ public class ActivityRegister extends BaseActivity
     public void show_update_device(ErrorApi obj) {
 
     }
+
+    public void phoneLogin(final View view) {
+        final Intent intent = new Intent(this, AccountKitActivity.class);
+        AccountKitConfiguration.AccountKitConfigurationBuilder configurationBuilder =
+                new AccountKitConfiguration.AccountKitConfigurationBuilder(
+                        LoginType.PHONE,
+                        AccountKitActivity.ResponseType.CODE);
+        // or .ResponseType.TOKEN
+        // ... perform additional configuration ...
+        intent.putExtra(
+                AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION,
+                configurationBuilder.build());
+        startActivityForResult(intent, APP_REQUEST_CODE);
+    }
+
+    public static int APP_REQUEST_CODE = 99;
 
 }

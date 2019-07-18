@@ -1,21 +1,13 @@
 package neo.vn.imbeautiful.base;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.text.Html;
-import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.widget.TextView;
 
 
 import neo.vn.imbeautiful.R;

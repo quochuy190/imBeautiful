@@ -1,25 +1,20 @@
 package neo.vn.imbeautiful.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
-import neo.vn.imbeautiful.MainActivity;
 import neo.vn.imbeautiful.R;
 import neo.vn.imbeautiful.base.BaseFragment;
-import neo.vn.imbeautiful.config.Constants;
 import neo.vn.imbeautiful.fragment.products.FragmentCommissionCTV;
 import neo.vn.imbeautiful.models.ObjLogin;
-import neo.vn.imbeautiful.untils.SharedPrefs;
 
 /**
  * Created by: Neo Company.

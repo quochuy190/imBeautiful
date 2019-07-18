@@ -22,7 +22,7 @@ import java.util.Locale;
  * Time: 17:10
  * Version: 1.0
  */
-public class CurrencyEditText extends android.support.v7.widget.AppCompatEditText {
+public class CurrencyEditText extends androidx.appcompat.widget.AppCompatEditText {
     private static String prefix = "VND ";
     private static final int MAX_LENGTH = 20;
     private static final int MAX_DECIMAL = 3;
@@ -33,7 +33,7 @@ public class CurrencyEditText extends android.support.v7.widget.AppCompatEditTex
     }
 
     public CurrencyEditText(Context context, AttributeSet attrs) {
-        this(context, attrs, android.support.v7.appcompat.R.attr.editTextStyle);
+        this(context, attrs, androidx.appcompat.R.attr.editTextStyle);
     }
 
     public CurrencyEditText(Context context, AttributeSet attrs, int defStyleAttr) {

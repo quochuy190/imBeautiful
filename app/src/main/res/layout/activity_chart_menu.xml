@@ -8,7 +8,7 @@
 
     <include layout="@layout/app_bar_all" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
 
         android:id="@+id/llct_chart_all"
         android:layout_marginBottom="1dp"
@@ -54,9 +54,9 @@
             app:layout_constraintBottom_toBottomOf="@+id/icon_left"
             android:layout_width="0dp"
             android:layout_height="0dp" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ll_chart_2"
         android:layout_marginBottom="1dp"
         android:background="@color/white"
@@ -64,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.constraint.Guideline
+        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/icon_left_2"
             app:layout_constraintTop_toTopOf="@+id/icon_left_2" />
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:background="@drawable/spr_item_language"
             android:id="@+id/llct_chart_time"
             app:layout_constraintEnd_toEndOf="parent"
@@ -143,9 +143,9 @@
                 app:layout_constraintBottom_toBottomOf="@+id/icon_left_2_1"
                 android:layout_width="0dp"
                 android:layout_height="0dp" />
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/llct_chart_biendong"
             android:background="@drawable/spr_item_language"
             app:layout_constraintEnd_toEndOf="parent"
@@ -189,11 +189,11 @@
                 app:layout_constraintBottom_toBottomOf="@+id/icon_left_2_2"
                 android:layout_width="0dp"
                 android:layout_height="0dp" />
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llct_chart_ctv"
         android:layout_marginBottom="1dp"
         android:background="@color/white"
@@ -238,5 +238,5 @@
             app:layout_constraintBottom_toBottomOf="@+id/icon_left_3"
             android:layout_width="0dp"
             android:layout_height="0dp" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

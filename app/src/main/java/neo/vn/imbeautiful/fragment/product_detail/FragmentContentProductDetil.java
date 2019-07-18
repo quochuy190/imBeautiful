@@ -13,8 +13,12 @@ import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import neo.vn.imbeautiful.App;
 import neo.vn.imbeautiful.R;
 import neo.vn.imbeautiful.base.BaseFragment;
+import neo.vn.imbeautiful.config.Constants;
+import neo.vn.imbeautiful.models.ObjLogin;
+import neo.vn.imbeautiful.untils.SharedPrefs;
 
 /**
  * Created by: Neo Company.
@@ -30,6 +34,7 @@ public class FragmentContentProductDetil extends BaseFragment {
     WebView webView;
     @BindView(R.id.btn_share_content)
     ImageView img_share;
+    String sUrl = "";
 
     public static FragmentContentProductDetil getInstance() {
         if (fragment == null) {
@@ -47,13 +52,16 @@ public class FragmentContentProductDetil extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_content_product_detail, container, false);
         ButterKnife.bind(this, view);
         Log.e(TAG, "onCreateView: FragmentContentProductD");
-        initWebview();
         initData();
+        initWebview();
+
         initEvent();
         return view;
     }
 
     private void initData() {
+        ObjLogin sUserName = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USER_LOGIN, ObjLogin.class);
+        sUrl = App.mProduct.getLINK_AFFILIATE()+"?prc="+App.mProduct.getCODE_PRODUCT()+"&uc="+sUserName.getUSER_CODE();
 
     }
 
@@ -61,8 +69,7 @@ public class FragmentContentProductDetil extends BaseFragment {
         img_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                share_app(getActivity(),
-                        "https://sandotot.com/tam-trang-sui-bot-toan-than-gluta-white-bubble-detox-body-gluta-white-1-1-225.html");
+                share_app(getActivity(), sUrl);
             }
         });
     }
@@ -77,7 +84,7 @@ public class FragmentContentProductDetil extends BaseFragment {
         webView.setScrollbarFadingEnabled(false);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
-        webView.loadUrl("https://sandotot.com/kem-sach-mun-tan-goc-gluta-white-miracle-clean-acnes-1-1-2.html?aff=606466");
+        webView.loadUrl(sUrl);
     }
 
     public static void share_app(Activity activity, String content) {
