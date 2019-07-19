@@ -2,14 +2,15 @@ package neo.vn.imbeautiful.fragment.left_menu.ctv;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import neo.vn.imbeautiful.activity.collaborators.FragmentListCTV;
 import neo.vn.imbeautiful.activity.login.ActivityIntroduce;
 import neo.vn.imbeautiful.activity.login.Activity_Webview;
 import neo.vn.imbeautiful.activity.notify.ActivityNotify;
+import neo.vn.imbeautiful.activity.tintuc.ActivityListNews;
 import neo.vn.imbeautiful.adapter.AdapterLeftMenu;
 import neo.vn.imbeautiful.base.BaseFragment;
 import neo.vn.imbeautiful.callback.ItemClickListener;
@@ -149,16 +151,34 @@ public class FragmentLeftMenu extends BaseFragment {
 
                 //  MainActivity.setback_toolbar();
                 break;
+            case 3:
+                intent = new Intent(getActivity(), ActivityListNews.class);
+                intent.putExtra(Constants.KEY_SEND_NEWS_TITLE, "Chính sách");
+                intent.putExtra(Constants.KEY_SEND_NEWS_TYPE, "2");
+                //  MainActivity.setback_toolbar();
+                break;
+            case 4:
+                intent = new Intent(getActivity(), ActivityListNews.class);
+                intent.putExtra(Constants.KEY_SEND_NEWS_TITLE, "Đào tạo");
+                intent.putExtra(Constants.KEY_SEND_NEWS_TYPE, "3");
+                //  MainActivity.setback_toolbar();
+                break;
+            case 5:
+                intent = new Intent(getActivity(), ActivityListNews.class);
+                intent.putExtra(Constants.KEY_SEND_NEWS_TITLE, "Tin tức sự kiện");
+                intent.putExtra(Constants.KEY_SEND_NEWS_TYPE, "4");
+                //  MainActivity.setback_toolbar();
+                break;
             case 6:
                 intent = new Intent(getActivity(), ActivityNotify.class);
                 //  MainActivity.setback_toolbar();
                 break;
-            case 3:
+          /*  case 3:
                 intent = new Intent(getActivity(), Activity_Webview.class);
                 intent.putExtra(Constants.KEY_SEND_WEBVIEW_TITLE, "Chính sách");
                 intent.putExtra(Constants.KEY_SEND_WEBVIEW_OPTION, "https://imbeautiful.vn/chinh-sach");
                 //  MainActivity.setback_toolbar();
-                break;
+                break;*/
             case 7:
                 intent = new Intent(getActivity(), Activity_Webview.class);
                 intent.putExtra(Constants.KEY_SEND_WEBVIEW_TITLE, "Giới thiệu");

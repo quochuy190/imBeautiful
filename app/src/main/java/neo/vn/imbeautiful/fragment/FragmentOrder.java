@@ -440,6 +440,11 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
 
     }
 
+    @Override
+    public void show_config_commission(ErrorApi obj) {
+
+    }
+
     private void initPulltoRefesh() {
         pull_refresh_product.setOnRefreshListener(this);
     }

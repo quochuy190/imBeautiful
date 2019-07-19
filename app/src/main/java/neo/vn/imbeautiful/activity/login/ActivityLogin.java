@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,12 +13,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.facebook.accountkit.AccessToken;
 import com.facebook.accountkit.AccountKit;
 import com.facebook.accountkit.AccountKitLoginResult;
 import com.facebook.accountkit.ui.AccountKitActivity;
 import com.facebook.accountkit.ui.AccountKitConfiguration;
 import com.facebook.accountkit.ui.LoginType;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import butterknife.BindView;
 import neo.vn.imbeautiful.App;
@@ -38,6 +45,7 @@ import neo.vn.imbeautiful.untils.SharedPrefs;
  * Version: 1.0
  */
 public class ActivityLogin extends BaseActivity implements View.OnClickListener, InterfaceLogin.View {
+    private static final String TAG = "ActivityLogin";
     @BindView(R.id.edt_username)
     EditText edt_username;
     @BindView(R.id.edt_pass)
@@ -64,6 +72,7 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         mPresenter = new PresenterLogin(this);
         UUID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        get_token_firebase();
         initData();
         initEvent();
     }
@@ -123,6 +132,21 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
             edt_pass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
             isShowpass = !isShowpass;
         }
+    }
+    private void get_token_firebase() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+                        Log.d(TAG, token);
+                    }
+                });
     }
 
     private void login() {

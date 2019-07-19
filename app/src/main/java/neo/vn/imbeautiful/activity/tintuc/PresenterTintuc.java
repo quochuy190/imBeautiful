@@ -1,4 +1,4 @@
-package neo.vn.imbeautiful.activity.products;
+package neo.vn.imbeautiful.activity.tintuc;
 
 import android.util.Log;
 
@@ -9,8 +9,7 @@ import java.util.Map;
 
 import neo.vn.imbeautiful.apiservice_base.ApiServicePost;
 import neo.vn.imbeautiful.callback.CallbackData;
-import neo.vn.imbeautiful.models.respon_api.ResponGetProduct;
-import neo.vn.imbeautiful.models.respon_api.ResponGetPropeti;
+import neo.vn.imbeautiful.models.respon_api.ResponseInfomation;
 
 /**
  * Created by: Neo Company.
@@ -19,23 +18,23 @@ import neo.vn.imbeautiful.models.respon_api.ResponGetPropeti;
  * Time: 10:44
  * Version: 1.0
  */
-public class PresenterProperties implements InterfaceProperties.Presenter {
+public class PresenterTintuc implements InterfaceTintuc.Presenter {
     private static final String TAG = "PresenterProduct";
     ApiServicePost mApiService;
-    InterfaceProperties.View mView;
+    InterfaceTintuc.View mView;
 
-    public PresenterProperties(InterfaceProperties.View mView) {
+    public PresenterTintuc(InterfaceTintuc.View mView) {
         this.mView = mView;
         mApiService = new ApiServicePost();
     }
 
     @Override
-    public void api_get_properties(String USERNAME, String LIST_PROPERTIES) {
+    public void api_get_infomation(String USERNAME, String TYPES, String CATEGORY) {
         Map<String, String> mMap = new LinkedHashMap<>();
-        String sService = "get_properties";
+        String sService = "get_infomation";
         mMap.put("USERNAME", USERNAME);
-        mMap.put("LIST_PROPERTIES", LIST_PROPERTIES);
-
+        mMap.put("TYPES", TYPES);
+        mMap.put("CATEGORY", CATEGORY);
         mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override
             public void onGetDataErrorFault(Exception e) {
@@ -47,8 +46,11 @@ public class PresenterProperties implements InterfaceProperties.Presenter {
             public void onGetDataSuccess(String objT) {
                 Log.i(TAG, "onGetDataSuccess: " + objT);
                 try {
-                    ResponGetPropeti obj = new Gson().fromJson(objT, ResponGetPropeti.class);
-                    mView.show_get_properties(obj);
+                    ResponseInfomation obj = new Gson().fromJson(objT, ResponseInfomation.class);
+                    if (TYPES.equals("3")) {
+                        mView.show_api_infomation_daotao(obj);
+                    } else
+                        mView.show_api_infomation(obj);
                 } catch (Exception e) {
                     e.printStackTrace();
                     mView.show_error_api();

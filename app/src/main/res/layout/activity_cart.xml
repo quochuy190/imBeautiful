@@ -23,17 +23,20 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
+        android:gravity="center"
+        android:textStyle="italic"
         android:id="@+id/txt_title_hoahong"
         android:textSize="@dimen/txt_13sp"
         android:text="(Hoa hồng được cộng sau khi đơn hàng được hoàn thành)"
         android:padding="@dimen/pading_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txt_value_total"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="0dp"
         android:layout_height="wrap_content" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/txt_value_commission_lable"
         android:textSize="@dimen/txt_user"
         android:text="Hoa hồng: "
@@ -44,6 +47,7 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:visibility="gone"
         android:textColor="@color/app_main"
         android:textStyle="bold"
         android:id="@+id/txt_value_commission"
@@ -60,7 +64,7 @@
         android:textSize="@dimen/txt_user"
         android:text="Tổng tiền: "
         android:padding="@dimen/stoker_edt"
-        app:layout_constraintBottom_toTopOf="@+id/txt_value_commission_lable"
+        app:layout_constraintBottom_toTopOf="@+id/btn_order"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -72,20 +76,21 @@
         android:textSize="@dimen/txt_user"
         android:text="3.500 đ"
         android:padding="@dimen/stoker_edt"
-        app:layout_constraintBottom_toTopOf="@+id/txt_value_commission_lable"
-        app:layout_constraintStart_toEndOf="@+id/txt_value_commission_lable"
+        app:layout_constraintBottom_toTopOf="@+id/btn_order"
+        app:layout_constraintStart_toEndOf="@+id/txt_value_total_lable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
+        android:layout_marginBottom="5dp"
         android:id="@+id/btn_order"
         android:layout_marginRight="@dimen/margin_top_fragment_order"
-        app:layout_constraintBottom_toBottomOf="@id/txt_value_commission"
-        app:layout_constraintTop_toTopOf="@id/txt_value_total"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:textColor="@color/white"
         android:text="Đặt hàng"
         android:background="@drawable/spr_btn_update_sodu"
-        app:layout_constraintDimensionRatio="3:1"
+        app:layout_constraintDimensionRatio="3.5:1"
         app:layout_constraintWidth_percent="0.3"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="0dp"
@@ -100,6 +105,6 @@
         app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/txt_value_total" />
+        app:layout_constraintBottom_toTopOf="@id/txt_title_hoahong" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

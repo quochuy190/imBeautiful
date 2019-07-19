@@ -35,4 +35,6 @@
     <dimen name="height_bar_hh_detail">320dp</dimen>
     <dimen name="height_bar_search">195dp</dimen>
     <dimen name="dp20">21dp</dimen>
+
+    <dimen name="height_spinner">38dp</dimen>
 </resources>

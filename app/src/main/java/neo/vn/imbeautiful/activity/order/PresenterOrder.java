@@ -201,4 +201,33 @@ public class PresenterOrder implements InterfaceOrder.Presenter {
             }
         }, sService, mMap);
     }
+
+    @Override
+    public void api_get_config_commission(String USERNAME, String VALUES) {
+        Map<String, String> mMap = new LinkedHashMap<>();
+        String sService = "get_config_commission";
+        mMap.put("USERNAME", USERNAME);
+        mMap.put("VALUES", VALUES);
+
+
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
+            @Override
+            public void onGetDataErrorFault(Exception e) {
+                mView.show_error_api();
+                Log.i(TAG, "onGetDataErrorFault: " + e);
+            }
+
+            @Override
+            public void onGetDataSuccess(String objT) {
+                Log.i(TAG, "onGetDataSuccess: " + objT);
+                try {
+                    ErrorApi obj = new Gson().fromJson(objT, ErrorApi.class);
+                    mView.show_config_commission(obj);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mView.show_error_api();
+                }
+            }
+        }, sService, mMap);
+    }
 }

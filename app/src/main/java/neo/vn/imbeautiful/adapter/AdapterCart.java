@@ -66,9 +66,9 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.TopicViewHoder
             else
                 holder.txt_name.setText("...");
             if (obj != null && obj.getsPrice().length() > 0)
-                holder.txt_prime.setText("Giá: " + StringUtil.conventMonney(obj.getsPrice()));
+                holder.txt_prime.setText( StringUtil.conventMonney(obj.getsPrice()));
             else
-                holder.txt_prime.setText("Giá: ...");
+                holder.txt_prime.setText("...");
             if (obj.getsUrlImage() != null) {
                 Glide.with(context).load(obj.getsUrlImage()).asBitmap()
                         .placeholder(R.drawable.img_defaul)
@@ -88,17 +88,17 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.TopicViewHoder
                 } else {
                     holder.txt_value_cart.setText("0");
                 }
-                if (obj.getCOMMISSION() != null) {
+  /*              if (obj.getCOMMISSION() != null) {
                     int commission = Integer.parseInt(obj.getCOMMISSION());
                     int price = Integer.parseInt(obj.getsQuantum()) * Integer.parseInt(obj.getsPrice());
                     long com_price = (commission * price) / 100;
                     holder.txt_commission.setText("Hoa hồng: " + StringUtil.conventMonney_Long("" + com_price));
                 } else
-                    holder.txt_commission.setText("Hoa hồng: 0đ");
+                    holder.txt_commission.setText("Hoa hồng: 0đ");*/
 
             } else {
                 holder.txt_value_cart.setText("0");
-                holder.txt_commission.setText("Hoa hồng: 0đ");
+              //  holder.txt_commission.setText("Hoa hồng: 0đ");
             }
 
             holder.txt_add.setOnClickListener(new View.OnClickListener() {
@@ -143,8 +143,6 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.TopicViewHoder
         TextView txt_value_cart;
         @BindView(R.id.txt_add_cart)
         TextView txt_add;
-        @BindView(R.id.txt_commission)
-        TextView txt_commission;
         @BindView(R.id.img_delete)
         ImageView img_delete;
 

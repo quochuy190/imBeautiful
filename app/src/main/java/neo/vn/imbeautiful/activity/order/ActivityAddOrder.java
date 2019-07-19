@@ -2,14 +2,15 @@ package neo.vn.imbeautiful.activity.order;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -101,6 +102,7 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
     private void initData() {
         mList = (List<Products>) getIntent().getSerializableExtra(Constants.KEY_SEND_LIST_PRODUCT);
         set_price_total();
+
     }
 
     City objCity;
@@ -156,7 +158,6 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
             }
 
         }
-
         sUsername = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USERNAME, String.class);
 
         if (sCODE_PRODUCT.length() > 1)
@@ -243,6 +244,19 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
             showDialogNotify("Thông báo", obj.getsRESULT());
     }
 
+    @Override
+    public void show_config_commission(ErrorApi obj) {
+        hideDialogLoading();
+        if (obj.getsERROR().equals("0000")) {
+            if (obj.getVALUE() != null && obj.getVALUE().length() > 0) {
+                int iComiss = Integer.parseInt(obj.getVALUE());
+                lCommission = (iComiss * lPrice) / 100;
+                txt_commission.setText(StringUtil.conventMonney_Long("" + lCommission));
+              //  txt_price.setText(StringUtil.conventMonney_Long("" + lCommission));
+            }
+        }
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -268,9 +282,11 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
         }
     }
 
+    long lPrice = 0;
+    long lCommission = 0;
+
     private void set_price_total() {
-        long lPrice = 0;
-        long lCommission = 0;
+
         for (Products obj : mList) {
             if (obj != null && obj.getsQuantum() != null && obj.getsQuantum().length() > 0 && obj.getsPrice() != null) {
                 lPrice = lPrice + (Integer.parseInt(obj.getsQuantum()) * Integer.parseInt(obj.getsPrice()));
@@ -281,7 +297,10 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
                 }
             }
         }
-        txt_commission.setText(StringUtil.conventMonney_Long("" + lCommission));
+        showDialogLoading();
+        String sUserName = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USERNAME, String.class);
+        mPresenter.api_get_config_commission(sUserName, "" + lPrice);
+      //  txt_commission.setText(StringUtil.conventMonney_Long("" + lCommission));
         txt_price.setText(StringUtil.conventMonney_Long("" + lPrice));
     }
 }

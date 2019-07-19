@@ -20,6 +20,12 @@ public class ErrorApi {
     String MESSGE;
     @SerializedName("RESULT")
     String sRESULT;
+    @SerializedName("VALUE")
+    String VALUE;
+    @SerializedName("DISCOUNT_UP")
+    String DISCOUNT_UP;
+    @SerializedName("DISCOUNT_DOWN")
+    String DISCOUNT_DOWN;
 
     public ErrorApi() {
     }
@@ -35,6 +41,30 @@ public class ErrorApi {
         Gson gson = new Gson();
         arrayList = gson.fromJson(jsonArray, type);
         return arrayList;
+    }
+
+    public String getVALUE() {
+        return VALUE;
+    }
+
+    public void setVALUE(String VALUE) {
+        this.VALUE = VALUE;
+    }
+
+    public String getDISCOUNT_UP() {
+        return DISCOUNT_UP;
+    }
+
+    public void setDISCOUNT_UP(String DISCOUNT_UP) {
+        this.DISCOUNT_UP = DISCOUNT_UP;
+    }
+
+    public String getDISCOUNT_DOWN() {
+        return DISCOUNT_DOWN;
+    }
+
+    public void setDISCOUNT_DOWN(String DISCOUNT_DOWN) {
+        this.DISCOUNT_DOWN = DISCOUNT_DOWN;
     }
 
     public String getMESSGE() {

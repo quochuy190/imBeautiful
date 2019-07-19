@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/pading_icon"
-    android:background="@color/white"
+    android:layout_marginTop="0.5dp"
+
+    android:background="@drawable/spr_item_language"
     android:padding="@dimen/pading_icon">
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,43 +21,34 @@
         app:layout_constraintTop_toTopOf="@+id/img_right_next_home_one" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:layout_marginEnd="3dp"
+        android:textStyle="italic"
+        android:id="@+id/txt_xemthem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Xem tất cả"
-        android:textColor="@color/blue_next_right"
-        android:textSize="@dimen/txt_user"
+        android:text="Xem thêm"
+        android:textColor="@color/blue_click"
+        android:textSize="@dimen/txt_13sp"
         app:layout_constraintBottom_toBottomOf="@+id/img_right_next_home_one"
-        app:layout_constraintEnd_toStartOf="@+id/img_right_next_home_one"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/img_right_next_home_one" />
 
-    <ImageView
-
-        android:id="@+id/img_right_next_home_one"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:src="@drawable/ic_right"
-        android:tint="@color/blue_next_right"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_one" />
 
     <ImageView
-        android:scaleType="fitXY"
+        android:layout_margin="@dimen/dp1"
         android:id="@+id/img_news_home"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/spr_bg_item_product_home"
         android:padding="1dp"
         android:src="@drawable/img_defaul"
-        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintDimensionRatio="1.2:1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintWidth_percent="0.3" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.28" />
 
     <TextView
+        android:textStyle="bold"
         android:id="@+id/txt_tieude"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -64,21 +57,23 @@
         android:text="Tiêu đề bài viết"
         android:textColor="@color/black"
         android:textSize="@dimen/txt_14sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/txt_xemthem"
         app:layout_constraintStart_toEndOf="@+id/img_news_home"
         app:layout_constraintTop_toTopOf="@id/img_news_home" />
 
     <TextView
-        android:id="@+id/txt_name_product_cart"
+        android:id="@+id/txt_content"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginLeft="@dimen/pading_icon"
-        android:maxLines="3"
-        android:minLines="3"
-        android:padding="1dp"
+        android:layout_marginBottom="8dp"
+        android:maxLines="4"
+        android:minLines="4"
+        android:padding="2dp"
         android:text="Motherland Argan oil Moringa oil Repair moisture Conditioner"
         android:textColor="@color/black"
         android:textSize="@dimen/txt_14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/img_news_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/img_news_home"
         app:layout_constraintTop_toBottomOf="@+id/txt_tieude" />

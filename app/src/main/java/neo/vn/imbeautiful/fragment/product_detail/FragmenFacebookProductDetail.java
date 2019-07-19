@@ -173,7 +173,7 @@ public class FragmenFacebookProductDetail extends BaseFragment {
         }
         if (mProduct.getVIDEO_FB() != null) {
             img_facebook_5.setVisibility(View.VISIBLE);
-            Glide.with(this).load(R.drawable.play_video_default).into(img_facebook_5);
+            Glide.with(getContext()).load(R.drawable.play_video_default).into(img_facebook_5);
             //img_facebook_5.setImageDrawable(getResources().getDrawable(R.drawable.play_video_default));
         }
 

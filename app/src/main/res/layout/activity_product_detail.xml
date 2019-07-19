@@ -45,7 +45,9 @@
                 app:tabBackground="@drawable/tab_selector"
                 app:tabGravity="center"
                 app:tabIndicatorHeight="0dp"
-                app:tabPadding="2dp"></com.google.android.material.tabs.TabLayout>
+                app:tabPadding="2dp">
+
+            </com.google.android.material.tabs.TabLayout>
 
             <TextView
 
@@ -81,53 +83,110 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_name_product_detail" />
 
-            <TextView
-                android:id="@+id/txt_colour_product_detail"
+            <Spinner
+                android:background="@drawable/spr_spinner"
+                android:dropDownVerticalOffset="@dimen/height_spinner"
+                android:singleLine="true"
+                android:spinnerMode="dropdown"
+                android:textSize="@dimen/txt_15sp"
+                android:theme="@style/Spinner"
+                app:layout_constraintWidth_percent="0.45"
+                android:id="@+id/spiner_type_1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/height_spinner"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="@dimen/pading_icon"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@drawable/spr_edt_product_detail"
                 android:padding="@dimen/pading_txt_item_order"
                 android:text="Màu : đen"
                 android:textColor="@color/black"
-                android:textSize="@dimen/txt_14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tx_price_product_detail" />
 
-            <TextView
-                android:id="@+id/txt_stype_product_detail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title_spinner_1" />
+
+            <Spinner
+                android:background="@drawable/spr_spinner"
+                android:dropDownVerticalOffset="@dimen/height_spinner"
+                android:singleLine="true"
+                android:spinnerMode="dropdown"
+                android:textSize="@dimen/txt_15sp"
+                android:theme="@style/Spinner"
+                app:layout_constraintWidth_percent="0.45"
+                app:layout_constraintHeight_percent="0.06"
+                android:id="@+id/spiner_type_2"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/height_spinner"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="@dimen/pading_icon"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@drawable/spr_edt_product_detail"
                 android:padding="@dimen/pading_txt_item_order"
                 android:text="Kích cỡ: M"
                 android:textColor="@color/black"
-                android:textSize="@dimen/txt_14sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_colour_product_detail" />
+                app:layout_constraintTop_toBottomOf="@+id/txt_title_spinner_2" />
+            <TextView
+                android:id="@+id/txt_title_spinner_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pading_icon"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
 
+                android:padding="@dimen/dp1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintEnd_toEndOf="@id/spiner_type_1"
+                app:layout_constraintStart_toStartOf="@id/spiner_type_1"
+                app:layout_constraintTop_toBottomOf="@id/tx_price_product_detail" />
+
+            <TextView
+                android:id="@+id/txt_title_spinner_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pading_icon"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:padding="@dimen/dp1"
+
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt_15sp"
+                app:layout_constraintEnd_toEndOf="@id/spiner_type_2"
+                app:layout_constraintStart_toStartOf="@id/spiner_type_2"
+                app:layout_constraintTop_toBottomOf="@id/tx_price_product_detail" />
+
+            <ImageView
+            android:padding="5dp"
+            android:src="@drawable/ic_down_spinner"
+            app:layout_constraintTop_toTopOf="@id/spiner_type_1"
+            app:layout_constraintBottom_toBottomOf="@id/spiner_type_1"
+            app:layout_constraintEnd_toEndOf="@id/spiner_type_1"
+            app:layout_constraintDimensionRatio="1:1"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+            <ImageView
+                android:padding="5dp"
+                android:src="@drawable/ic_down_spinner"
+                app:layout_constraintTop_toTopOf="@id/spiner_type_2"
+                app:layout_constraintBottom_toBottomOf="@id/spiner_type_2"
+                app:layout_constraintEnd_toEndOf="@id/spiner_type_2"
+                app:layout_constraintDimensionRatio="1:1"
+                android:layout_width="0dp"
+                android:layout_height="0dp" />
             <ImageView
                 android:id="@+id/ic_truck"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="@dimen/pading_icon"
+                android:layout_marginTop="@dimen/margin_top_fragment_order"
                 android:src="@drawable/icon_car"
                 app:layout_constraintDimensionRatio="2.5:1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txt_stype_product_detail"
+                app:layout_constraintTop_toBottomOf="@id/spiner_type_2"
                 app:layout_constraintWidth_percent="0.15" />
 
             <TextView

@@ -3,6 +3,13 @@ package neo.vn.imbeautiful.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -10,12 +17,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,6 +37,9 @@ import neo.vn.imbeautiful.activity.order.PresenterOrder;
 import neo.vn.imbeautiful.activity.products.ActivityProductDetail;
 import neo.vn.imbeautiful.activity.products.InterfaceProduct;
 import neo.vn.imbeautiful.activity.products.PresenterProduct;
+import neo.vn.imbeautiful.activity.tintuc.ActivityDetailNews;
+import neo.vn.imbeautiful.activity.tintuc.InterfaceTintuc;
+import neo.vn.imbeautiful.activity.tintuc.PresenterTintuc;
 import neo.vn.imbeautiful.adapter.AdapterListProductHome;
 import neo.vn.imbeautiful.adapter.AdapterNewsHome;
 import neo.vn.imbeautiful.base.BaseFragment;
@@ -43,8 +47,8 @@ import neo.vn.imbeautiful.callback.ClickDialog;
 import neo.vn.imbeautiful.callback.ItemClickListener;
 import neo.vn.imbeautiful.config.Constants;
 import neo.vn.imbeautiful.models.ErrorApi;
+import neo.vn.imbeautiful.models.InfomationObj;
 import neo.vn.imbeautiful.models.MessageEvent;
-import neo.vn.imbeautiful.models.News;
 import neo.vn.imbeautiful.models.ObjLogin;
 import neo.vn.imbeautiful.models.ObjOrder;
 import neo.vn.imbeautiful.models.Products;
@@ -53,12 +57,13 @@ import neo.vn.imbeautiful.models.respon_api.ResponGetCommission;
 import neo.vn.imbeautiful.models.respon_api.ResponGetProduct;
 import neo.vn.imbeautiful.models.respon_api.ResponHistoryOrder;
 import neo.vn.imbeautiful.models.respon_api.ResponSubProduct;
+import neo.vn.imbeautiful.models.respon_api.ResponseInfomation;
 import neo.vn.imbeautiful.untils.KeyboardUtil;
 import neo.vn.imbeautiful.untils.SharedPrefs;
 import neo.vn.imbeautiful.untils.StringUtil;
 
 public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
-        InterfaceOrder.View, InterfaceCommission.View {
+        InterfaceOrder.View, InterfaceCommission.View, InterfaceTintuc.View {
     private static final String TAG = "FragmentHome";
     public static FragmentHome fragment;
     private List<Products> mList;
@@ -74,6 +79,7 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
     PresenterProduct mPresenter;
     private PresenterOrder mPresenterOrder;
     private PresenterCommission mPresenterCommission;
+    private PresenterTintuc mPresenterTintuc;
     Calendar myCalendar_to = Calendar.getInstance();
     Calendar myCalendar_from = Calendar.getInstance();
     @BindView(R.id.txt_count_order_home)
@@ -127,11 +133,13 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
         mPresenter = new PresenterProduct(this);
         mPresenterOrder = new PresenterOrder(this);
         mPresenterCommission = new PresenterCommission(this);
+        mPresenterTintuc = new PresenterTintuc(this);
         get_all_history();
         init();
         initEvent();
         initData();
         initNew();
+        initNewTituc();
     }
 
     private void initEvent() {
@@ -197,7 +205,8 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
             showDialogLoading();
             mPresenter.api_get_product_cat_detail(sUsername, "", "",
                     "1", "50");
-
+            mPresenterTintuc.api_get_infomation(sUsername, "4", "");
+            mPresenterTintuc.api_get_infomation(sUsername, "3", "");
             if (mObjLogin != null && mObjLogin.getGROUPS() != null) {
                 if (mObjLogin.getGROUPS().equals("3")) {
                     txt_title.setText("Số đơn hàng đang chờ xử lý");
@@ -237,29 +246,48 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
 
     AdapterNewsHome adapterNew;
     RecyclerView.LayoutManager mLayoutManagerProduct;
-    List<News> mLisnew;
-    @BindView(R.id.rcv_news_home)
-    RecyclerView recycle_lis_product;
+    List<InfomationObj> mLisnew;
+    @BindView(R.id.rcv_news_daotao)
+    RecyclerView recycle_new_daotao;
+
+    AdapterNewsHome adapterNew_tintuc;
+    RecyclerView.LayoutManager mLayoutManagerProduct_tintuc;
+    List<InfomationObj> mLisnew_tintuc;
+    @BindView(R.id.rcv_news_tintuc)
+    RecyclerView rcv_news_tintuc;
 
     private void initNew() {
         mLisnew = new ArrayList<>();
-        mLisnew.add(new News("abc"));
-        mLisnew.add(new News("abc"));
-        mLisnew.add(new News("abc"));
         adapterNew = new AdapterNewsHome(mLisnew, getContext());
         mLayoutManagerProduct = new GridLayoutManager(getContext(), 1);
-        recycle_lis_product.setHasFixedSize(true);
-        recycle_lis_product.setLayoutManager(mLayoutManagerProduct);
-        recycle_lis_product.setItemAnimator(new DefaultItemAnimator());
-        recycle_lis_product.setAdapter(adapterNew);
+        recycle_new_daotao.setHasFixedSize(true);
+        recycle_new_daotao.setLayoutManager(mLayoutManagerProduct);
+        recycle_new_daotao.setItemAnimator(new DefaultItemAnimator());
+        recycle_new_daotao.setAdapter(adapterNew);
         adapterNew.notifyDataSetChanged();
         adapterNew.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
-               /* Intent intent = new Intent(getContext(), ActivityProductDetail.class);
-                Products obj = (Products) item;
-                intent.putExtra(Constants.KEY_SEND_OBJ_PRODUCTS, obj);
-                startActivity(intent);*/
+                InfomationObj obj = (InfomationObj) item;
+                Intent intent = new Intent(getContext(), ActivityDetailNews.class);
+                intent.putExtra(Constants.KEY_SEND_NEWS_OBJ, obj);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void initNewTituc() {
+        mLisnew_tintuc = new ArrayList<>();
+        adapterNew_tintuc = new AdapterNewsHome(mLisnew_tintuc, getContext());
+        mLayoutManagerProduct_tintuc = new GridLayoutManager(getContext(), 1);
+        rcv_news_tintuc.setHasFixedSize(true);
+        rcv_news_tintuc.setLayoutManager(mLayoutManagerProduct_tintuc);
+        rcv_news_tintuc.setItemAnimator(new DefaultItemAnimator());
+        rcv_news_tintuc.setAdapter(adapterNew_tintuc);
+        adapterNew_tintuc.notifyDataSetChanged();
+        adapterNew_tintuc.setOnIListener(new ItemClickListener() {
+            @Override
+            public void onClickItem(int position, Object item) {
 
             }
         });
@@ -268,6 +296,26 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
     @Override
     public void show_error_api() {
 
+    }
+
+    @Override
+    public void show_api_infomation(ResponseInfomation objRes) {
+        hideDialogLoading();
+        if (objRes != null && objRes.getERROR().equals("0000")) {
+            mLisnew_tintuc.clear();
+            mLisnew_tintuc.addAll(objRes.getmList());
+            adapterNew_tintuc.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void show_api_infomation_daotao(ResponseInfomation objRes) {
+        hideDialogLoading();
+        if (objRes != null && objRes.getERROR().equals("0000")) {
+            mLisnew.clear();
+            mLisnew.addAll(objRes.getmList());
+            adapterNew.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -347,6 +395,11 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
 
     @Override
     public void show_order_product(ErrorApi obj) {
+
+    }
+
+    @Override
+    public void show_config_commission(ErrorApi obj) {
 
     }
 

@@ -7,18 +7,22 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
-import androidx.core.widget.NestedScrollView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadListener;
 import com.liulishuo.filedownloader.FileDownloader;
@@ -45,8 +49,9 @@ import neo.vn.imbeautiful.config.Constants;
 import neo.vn.imbeautiful.fragment.product_detail.FragmenFacebookProductDetail;
 import neo.vn.imbeautiful.fragment.product_detail.FragmentContentProductDetil;
 import neo.vn.imbeautiful.models.Products;
+import neo.vn.imbeautiful.models.PropetiObj;
 import neo.vn.imbeautiful.models.respon_api.ObjLisCart;
-import neo.vn.imbeautiful.models.respon_api.ResponGetCat;
+import neo.vn.imbeautiful.models.respon_api.ResponGetPropeti;
 import neo.vn.imbeautiful.untils.SharedPrefs;
 import neo.vn.imbeautiful.untils.StringUtil;
 import okhttp3.Call;
@@ -81,6 +86,14 @@ public class ActivityProductDetail extends BaseActivity
     @BindView(R.id.scroll_product_detail)
     NestedScrollView scroll_product_detail;
     TabLayout tabLayout;
+    @BindView(R.id.spiner_type_1)
+    Spinner spiner_type_1;
+    @BindView(R.id.spiner_type_2)
+    Spinner spiner_type_2;
+    @BindView(R.id.txt_title_spinner_2)
+    TextView txt_title_spinner_2;
+    @BindView(R.id.txt_title_spinner_1)
+    TextView txt_title_spinner_1;
     private Products mProduct;
     private List<String> mLisImage;
     private List<Products> mList;
@@ -96,15 +109,53 @@ public class ActivityProductDetail extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupViewPager(view_pager);
+        dataset = new ArrayList<>();
+        listPropeti_2 = new ArrayList<>();
         ll_tab_layout_content.setSelected(true);
         mPresenterProperties = new PresenterProperties(this);
         // DownloadImageFromPath("http://developer.android.com/images/activity_lifecycle.png");
         // new AsyncDownloadFile(ActivityProductDetail.this).execute("http://developer.android.com/images/activity_lifecycle.png");
-
         initAppbar();
         initData();
         initEvent();
         loadFragmentContentProductDetil();
+    }
+
+    List<String> dataset, listPropeti_2;
+
+    private void set_data_spinner() {
+
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.item_spinner, dataset);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        spiner_type_1.setAdapter(adapter);
+        spiner_type_1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void set_data_spinner_2() {
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.item_spinner, listPropeti_2);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        spiner_type_2.setAdapter(adapter);
+        spiner_type_2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void initViewpager() {
@@ -148,6 +199,22 @@ public class ActivityProductDetail extends BaseActivity
                         load_image(sLink);
                 }
             }
+        } else {
+            if (mProduct.getsUrlImage()!=null&&mProduct.getsUrlImage().length()>0) {
+                load_image(mProduct.getsUrlImage());
+            }
+            if (mProduct.getIMG1()!=null&&mProduct.getIMG1().length()>0) {
+                load_image(mProduct.getIMG1());
+            }
+            if (mProduct.getIMG2()!=null&&mProduct.getIMG2().length()>0) {
+                load_image(mProduct.getIMG2());
+            }
+            if (mProduct.getIMG3()!=null&&mProduct.getIMG3().length()>0) {
+                load_image(mProduct.getIMG3());
+            }
+        }
+        if (mProduct.getID_PRODUCT_PROPERTIES() != null && mProduct.getID_PRODUCT_PROPERTIES().length() > 0) {
+            mPresenterProperties.api_get_properties(sUserName, mProduct.getID_PRODUCT_PROPERTIES());
         }
       /*  if (mProduct.getsUrlImage() != null)
             load_image(mProduct.getsUrlImage());
@@ -330,9 +397,31 @@ public class ActivityProductDetail extends BaseActivity
     }
 
     @Override
-    public void show_get_properties(ResponGetCat obj) {
+    public void show_get_properties(ResponGetPropeti obj) {
+        hideDialogLoading();
+        if (obj != null && obj.getsERROR().equals("0000")) {
+            if (obj.getLisDistrict() != null) {
+                for (PropetiObj objPro : obj.getLisDistrict()) {
+                    if (objPro.getTYPE_ID().equals("1")) {
+                        txt_title_spinner_1.setText(objPro.getNAME());
+                        for (PropetiObj.PropetiDetail objDetail : objPro.getINFO()) {
+                            dataset.add(objDetail.getSUB_PROPERTIES());
+                        }
+                    }
+                    if (objPro.getTYPE_ID().equals("2")) {
+                        txt_title_spinner_2.setText(objPro.getNAME());
+                        for (PropetiObj.PropetiDetail objDetail : objPro.getINFO()) {
+                            listPropeti_2.add(objDetail.getSUB_PROPERTIES());
+                        }
+                    }
 
+                }
+            }
+        }
+        set_data_spinner();
+        set_data_spinner_2();
     }
+
 
     public void DownloadImageFromPath(String path) {
         InputStream in = null;

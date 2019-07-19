@@ -29,6 +29,8 @@ public interface InterfaceOrder {
         void api_order_product(String USERNAME, String CODE_PRODUCT, String AMOUNT, String PRICE,
                                String MONEY, String BONUS, String FULL_NAME, String MOBILE_RECEIVER,
                                String ID_CITY, String ID_DISTRICT, String ADDRESS);
+
+        void api_get_config_commission(String USERNAME, String VALUES);
     }
 
     interface View {
@@ -44,5 +46,6 @@ public interface InterfaceOrder {
 
         void show_order_product(ErrorApi obj);
 
+        void show_config_commission(ErrorApi obj);
     }
 }

@@ -1,6 +1,7 @@
 package neo.vn.imbeautiful.activity.products;
 
 import neo.vn.imbeautiful.models.respon_api.ResponGetCat;
+import neo.vn.imbeautiful.models.respon_api.ResponGetPropeti;
 
 /**
  * Created by: Neo Company.
@@ -18,7 +19,7 @@ public interface InterfaceProperties {
     interface View {
         void show_error_api();
 
-        void show_get_properties(ResponGetCat obj);
+        void show_get_properties(ResponGetPropeti obj);
 
     }
 }

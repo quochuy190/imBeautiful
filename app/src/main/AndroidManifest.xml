@@ -29,12 +29,22 @@
 
         </activity>
         <activity
+            android:name=".activity.tintuc.ActivityListNews"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
             android:name=".activity.login.Activity_Webview"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
             android:name=".activity.charts.ActivityReportCTVDetail"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".activity.tintuc.ActivityDetailNews"
             android:screenOrientation="portrait">
 
         </activity>
@@ -125,7 +135,11 @@
         <meta-data android:name="com.facebook.accountkit.FacebookAppEventsEnabled"
             android:value="false"/>
 
-
+        <service android:name=".firebase_service.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

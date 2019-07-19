@@ -1,17 +1,27 @@
 package neo.vn.imbeautiful.adapter;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
+import android.graphics.Bitmap;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import neo.vn.imbeautiful.R;
 import neo.vn.imbeautiful.callback.ItemClickListener;
-import neo.vn.imbeautiful.models.News;
+import neo.vn.imbeautiful.models.InfomationObj;
 
 
 /**
@@ -19,7 +29,7 @@ import neo.vn.imbeautiful.models.News;
  */
 
 public class AdapterNewsHome extends RecyclerView.Adapter<AdapterNewsHome.TopicViewHoder> {
-    private List<News> mList;
+    private List<InfomationObj> mList;
     private Context context;
     private ItemClickListener OnIListener;
 
@@ -32,7 +42,7 @@ public class AdapterNewsHome extends RecyclerView.Adapter<AdapterNewsHome.TopicV
         OnIListener = onIListener;
     }
 
-    public AdapterNewsHome(List<News> listAirport, Context context) {
+    public AdapterNewsHome(List<InfomationObj> listAirport, Context context) {
         this.mList = listAirport;
         this.context = context;
     }
@@ -46,8 +56,26 @@ public class AdapterNewsHome extends RecyclerView.Adapter<AdapterNewsHome.TopicV
 
     @Override
     public void onBindViewHolder(TopicViewHoder holder, int position) {
-        News obj = mList.get(position);
-
+        InfomationObj obj = mList.get(position);
+        if (obj.getIMAGE_COVER() != null) {
+            Glide.with(context).load(obj.getIMAGE_COVER()).asBitmap()
+                    .placeholder(R.drawable.img_defaul)
+                    .into(new BitmapImageViewTarget(holder.img_news_home) {
+                        @Override
+                        public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                            super.onResourceReady(drawable, anim);
+                            //   progressBar.setVisibility(View.GONE);
+                        }
+                    });
+        } else {
+            Glide.with(context).load(R.drawable.img_defaul).into(holder.img_news_home);
+        }
+        if (obj.getTITLE() != null) {
+            holder.txt_tieude.setText(obj.getTITLE());
+        }
+        if (obj.getDESCRIPTION() != null) {
+            holder.txt_content.setText(Html.fromHtml(obj.getDESCRIPTION()));
+        }
 
     }
 
@@ -58,6 +86,14 @@ public class AdapterNewsHome extends RecyclerView.Adapter<AdapterNewsHome.TopicV
 
     public class TopicViewHoder extends RecyclerView.ViewHolder implements
             View.OnClickListener, View.OnLongClickListener {
+        @BindView(R.id.txt_xemthem)
+        TextView txt_xemthem;
+        @BindView(R.id.txt_tieude)
+        TextView txt_tieude;
+        @BindView(R.id.img_news_home)
+        ImageView img_news_home;
+        @BindView(R.id.txt_content)
+        TextView txt_content;
 
         public TopicViewHoder(View itemView) {
             super(itemView);
@@ -76,7 +112,7 @@ public class AdapterNewsHome extends RecyclerView.Adapter<AdapterNewsHome.TopicV
         }
     }
 
-    public void updateList(List<News> list) {
+    public void updateList(List<InfomationObj> list) {
         mList = list;
         notifyDataSetChanged();
     }

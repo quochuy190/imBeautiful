@@ -36,7 +36,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         super.onNewToken(s);
         Log.e(TAG, "onNewToken: " + s);
         if (s != null && s.length() > 0) {
-            SharedPrefs.getInstance().put(Constants.KEY_SAVE_TOKEN_FIREBASE, s);
+            SharedPrefs.getInstance().put(Constants.KEY_TOKEN, s);
         }
     }
 

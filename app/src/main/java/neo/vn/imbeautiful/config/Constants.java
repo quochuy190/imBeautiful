@@ -35,4 +35,7 @@ public class Constants {
     public static final String KEY_SEND_OBJ_REPORT_CTV = "KEY_SEND_OBJ_REPORT_CTV";
     public static final String KEY_SEND_WEBVIEW_OPTION = "KEY_SEND_WEBVIEW_OPTION";
     public static final String KEY_SEND_WEBVIEW_TITLE = "KEY_SEND_WEBVIEW_TITLE";
+    public static final String KEY_SEND_NEWS_TITLE = "KEY_SEND_NEWS_TITLE";
+    public static final String KEY_SEND_NEWS_TYPE = "KEY_SEND_NEWS_TYPE";
+    public static final String KEY_SEND_NEWS_OBJ = "KEY_SEND_NEWS_OBJ";
 }

@@ -410,6 +410,11 @@ public class ActivityHistoryOrderDetail extends BaseActivity
 
     }
 
+    @Override
+    public void show_config_commission(ErrorApi obj) {
+
+    }
+
     private void initAppbar() {
         ImageView img_back = findViewById(R.id.img_back);
         TextView txt_title = findViewById(R.id.txt_title);
