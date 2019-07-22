@@ -13,6 +13,7 @@ public class Constants {
         public static final int GET_DISTRICT = 1001;
         public static final int GET_ADD_ORDER = 1002;
         public static final int GET_LIST_CTV = 1003;
+        public static final int GET_START_CART = 1004;
     }
 
     public static final String KEY_TOKEN = "KEY_TOKEN";

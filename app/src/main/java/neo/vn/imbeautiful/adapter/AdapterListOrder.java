@@ -93,18 +93,28 @@ public class AdapterListOrder extends RecyclerView.Adapter<AdapterListOrder.Topi
                 switch (obj.getSTATUS()) {
                     case "0":
                         holder.txt_item_order_status.setText("Đã hoàn thành");
+                        holder.txt_item_order_status.setBackground(context.getResources()
+                                .getDrawable(R.drawable.spr_txt_status_order_orange));
                         break;
                     case "1":
                         holder.txt_item_order_status.setText("Đang xử lý");
+                        holder.txt_item_order_status.setBackground(context.getResources()
+                                .getDrawable(R.drawable.spr_txt_status_order_blue));
                         break;
                     case "2":
                         holder.txt_item_order_status.setText("Đã tiếp nhận");
+                        holder.txt_item_order_status.setBackground(context.getResources()
+                                .getDrawable(R.drawable.spr_txt_status_order_green));
                         break;
                     case "3":
                         holder.txt_item_order_status.setText("Đang vận chuyển");
+                        holder.txt_item_order_status.setBackground(context.getResources()
+                                .getDrawable(R.drawable.spr_txt_status_order_green));
                         break;
                     case "4":
                         holder.txt_item_order_status.setText("Đã huỷ");
+                        holder.txt_item_order_status.setBackground(context.getResources()
+                                .getDrawable(R.drawable.spr_txt_status_order_red));
                         break;
 
                 }

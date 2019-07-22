@@ -288,7 +288,10 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
         adapterNew_tintuc.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
-
+                InfomationObj obj = (InfomationObj) item;
+                Intent intent = new Intent(getContext(), ActivityDetailNews.class);
+                intent.putExtra(Constants.KEY_SEND_NEWS_OBJ, obj);
+                startActivity(intent);
             }
         });
     }

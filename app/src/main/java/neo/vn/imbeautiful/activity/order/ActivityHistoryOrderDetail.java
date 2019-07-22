@@ -179,6 +179,7 @@ public class ActivityHistoryOrderDetail extends BaseActivity
             showDialogLoading();
             mPresenter.api_get_order_history_detail(sUserName, objOrder.getCODE_ORDER());
             mPresenter.api_get_order_history_detail_pd(sUserName, objOrder.getCODE_ORDER());
+            set_bg_status();
         }
 
         if (mLogin.getGROUPS().equals("5") && objOrder.getSTATUS().equals("1")) {
@@ -200,6 +201,37 @@ public class ActivityHistoryOrderDetail extends BaseActivity
         }
 
 
+    }
+
+    private void set_bg_status() {
+        switch (objOrder.getSTATUS()) {
+            case "0":
+                txt_item_order_status.setText("Đã hoàn thành");
+                txt_item_order_status.setBackground(getResources()
+                        .getDrawable(R.drawable.spr_txt_status_order_orange));
+                break;
+            case "1":
+                txt_item_order_status.setText("Đang xử lý");
+                txt_item_order_status.setBackground(getResources()
+                        .getDrawable(R.drawable.spr_txt_status_order_blue));
+                break;
+            case "2":
+                txt_item_order_status.setText("Đã tiếp nhận");
+                txt_item_order_status.setBackground(getResources()
+                        .getDrawable(R.drawable.spr_txt_status_order_green));
+                break;
+            case "3":
+                txt_item_order_status.setText("Đang vận chuyển");
+                txt_item_order_status.setBackground(getResources()
+                        .getDrawable(R.drawable.spr_txt_status_order_green));
+                break;
+            case "4":
+                txt_item_order_status.setText("Đã huỷ");
+                txt_item_order_status.setBackground(getResources()
+                        .getDrawable(R.drawable.spr_txt_status_order_red));
+                break;
+
+        }
     }
 
     private void initProduct() {

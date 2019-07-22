@@ -8,8 +8,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.text.Html;
 import android.util.Base64;
 import android.util.Log;
@@ -18,6 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.facebook.CallbackManager;
@@ -143,8 +144,12 @@ public class FragmenFacebookProductDetail extends BaseFragment {
             }
             if (mProduct.getCONTENT_FB() != null) {
                 txt_des_up_face.setText(Html.fromHtml(mProduct.getCONTENT_FB()));
-            } else
+            } else if (mProduct.getDESCRIPTION() != null) {
+                txt_des_up_face.setText(Html.fromHtml(mProduct.getDESCRIPTION()));
+            } else {
                 txt_des_up_face.setText("Mô tả: ...");
+            }
+
 
             if (mList.size() == 0)
                 mList.add("abc");

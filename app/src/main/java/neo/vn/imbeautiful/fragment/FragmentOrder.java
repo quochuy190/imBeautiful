@@ -7,11 +7,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +16,12 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -28,6 +29,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -131,6 +133,7 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
             myCalendar_from.set(Calendar.YEAR, year);
             myCalendar_from.set(Calendar.MONTH, monthOfYear);
             myCalendar_from.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
             updateFromdate();
         }
 
@@ -139,13 +142,33 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
     private void updateFromdate() {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        txt_date_start.setText(sdf.format(myCalendar_from.getTime()));
+        Date strDate = myCalendar_from.getTime();
+        Date sDateEnd = myCalendar_to.getTime();
+        if (System.currentTimeMillis() > strDate.getTime()) {
+            if (strDate.getTime() < sDateEnd.getTime()) {
+                txt_date_start.setText(sdf.format(myCalendar_from.getTime()));
+            } else
+                showAlertDialog("Thông báo", "Thời gian không hợp lệ, mời chọn lại ");
+        } else
+            showAlertDialog("Thông báo", "Thời gian không hợp lệ, mời chọn lại ");
+
+
     }
 
     private void updateTodate() {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        txt_date_end.setText(sdf.format(myCalendar_to.getTime()));
+        Date strDate = myCalendar_to.getTime();
+        Date strDateStart = myCalendar_from.getTime();
+        if (strDate.getTime() < System.currentTimeMillis()) {
+            if (strDate.getTime() >= strDateStart.getTime()) {
+                txt_date_end.setText(sdf.format(myCalendar_to.getTime()));
+            } else
+                showAlertDialog("Thông báo", "Thời gian không hợp lệ, mời chọn lại ");
+        } else {
+            showAlertDialog("Thông báo", "Thời gian không hợp lệ, mời chọn lại ");
+        }
+
     }
 
     public static FragmentOrder getInstance() {
@@ -197,9 +220,9 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
     }
 
     public void get_all_history() {
-        updateTodate();
         int dayOfMonth = myCalendar_from.get(Calendar.DAY_OF_MONTH);
         myCalendar_from.add(Calendar.DAY_OF_MONTH, -(dayOfMonth - 1));
+        updateTodate();
         updateFromdate();
         sFromDate = txt_date_start.getText().toString();
         sToDate = txt_date_end.getText().toString();
@@ -470,7 +493,6 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
         dialog_yes.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog_yes.setContentView(R.layout.dialog_selected_status);
         dialog_yes.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
         TextView txt_title = (TextView) dialog_yes.findViewById(R.id.txt_warning_title);
         TextView txt_dangchoduyet = (TextView) dialog_yes.findViewById(R.id.txt_dangchoduyet);
         TextView txt_dangchuyen = (TextView) dialog_yes.findViewById(R.id.txt_dangchuyen);
