@@ -1,18 +1,21 @@
 package neo.vn.imbeautiful.adapter;
 
+import android.app.Activity;
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import neo.vn.imbeautiful.R;
+import neo.vn.imbeautiful.callback.ILoadMore;
 import neo.vn.imbeautiful.callback.ItemClickListener;
 import neo.vn.imbeautiful.models.ObjOrder;
 import neo.vn.imbeautiful.untils.StringUtil;
@@ -22,11 +25,16 @@ import neo.vn.imbeautiful.untils.StringUtil;
  * Created by QQ on 7/7/2017.
  */
 
-public class AdapterListOrder extends RecyclerView.Adapter<AdapterListOrder.TopicViewHoder> {
-    private List<ObjOrder> mList;
+public class AdapterListOrderHome extends RecyclerView.Adapter<AdapterListOrderHome.TopicViewHoder> {
     private Context context;
     private ItemClickListener OnIListener;
-
+    private final int VIEW_TYPE_ITEM = 0, VIEW_TYPE_LOADING = 1;
+    ILoadMore loadMore;
+    boolean isLoading;
+    Activity activity;
+    List<ObjOrder> items;
+    int visibleThreshold = 5;
+    int lastVisibleItem, totalItemCount;
 
     public ItemClickListener getOnIListener() {
         return OnIListener;
@@ -36,8 +44,8 @@ public class AdapterListOrder extends RecyclerView.Adapter<AdapterListOrder.Topi
         OnIListener = onIListener;
     }
 
-    public AdapterListOrder(List<ObjOrder> listAirport, Context context) {
-        this.mList = listAirport;
+    public AdapterListOrderHome(List<ObjOrder> listAirport, Context context) {
+        this.items = listAirport;
         this.context = context;
     }
 
@@ -50,7 +58,7 @@ public class AdapterListOrder extends RecyclerView.Adapter<AdapterListOrder.Topi
 
     @Override
     public void onBindViewHolder(TopicViewHoder holder, int position) {
-        ObjOrder obj = mList.get(position);
+        ObjOrder obj = items.get(position);
         if (obj != null) {
             if (obj.getFULL_NAME_CTV() != null && obj.getFULL_NAME_CTV().length() > 0)
                 holder.txt_name_CTV.setText("Tên CTV: " + obj.getFULL_NAME_CTV());
@@ -127,7 +135,7 @@ public class AdapterListOrder extends RecyclerView.Adapter<AdapterListOrder.Topi
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return items.size();
     }
 
     public class TopicViewHoder extends RecyclerView.ViewHolder implements
@@ -157,7 +165,7 @@ public class AdapterListOrder extends RecyclerView.Adapter<AdapterListOrder.Topi
 
         @Override
         public void onClick(View v) {
-            OnIListener.onClickItem(getLayoutPosition(), mList.get(getLayoutPosition()));
+            OnIListener.onClickItem(getLayoutPosition(), items.get(getLayoutPosition()));
         }
 
         @Override
@@ -165,18 +173,19 @@ public class AdapterListOrder extends RecyclerView.Adapter<AdapterListOrder.Topi
             return false;
         }
     }
-    class LoadingViewHolder extends RecyclerView.ViewHolder
-    {
+
+    class LoadingViewHolder extends RecyclerView.ViewHolder {
 
         public ProgressBar progressBar;
 
         public LoadingViewHolder(View itemView) {
             super(itemView);
-            progressBar = (ProgressBar)itemView.findViewById(R.id.progress_bar);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progress_bar);
         }
     }
+
     public void updateList(List<ObjOrder> list) {
-        mList = list;
+        items = list;
         notifyDataSetChanged();
     }
 }

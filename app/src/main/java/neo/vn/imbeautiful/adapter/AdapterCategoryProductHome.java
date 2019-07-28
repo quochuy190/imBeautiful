@@ -1,14 +1,15 @@
 package neo.vn.imbeautiful.adapter;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
@@ -49,10 +50,24 @@ public class AdapterCategoryProductHome extends
 
     @Override
     public void onBindViewHolder(@NonNull final CategoryServiceViewHolder holder, final int position) {
-        holder.title.setText(mLisCateService.get(position).getsName());
+        if (mLisCateService.get(position).getSUB_NAME() != null)
+            holder.title.setText(mLisCateService.get(position).getSUB_NAME());
         holder.horizontalAdapter.setData(mLisCateService.get(position).getmList()); // List of Strings
-       // holder.horizontalAdapter.setRowIndex(position);
+        // holder.horizontalAdapter.setRowIndex(position);
         holder.icon_down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnIListener.onClickItem(position, mLisCateService.get(position));
+            }
+        });
+
+        holder.title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnIListener.onClickItem(position, mLisCateService.get(position));
+            }
+        });
+        holder.txt_title_view_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OnIListener.onClickItem(position, mLisCateService.get(position));
@@ -75,6 +90,7 @@ public class AdapterCategoryProductHome extends
 
     public static class CategoryServiceViewHolder extends RecyclerView.ViewHolder {
         public final TextView title;
+        TextView txt_title_view_all;
         private AdapterItemProduct horizontalAdapter;
         private RecyclerView horizontalList;
         private ImageView icon_down;
@@ -83,6 +99,7 @@ public class AdapterCategoryProductHome extends
             super(view);
             Context context = itemView.getContext();
             title = (TextView) view.findViewById(R.id.txt_title_objservice);
+            txt_title_view_all = (TextView) view.findViewById(R.id.txt_title_view_all);
             icon_down = (ImageView) view.findViewById(R.id.icon_down);
             horizontalList = (RecyclerView) itemView.findViewById(R.id.recycle_lis_objservice);
             horizontalList.setLayoutManager(new GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL,

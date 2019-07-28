@@ -97,6 +97,8 @@ public class Activity_Chart_By_Products extends BaseActivity implements View.OnC
         showDialogLoading();
         mPresenter.api_report_item(sUserName, sFromDate, sToDate, sReportType,
                 "", "" + page, "" + index);
+    /*    mPresenter.api_get_report_fluctuations(sUserName,  "" + year,
+                "", "" , "1" , "1");*/
     }
 
     private void initEvent() {
@@ -297,6 +299,11 @@ public class Activity_Chart_By_Products extends BaseActivity implements View.OnC
 
     @Override
     public void show_get_report_ctv_detail(ResponGetReportListCTV obj) {
+
+    }
+
+    @Override
+    public void show_get_report_fluctuations(ResponGetReportListCTV obj) {
 
     }
 

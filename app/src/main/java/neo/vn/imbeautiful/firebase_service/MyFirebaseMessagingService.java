@@ -103,11 +103,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(body))
-
-
-                /* .setSound(Uri.parse("android.resource://"
-                         + getApplicationContext().getPackageName() + "/"
-                         + R.raw.notifi))*/
                 .setNumber(++number_notifycation)
                 .setContentIntent(pendingIntent);
         NotificationManagerCompat manager = NotificationManagerCompat.from(this);

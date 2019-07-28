@@ -29,6 +29,10 @@ public class City {
     @SerializedName("OD")
     String OD;
 
+    public City(String MATP, String NAME) {
+        this.MATP = MATP;
+        this.NAME = NAME;
+    }
 
     public City() {
     }

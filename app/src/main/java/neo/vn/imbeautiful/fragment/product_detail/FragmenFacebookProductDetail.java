@@ -58,6 +58,7 @@ public class FragmenFacebookProductDetail extends BaseFragment {
     ImageView btn_share;
     @BindView(R.id.txt_des_up_face)
     TextView txt_des_up_face;
+
     @BindView(R.id.img_facebook_1)
     ImageView img_facebook_1;
     @BindView(R.id.img_facebook_2)
@@ -142,6 +143,7 @@ public class FragmenFacebookProductDetail extends BaseFragment {
             if (mProduct.getIMG3() != null) {
                 mList.add(mProduct.getIMG3());
             }
+
             if (mProduct.getCONTENT_FB() != null) {
                 txt_des_up_face.setText(Html.fromHtml(mProduct.getCONTENT_FB()));
             } else if (mProduct.getDESCRIPTION() != null) {
@@ -203,6 +205,15 @@ public class FragmenFacebookProductDetail extends BaseFragment {
 
     private void initEvent() {
 
+        txt_des_up_face.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("imBeautiful", txt_des_up_face.getText().toString());
+                clipboard.setPrimaryClip(clip);
+                share_multil_image();
+            }
+        });
         btn_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

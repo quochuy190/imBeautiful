@@ -39,4 +39,8 @@ public class Constants {
     public static final String KEY_SEND_NEWS_TITLE = "KEY_SEND_NEWS_TITLE";
     public static final String KEY_SEND_NEWS_TYPE = "KEY_SEND_NEWS_TYPE";
     public static final String KEY_SEND_NEWS_OBJ = "KEY_SEND_NEWS_OBJ";
+    public static final String KEY_SEND_UPDATE_USER = "KEY_SEND_UPDATE_USER";
+    public static final String KEY_SEND_PHONE_REGISTER = "KEY_SEND_PHONE_REGISTER";
+    public static final String KEY_SEND_ID_PRODUCT_PARENT = "KEY_SEND_ID_PRODUCT_PARENT";
+    public static final String KEY_SEND_ID_PRODUCT_SUB = "KEY_SEND_ID_PRODUCT_SUB";
 }

@@ -162,4 +162,37 @@ public class PresenterReport implements InterfaceReport.Presenter {
             }
         }, sService, mMap);
     }
+
+    @Override
+    public void api_get_report_fluctuations(String USERNAME, String YEAR, String MONTH, String PR_CODE,
+                                            String REPORT_TYPE, String DISPLAY_TYPE) {
+        Map<String, String> mMap = new LinkedHashMap<>();
+        String sService = "report_fluctuations";
+        mMap.put("USERNAME", USERNAME);
+        mMap.put("YEAR", YEAR);
+        mMap.put("MONTH", MONTH);
+        mMap.put("PR_CODE", PR_CODE);
+        mMap.put("REPORT_TYPE", REPORT_TYPE);
+        mMap.put("DISPLAY_TYPE", DISPLAY_TYPE);
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
+            @Override
+            public void onGetDataErrorFault(Exception e) {
+                mView.show_error_api();
+                Log.i(TAG, "onGetDataErrorFault: " + e);
+            }
+
+            @Override
+            public void onGetDataSuccess(String objT) {
+                Log.i(TAG, "onGetDataSuccess: " + objT);
+                try {
+                    ResponGetReportListCTV obj = new Gson().fromJson(objT, ResponGetReportListCTV.class);
+                    mView.show_get_report_fluctuations(obj);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mView.show_error_api();
+                }
+            }
+        }, sService, mMap);
+
+    }
 }

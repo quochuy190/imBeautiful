@@ -38,12 +38,10 @@ import butterknife.ButterKnife;
 import neo.vn.imbeautiful.App;
 import neo.vn.imbeautiful.R;
 import neo.vn.imbeautiful.activity.collaborators.FragmentListCTV;
-import neo.vn.imbeautiful.activity.order.ActivityHistoryOrderDetail;
 import neo.vn.imbeautiful.activity.order.InterfaceOrder;
 import neo.vn.imbeautiful.activity.order.PresenterOrder;
-import neo.vn.imbeautiful.adapter.AdapterListOrder;
+import neo.vn.imbeautiful.adapter.AdapterDanhsachDathang;
 import neo.vn.imbeautiful.base.BaseFragment;
-import neo.vn.imbeautiful.callback.ItemClickListener;
 import neo.vn.imbeautiful.config.Constants;
 import neo.vn.imbeautiful.models.CustomEvent;
 import neo.vn.imbeautiful.models.ErrorApi;
@@ -69,12 +67,14 @@ import static android.app.Activity.RESULT_OK;
  * @updated on 8/6/2018
  * @since 1.0
  */
-public class FragmentOrder extends BaseFragment implements View.OnClickListener, InterfaceOrder.View, SwipeRefreshLayout.OnRefreshListener {
+public class FragmentOrder extends BaseFragment
+        implements View.OnClickListener, InterfaceOrder.View,
+        SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "FragmentOrder";
     private PresenterOrder mPresenter;
     public static FragmentOrder fragment;
     private List<ObjOrder> mList;
-    private AdapterListOrder adapterService;
+    private AdapterDanhsachDathang adapterService;
     @BindView(R.id.recycle_list_order)
     RecyclerView recycle_list_order;
     @BindView(R.id.txt_date_end)
@@ -133,7 +133,6 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
             myCalendar_from.set(Calendar.YEAR, year);
             myCalendar_from.set(Calendar.MONTH, monthOfYear);
             myCalendar_from.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
             updateFromdate();
         }
 
@@ -151,8 +150,6 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
                 showAlertDialog("Thông báo", "Thời gian không hợp lệ, mời chọn lại ");
         } else
             showAlertDialog("Thông báo", "Thời gian không hợp lệ, mời chọn lại ");
-
-
     }
 
     private void updateTodate() {
@@ -168,7 +165,6 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
         } else {
             showAlertDialog("Thông báo", "Thời gian không hợp lệ, mời chọn lại ");
         }
-
     }
 
     public static FragmentOrder getInstance() {
@@ -214,7 +210,9 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
         btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initData();
+                page = 1;
+                showDialogLoading();
+                get_api();
             }
         });
     }
@@ -230,14 +228,14 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
 
     private void init() {
         mList = new ArrayList<>();
-        adapterService = new AdapterListOrder(mList, getContext());
+        adapterService = new AdapterDanhsachDathang(mList, getContext());
         mLayoutManager = new GridLayoutManager(getContext(), 1);
         recycle_list_order.setNestedScrollingEnabled(false);
         recycle_list_order.setHasFixedSize(true);
         recycle_list_order.setLayoutManager(mLayoutManager);
         recycle_list_order.setItemAnimator(new DefaultItemAnimator());
         recycle_list_order.setAdapter(adapterService);
-        adapterService.setOnIListener(new ItemClickListener() {
+       /* adapterService.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
                 Intent intent = new Intent(getContext(), ActivityHistoryOrderDetail.class);
@@ -245,7 +243,7 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
                 intent.putExtra(Constants.KEY_SAND_OBJ_ORDER, obj);
                 startActivityForResult(intent, Constants.RequestCode.GET_ADD_ORDER);
             }
-        });
+        });*/
 
         // loadmore
         recycle_list_order.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -268,13 +266,13 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
                         if (!isLoading) {
                             isLoading = true;
                             page++;
-                            showDialogLoading();
+                            mList.add(null);
+                            adapterService.notifyDataSetChanged();
                             //  key = ed_key_search_fragment.getText().toString();
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mPresenter.api_get_order_history(sUserName, sFromDate, sToDate, sUserCTV, sStatus,
-                                            "" + page, "" + index);
+                                    get_api();
                                 }
                             }, 1000);
                         }
@@ -318,13 +316,19 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
                 if (resultCode == RESULT_OK) {
                     if (App.mObjCTV != null) {
                         mCTV = App.mObjCTV;
+                        sUserCTV = mCTV.getUSERNAME();
                         txt_ctv.setText(mCTV.getFULL_NAME());
                     }
                 } else {
                     sUserCTV = "";
                     txt_ctv.setText("Tất cả CTV");
                 }
-
+                break;
+            case Constants.RequestCode.GET_ADD_ORDER:
+                if (resultCode == RESULT_OK) {
+                    showDialogLoading();
+                    get_api();
+                }
                 break;
         }
     }
@@ -334,23 +338,34 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
     private ObjLogin objLogin;
 
     private void initData() {
-        txt_total_order.setText("Tổng số đơn hàng: 0/0");
+        txt_total_order.setText("Tổng số đơn hàng: 0");
         objLogin = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USER_LOGIN, ObjLogin.class);
         if (objLogin != null && objLogin.getGROUPS() != null) {
             if (objLogin.getGROUPS().equals("5")) {
+                sStatus = "";
                 ll_filter_CTV.setVisibility(View.GONE);
-            } else
+            } else {
+                sStatus = "1";
                 ll_filter_CTV.setVisibility(View.VISIBLE);
+            }
+
         }
-        showDialogLoading();
-        sFromDate = txt_date_start.getText().toString();
-        sToDate = txt_date_end.getText().toString();
         sUserName = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USERNAME, String.class);
         mList.clear();
-        if (App.isLoadOrder) {
+     /*   if (App.isLoadOrder) {
             sStatus = "1";
             txt_item_order_status.setText("Đang xử lý");
-        }
+        }*/
+
+        txt_item_order_status.setText("Đang xử lý");
+        showDialogLoading();
+        get_api();
+    }
+
+    private void get_api() {
+
+        sFromDate = txt_date_start.getText().toString();
+        sToDate = txt_date_end.getText().toString();
         mPresenter.api_get_order_history(sUserName, sFromDate, sToDate, sUserCTV, sStatus,
                 "" + page, "" + index);
     }
@@ -423,7 +438,7 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
             sStatus = "1";
             page = 1;
             mList.clear();
-            initData();
+            get_api();
         }
     }
 
@@ -431,16 +446,29 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
     public void show_order_history(ResponHistoryOrder obj) {
         hideDialogLoading_delay();
         if (obj.getsERROR().equals("0000")) {
+            if (page == 1) {
+                mList.clear();
+            } else {
+                if (page > 1) {
+                    mList.remove(mList.size() - 1);
+                }
+            }
             App.isLoadOrder = false;
             isLoading = false;
             if (obj.getmList() != null && obj.getmList().size() > 0) {
                 mList.addAll(obj.getmList());
-                txt_total_order.setText("Tổng số đơn hàng: " + mList.size() + "/" + obj.getTOTAL_ORDER());
+                txt_total_order.setText("Tổng số đơn hàng: " + mList.size());
             }
-
             adapterService.notifyDataSetChanged();
-        } else
-            showAlertDialog("Thông báo", obj.getsRESULT());
+        } else {
+            if (page == 1)
+                showAlertDialog("Thông báo", obj.getsRESULT());
+            else if (page > 1) {
+                mList.remove(mList.size() - 1);
+                adapterService.notifyDataSetChanged();
+            }
+        }
+
     }
 
     @Override
@@ -479,7 +507,7 @@ public class FragmentOrder extends BaseFragment implements View.OnClickListener,
             public void run() {
                 mList.clear();
                 page = 1;
-                initData();
+                get_api();
                 pull_refresh_product.setRefreshing(false);
             }
         }, 500);

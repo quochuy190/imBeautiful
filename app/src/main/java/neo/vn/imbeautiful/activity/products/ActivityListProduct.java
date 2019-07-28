@@ -3,13 +3,17 @@ package neo.vn.imbeautiful.activity.products;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +29,9 @@ import neo.vn.imbeautiful.models.Products;
 import neo.vn.imbeautiful.models.respon_api.ResponGetCat;
 import neo.vn.imbeautiful.models.respon_api.ResponGetProduct;
 import neo.vn.imbeautiful.models.respon_api.ResponSubProduct;
+import neo.vn.imbeautiful.untils.KeyboardUtil;
 import neo.vn.imbeautiful.untils.SharedPrefs;
+import neo.vn.imbeautiful.untils.StringUtil;
 
 /**
  * Created by: Neo Company.
@@ -39,6 +45,7 @@ public class ActivityListProduct extends BaseActivity implements InterfaceProduc
     AdapterProducts adapterProduct;
     RecyclerView.LayoutManager mLayoutManagerProduct;
     List<Products> mLisCateProduct;
+    List<Products> mLisSearch;
     @BindView(R.id.recycle_product)
     RecyclerView recycle_lis_product;
     @BindView(R.id.img_back)
@@ -48,6 +55,15 @@ public class ActivityListProduct extends BaseActivity implements InterfaceProduc
     private String sUser;
     @BindView(R.id.pull_refresh_product)
     SwipeRefreshLayout pull_refresh_product;
+    @BindView(R.id.edt_search_appbar)
+    EditText edt_search_service;
+    @BindView(R.id.img_search)
+    ImageView img_search;
+    @BindView(R.id.img_edt_search)
+    ImageView ic_search_appbar;
+    @BindView(R.id.txt_title)
+    TextView txt_title;
+    boolean isSearch = false;
 
     @Override
     public int setContentViewId() {
@@ -58,6 +74,9 @@ public class ActivityListProduct extends BaseActivity implements InterfaceProduc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = new PresenterProduct(this);
+        KeyboardUtil.hideSoftKeyboard(this);
+        img_search.setVisibility(View.VISIBLE);
+        hide_search();
         initData();
         initAppbar();
         initPulltoRefesh();
@@ -66,42 +85,131 @@ public class ActivityListProduct extends BaseActivity implements InterfaceProduc
         initEvent();
     }
 
+    private void hide_title() {
+        txt_title.setVisibility(View.GONE);
+        edt_search_service.setVisibility(View.VISIBLE);
+        img_search.setVisibility(View.VISIBLE);
+        ic_search_appbar.setVisibility(View.VISIBLE);
+    }
+
+    private void hide_search() {
+        txt_title.setVisibility(View.VISIBLE);
+        edt_search_service.setVisibility(View.GONE);
+        img_search.setVisibility(View.VISIBLE);
+        ic_search_appbar.setVisibility(View.GONE);
+    }
+
     private void initEvent() {
+        img_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isSearch) {
+                    hide_title();
+                    isSearch = !isSearch;
+                } else {
+                    hide_search();
+                    isSearch = !isSearch;
+                }
+            }
+        });
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        edt_search_service.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                // filter your list from your input
+                filter(s.toString());
+                //you can use runnable postDelayed like 500 ms to delay search text
+            }
+        });
+
+
     }
 
-    private void initData() {
-        mCat = (ObjCategoryProduct) getIntent().getSerializableExtra(Constants.KEY_SEND_OBJ_CATEGORY_SUB);
-        if (mCat != null) {
-            sUser = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USERNAME, String.class);
-            showDialogLoading();
-            mPresenter.api_get_product_cat_detail(sUser, mCat.getSUB_ID_PARENT(), mCat.getSUB_ID(),
-                    "" + page, "" + index);
+    void filter(String text) {
+        mLisSearch.clear();
+        for (Products d : mLisCateProduct) {
+            if (d.getsName() != null) {
+                String sName = StringUtil.removeAccent(d.getsName().toLowerCase());
+                String sInput = StringUtil.removeAccent(text.toLowerCase());
+                if (sName.contains(sInput)) {
+                    //adding the element to filtered list
+                    mLisSearch.add(d);
+                }
+            }
         }
+        adapterProduct.updateList(mLisSearch);
+
+    }
+
+    String sIdParent = null, sSubid = "";
+
+    private void initData() {
+        sIdParent = getIntent().getStringExtra(Constants.KEY_SEND_ID_PRODUCT_PARENT);
+        sSubid = getIntent().getStringExtra(Constants.KEY_SEND_ID_PRODUCT_SUB);
+        sUser = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USERNAME, String.class);
+        if (sIdParent != null) {
+            showDialogLoading();
+            if (sSubid != null) {
+                mPresenter.api_get_product_cat_detail(sUser, sIdParent, sSubid,
+                        "" + page, "" + index);
+            } else {
+                sSubid = "";
+                mPresenter.api_get_product_cat_detail(sUser, sIdParent, sSubid,
+                        "" + page, "" + index);
+            }
+
+        } else {
+            mCat = (ObjCategoryProduct) getIntent().getSerializableExtra(Constants.KEY_SEND_OBJ_CATEGORY_SUB);
+            if (mCat != null) {
+                showDialogLoading();
+                txt_title.setText(mCat.getsName());
+                sIdParent = mCat.getSUB_ID_PARENT();
+                sSubid = mCat.getSUB_ID();
+                mPresenter.api_get_product_cat_detail(sUser, sIdParent, sSubid,
+                        "" + page, "" + index);
+            }
+        }
+
     }
 
     int pastVisiblesItems, visibleItemCount, totalItemCount;
     boolean isLoading = true;
     int page = 1;
     int index = 30;
+
+
     private void initAppbar() {
         ImageView img_back = findViewById(R.id.img_back);
-        TextView txt_title = findViewById(R.id.txt_title);
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        txt_title.setText("Danh sách sản phẩm");
     }
+
+
     private void initProduct() {
         mLisCateProduct = new ArrayList<>();
+        mLisSearch = new ArrayList<>();
         adapterProduct = new AdapterProducts(mLisCateProduct, this);
         mLayoutManagerProduct = new GridLayoutManager(this, 2);
         recycle_lis_product.setHasFixedSize(true);
@@ -147,8 +255,8 @@ public class ActivityListProduct extends BaseActivity implements InterfaceProduc
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mPresenter.api_get_product_cat_detail(sUser, mCat.getIDD(),
-                                            mCat.getSUB_ID(), "" + page, "" + index);
+                                    mPresenter.api_get_product_cat_detail(sUser, sIdParent,
+                                            sSubid, "" + page, "" + index);
                                 }
                             }, 1000);
                         }
@@ -198,6 +306,8 @@ public class ActivityListProduct extends BaseActivity implements InterfaceProduc
                     mLisCateProduct.addAll(obj.getmList());
                     adapterProduct.notifyDataSetChanged();
                 }
+            } else {
+                showAlertDialog("Thông báo", obj.getsRESULT());
             }
         }
     }

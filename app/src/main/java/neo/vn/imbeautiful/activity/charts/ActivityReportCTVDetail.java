@@ -91,6 +91,8 @@ public class ActivityReportCTVDetail extends BaseActivity implements InterfaceRe
                         objRoportCTV.getsMonth(), "" + page, "" + number);
             }
         }
+        mPresenter.api_get_report_fluctuations(sUserName,  "" + year,
+                "", "" , "1" , "1");
 
     }
 
@@ -170,5 +172,10 @@ public class ActivityReportCTVDetail extends BaseActivity implements InterfaceRe
         } else if (obj != null && obj.getsRESULT() != null) {
             showDialogNotify("Thông báo", obj.getsRESULT());
         }
+    }
+
+    @Override
+    public void show_get_report_fluctuations(ResponGetReportListCTV obj) {
+
     }
 }

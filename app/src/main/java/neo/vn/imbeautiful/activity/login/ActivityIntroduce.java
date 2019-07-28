@@ -37,7 +37,7 @@ public class ActivityIntroduce extends BaseActivity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActivityIntroduce.this, ActivityRegister.class));
+                startActivity(new Intent(ActivityIntroduce.this, ActivityConfirmOTP.class));
                 finish();
             }
         });

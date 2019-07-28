@@ -2,15 +2,17 @@ package neo.vn.imbeautiful.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,17 +116,28 @@ public class FragmentProduct extends BaseFragment implements InterfaceProduct.Vi
             @Override
             public void onClick(View v) {
                 if (!isHideCategory) {
-                    list_menu_untility.setVisibility(View.GONE);
-                    recycle_lis_product.setVisibility(View.VISIBLE);
-                    isHideCategory = !isHideCategory;
+                    show_category();
                 } else {
-                    list_menu_untility.setVisibility(View.VISIBLE);
+                    hide_category();
+                /*    list_menu_untility.setVisibility(View.VISIBLE);
                     recycle_lis_product.setVisibility(View.GONE);
-                    isHideCategory = !isHideCategory;
+                    isHideCategory = !isHideCategory;*/
                 }
 
             }
         });
+    }
+
+    private void hide_category() {
+        list_menu_untility.setVisibility(View.VISIBLE);
+        recycle_lis_product.setVisibility(View.GONE);
+        isHideCategory = !isHideCategory;
+    }
+
+    private void show_category() {
+        list_menu_untility.setVisibility(View.GONE);
+        recycle_lis_product.setVisibility(View.VISIBLE);
+        isHideCategory = !isHideCategory;
     }
 
     private void initDataCat() {
@@ -135,7 +148,7 @@ public class FragmentProduct extends BaseFragment implements InterfaceProduct.Vi
 
     }
 
-    AdapterCategoryProduct adapter;
+    AdapterCategoryProduct adapterCategory;
     AdapterCategoryProductHome adapterProduct;
     RecyclerView.LayoutManager mLayoutManager;
     RecyclerView.LayoutManager mLayoutManagerProduct;
@@ -149,46 +162,52 @@ public class FragmentProduct extends BaseFragment implements InterfaceProduct.Vi
 
     private void init() {
         mLisShop = new ArrayList<>();
-        adapter = new AdapterCategoryProduct(getContext(), mLisShop, new OnListenerItemClickObjService() {
+        adapterCategory = new AdapterCategoryProduct(getContext(), mLisShop, new OnListenerItemClickObjService() {
             @Override
             public void onClickListener(ObjCategoryProduct item) {
+
                 Intent intent = new Intent(getContext(), ActivityListProduct.class);
                 ObjCategoryProduct obj = (ObjCategoryProduct) item;
                 intent.putExtra(Constants.KEY_SEND_OBJ_CATEGORY_SUB, obj);
                 startActivity(intent);
+                show_category();
             }
 
             @Override
             public void onItemXemthemClick(ObjCategoryProduct objService) {
+
             }
         });
         mLayoutManager = new GridLayoutManager(getContext(), 1);
         list_menu_untility.setHasFixedSize(true);
         list_menu_untility.setLayoutManager(mLayoutManager);
         list_menu_untility.setItemAnimator(new DefaultItemAnimator());
-        list_menu_untility.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        adapter.setOnIListener(new ItemClickListener() {
+        list_menu_untility.setAdapter(adapterCategory);
+        adapterCategory.notifyDataSetChanged();
+        adapterCategory.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
                 mLisShop.get(position).setHideSub(!mLisShop.get(position).isHideSub());
-                adapter.notifyDataSetChanged();
+                adapterCategory.notifyDataSetChanged();
             }
         });
-        adapter.setOnIListener_Title(new ItemClickListener() {
+        adapterCategory.setOnIListener_Title(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
+
                 Intent intent = new Intent(getContext(), ActivityListCategoryProduct.class);
                 ObjCategoryProduct obj = (ObjCategoryProduct) item;
                 intent.putExtra(Constants.KEY_SEND_OBJ_CATEGORY, obj);
                 startActivity(intent);
+                show_category();
             }
         });
     }
 
     private void initProduct() {
         mLisCateProduct = new ArrayList<>();
-        adapterProduct = new AdapterCategoryProductHome(getContext(), mLisCateProduct, new ItemClickListener() {
+        adapterProduct = new AdapterCategoryProductHome(getContext(), mLisCateProduct,
+                new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
                 Intent intent = new Intent(getContext(), ActivityProductDetail.class);
@@ -208,7 +227,9 @@ public class FragmentProduct extends BaseFragment implements InterfaceProduct.Vi
             public void onClickItem(int position, Object item) {
                /* mLisShop.get(position).setHideSub(!mLisShop.get(position).isHideSub());
                 adapter.notifyDataSetChanged();*/
-                Intent intent = new Intent(getContext(), ActivityListCategoryProduct.class);
+                CategoryProductHome obj = (CategoryProductHome) item;
+                Intent intent = new Intent(getContext(), ActivityListProduct.class);
+                intent.putExtra(Constants.KEY_SEND_ID_PRODUCT_PARENT, obj.getID());
                 startActivity(intent);
             }
         });
@@ -222,12 +243,12 @@ public class FragmentProduct extends BaseFragment implements InterfaceProduct.Vi
 
     @Override
     public void show_product_cat(ResponGetCat obj) {
-     //   hideDialogLoading();
+        //   hideDialogLoading();
         if (obj != null) {
             if (obj.getsERROR() != null && obj.getsERROR().equals("0000")) {
                 mLisShop.clear();
                 mLisShop.addAll(obj.getmList());
-                adapter.notifyDataSetChanged();
+                adapterCategory.notifyDataSetChanged();
             } else showAlertDialog("Thông báo", obj.getsRESULT());
         }
     }

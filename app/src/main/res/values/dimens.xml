@@ -6,7 +6,7 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <!--activiy introduce-->
-    <dimen name="margin_top_introduce">25dp</dimen>
+    <dimen name="margin_top_introduce">15dp</dimen>
     <dimen name="txt_title_im_beautiful">17sp</dimen>
     <dimen name="txt_content_im_beautiful">15sp</dimen>
     <dimen name="txt_btn_login">22sp</dimen>
@@ -16,6 +16,7 @@
     <dimen name="margin_top_btn_login">30dp</dimen>
     <dimen name="pading_icon">4dp</dimen>
     <dimen name="dp7">7dp</dimen>
+    <dimen name="dp10">10dp</dimen>
     <dimen name="txt_user">16sp</dimen>
     <dimen name="txt_15sp">15sp</dimen>
     <dimen name="txt_14sp">14sp</dimen>
@@ -42,4 +43,5 @@
 
     <dimen name="dp20">20dp</dimen>
     <dimen name="height_spinner">35dp</dimen>
+    <dimen name="height_appbar">45dp</dimen>
 </resources>

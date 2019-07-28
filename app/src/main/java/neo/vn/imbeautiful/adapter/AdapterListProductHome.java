@@ -56,32 +56,35 @@ public class AdapterListProductHome extends RecyclerView.Adapter<AdapterListProd
     @Override
     public void onBindViewHolder(TopicViewHoder holder, final int position) {
         final Products obj = mList.get(position);
-        if (obj != null && obj.getsName().length() > 0)
-            holder.txt_name.setText(obj.getsName().toLowerCase());
-        else
-            holder.txt_name.setText("...");
-        if (obj != null && obj.getsPrice().length() > 0)
-            holder.txt_prime.setText(StringUtil.conventMonney_Long(obj.getsPrice()));
-        else
-            holder.txt_prime.setText(StringUtil.conventMonney_Long("0"));
-        if (obj.getsUrlImage() != null && obj.getsUrlImage().length() > 0) {
-            Glide.with(context).load(obj.getsUrlImage()).asBitmap()
-                    .placeholder(R.drawable.img_defaul)
-                    .into(new BitmapImageViewTarget(holder.img_product) {
-                        @Override
-                        public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
-                            super.onResourceReady(drawable, anim);
-                            //   progressBar.setVisibility(View.GONE);
-                        }
-                    });
-        } else
-            Glide.with(context).load(R.drawable.img_defaul).into(holder.img_product);
-        holder.img_product.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OnIListener.onClickItem(position, obj);
-            }
-        });
+        if (obj!=null){
+            if (obj.getsName() != null && obj.getsName().length() > 0)
+                holder.txt_name.setText(obj.getsName().toLowerCase());
+            else
+                holder.txt_name.setText("...");
+            if (obj.getsPrice() != null && obj.getsPrice().length() > 0)
+                holder.txt_prime.setText(StringUtil.conventMonney_Long(obj.getsPrice()));
+            else
+                holder.txt_prime.setText(StringUtil.conventMonney_Long("0"));
+            if (obj.getsUrlImage() != null && obj.getsUrlImage().length() > 0) {
+                Glide.with(context).load(obj.getsUrlImage()).asBitmap()
+                        .placeholder(R.drawable.img_defaul)
+                        .into(new BitmapImageViewTarget(holder.img_product) {
+                            @Override
+                            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                super.onResourceReady(drawable, anim);
+                                //   progressBar.setVisibility(View.GONE);
+                            }
+                        });
+            } else
+                Glide.with(context).load(R.drawable.img_defaul).into(holder.img_product);
+            holder.img_product.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    OnIListener.onClickItem(position, obj);
+                }
+            });
+        }
+
     }
 
     @Override

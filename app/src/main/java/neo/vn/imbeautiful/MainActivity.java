@@ -3,15 +3,6 @@ package neo.vn.imbeautiful;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,12 +12,26 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
+import neo.vn.imbeautiful.activity.collaborators.ActivityUpdateInfoCTV;
 import neo.vn.imbeautiful.activity.login.ActivityIntroduce;
+import neo.vn.imbeautiful.activity.login.ActivityRegister;
 import neo.vn.imbeautiful.activity.login.InterfaceLogin;
 import neo.vn.imbeautiful.activity.login.PresenterLogin;
 import neo.vn.imbeautiful.activity.products.ActivityCart;
@@ -74,6 +79,8 @@ public class MainActivity extends BaseActivity
     Fragment fragmentCurrent;
     ObjLogin objLogin;
     BottomNavigationView navigation;
+    @BindView(R.id.ll_avata_main)
+    ConstraintLayout ll_avata_main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +104,7 @@ public class MainActivity extends BaseActivity
         navigation = (BottomNavigationView) findViewById(R.id.nav_bottom_bar);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         initData();
+        initEvent();
         if (App.isLoginHome) {
             loadFragmentHome();
             start_left_menu();
@@ -106,6 +114,21 @@ public class MainActivity extends BaseActivity
         }
 
         //setupViewPager(viewPager);
+    }
+
+    private void initEvent() {
+        ll_avata_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ObjLogin objLogin = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USER_LOGIN, ObjLogin.class);
+                if (objLogin.getGROUPS().equals("5")){
+                    Intent intent = new Intent(MainActivity.this, ActivityUpdateInfoCTV.class);
+                    intent.putExtra(Constants.KEY_SEND_UPDATE_USER, true);
+                    startActivity(intent);
+                    close_drawer();
+                }
+            }
+        });
     }
 
     @Override

@@ -56,7 +56,7 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.TopicV
         Products obj = mList.get(position);
         if (obj != null) {
             if (obj.getsName() != null && obj.getsName().length() > 0)
-                holder.txt_name.setText(Html.fromHtml(StringUtil.convert_html(obj.getsName())));
+                holder.txt_name.setText(Html.fromHtml(StringUtil.convert_html(obj.getsName().toLowerCase())));
             else
                 holder.txt_name.setText("...");
             if (obj != null && obj.getsPrice().length() > 0)

@@ -1,6 +1,5 @@
 package neo.vn.imbeautiful.activity.charts;
 
-import neo.vn.imbeautiful.models.respon_api.ResponGetLisCTV;
 import neo.vn.imbeautiful.models.respon_api.ResponGetReportDefault;
 import neo.vn.imbeautiful.models.respon_api.ResponGetReportListCTV;
 import neo.vn.imbeautiful.models.respon_api.ResponGetReportProduct;
@@ -27,6 +26,9 @@ public interface InterfaceReport {
 
         void api_get_report_ctv_detail(String USERNAME, String USER_CTV, String YEAR,
                                        String MONTH, String PAGE, String NUMOFPAGE);
+
+        void api_get_report_fluctuations(String USERNAME, String YEAR, String MONTH,
+                                         String PR_CODE, String REPORT_TYPE, String DISPLAY_TYPE);
     }
 
     interface View {
@@ -43,5 +45,8 @@ public interface InterfaceReport {
         void show_get_report_ctv(ResponGetReportListCTV obj);
 
         void show_get_report_ctv_detail(ResponGetReportListCTV obj);
+
+        void show_get_report_fluctuations(ResponGetReportListCTV obj);
+
     }
 }

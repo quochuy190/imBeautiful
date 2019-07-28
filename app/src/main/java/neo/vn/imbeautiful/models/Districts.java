@@ -29,6 +29,11 @@ public class Districts {
     @SerializedName("MATP")
     String MATP;
 
+    public Districts(String MAQH, String NAME, String MATP) {
+        this.MAQH = MAQH;
+        this.NAME = NAME;
+        this.MATP = MATP;
+    }
 
     public Districts() {
     }

@@ -1,14 +1,17 @@
 package neo.vn.imbeautiful.activity.products;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,7 @@ import neo.vn.imbeautiful.models.Products;
 import neo.vn.imbeautiful.models.respon_api.ResponGetCat;
 import neo.vn.imbeautiful.models.respon_api.ResponGetProduct;
 import neo.vn.imbeautiful.models.respon_api.ResponSubProduct;
+import neo.vn.imbeautiful.untils.KeyboardUtil;
 import neo.vn.imbeautiful.untils.SharedPrefs;
 
 /**
@@ -46,7 +50,14 @@ public class ActivityListCategoryProduct extends BaseActivity implements Interfa
     private String sUser;
     @BindView(R.id.pull_refresh_product)
     SwipeRefreshLayout pull_refresh_product;
-
+    @BindView(R.id.edt_search_appbar)
+    EditText edt_search_service;
+    @BindView(R.id.img_search)
+    ImageView img_search;
+    @BindView(R.id.img_edt_search)
+    ImageView ic_search_appbar;
+    @BindView(R.id.txt_title)
+    TextView txt_title;
     @Override
     public int setContentViewId() {
         return R.layout.activity_list_product;
@@ -56,6 +67,8 @@ public class ActivityListCategoryProduct extends BaseActivity implements Interfa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = new PresenterProduct(this);
+        KeyboardUtil.hideSoftKeyboard(this);
+        hide_search();
         initData();
         initAppbar();
         initPulltoRefesh();
@@ -63,7 +76,12 @@ public class ActivityListCategoryProduct extends BaseActivity implements Interfa
         initEvent();
         //initDataProduct();
     }
-
+    private void hide_search() {
+        txt_title.setVisibility(View.VISIBLE);
+        edt_search_service.setVisibility(View.GONE);
+        img_search.setVisibility(View.VISIBLE);
+        ic_search_appbar.setVisibility(View.GONE);
+    }
     private void initEvent() {
 
 
@@ -71,14 +89,12 @@ public class ActivityListCategoryProduct extends BaseActivity implements Interfa
 
     private void initAppbar() {
         ImageView img_back = findViewById(R.id.img_back);
-        TextView txt_title = findViewById(R.id.txt_title);
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        txt_title.setText("I'm beautiful");
     }
 
     private void initPulltoRefesh() {
@@ -100,7 +116,7 @@ public class ActivityListCategoryProduct extends BaseActivity implements Interfa
         if (mCat != null) {
             sUser = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USERNAME, String.class);
             showDialogLoading();
-            mPresenter.api_get_get_sub_product_child(sUser, "");
+            mPresenter.api_get_get_sub_product_child(sUser, mCat.getIDD());
         }
     }
 
@@ -109,7 +125,10 @@ public class ActivityListCategoryProduct extends BaseActivity implements Interfa
         adapterProduct = new AdapterCategoryProductHome(this, mLisCateProduct, new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
-
+                Intent intent = new Intent(ActivityListCategoryProduct.this, ActivityProductDetail.class);
+                Products obj = (Products) item;
+                intent.putExtra(Constants.KEY_SEND_OBJ_PRODUCTS, obj);
+                startActivity(intent);
             }
         });
         mLayoutManagerProduct = new GridLayoutManager(this, 1);
@@ -121,22 +140,14 @@ public class ActivityListCategoryProduct extends BaseActivity implements Interfa
         adapterProduct.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
-
+                CategoryProductHome obj = (CategoryProductHome) item;
+                Intent intent = new Intent(ActivityListCategoryProduct.this, ActivityListProduct.class);
+                intent.putExtra(Constants.KEY_SEND_ID_PRODUCT_SUB, obj.getID());
+                intent.putExtra(Constants.KEY_SEND_ID_PRODUCT_PARENT, mCat.getIDD());
+                startActivity(intent);
             }
         });
     }
-
-    private void initDataProduct() {
-        for (int i = 0; i < 5; i++) {
-            List<Products> mLis = new ArrayList<>();
-            mLis.add(new Products("Tẩy da chết", "3500 đ", "https://naototnhat.com/wp-content/uploads/2018/08/my-pham-duong-trang-da.jpg"));
-            mLis.add(new Products("Tẩy da chết", "3500 đ", "https://naototnhat.com/wp-content/uploads/2018/08/my-pham-duong-trang-da.jpg"));
-            mLis.add(new Products("Tẩy da chết", "3500 đ", "https://naototnhat.com/wp-content/uploads/2018/08/my-pham-duong-trang-da.jpg"));
-            mLisCateProduct.add(new CategoryProductHome("Mỹ phẩm làm sạch", mLis));
-        }
-        adapterProduct.notifyDataSetChanged();
-    }
-
     @Override
     public void show_error_api() {
         hideDialogLoading();

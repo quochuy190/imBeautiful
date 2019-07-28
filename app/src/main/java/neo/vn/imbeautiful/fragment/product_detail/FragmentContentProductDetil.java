@@ -3,6 +3,7 @@ package neo.vn.imbeautiful.fragment.product_detail;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +37,8 @@ public class FragmentContentProductDetil extends BaseFragment {
     @BindView(R.id.btn_share_content)
     ImageView img_share;
     String sUrl = "";
+    @BindView(R.id.txt_affiliate)
+    TextView txt_affiliate;
 
     public static FragmentContentProductDetil getInstance() {
         if (fragment == null) {
@@ -61,8 +65,13 @@ public class FragmentContentProductDetil extends BaseFragment {
 
     private void initData() {
         ObjLogin sUserName = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USER_LOGIN, ObjLogin.class);
-        sUrl = App.mProduct.getLINK_AFFILIATE()+"?prc="+App.mProduct.getCODE_PRODUCT()+"&uc="+sUserName.getUSER_CODE();
 
+
+        if (App.mProduct.getLINK_AFFILIATE() != null) {
+            String sName = "Link Affiliate: <font color='#1E90FF'>" + App.mProduct.getLINK_AFFILIATE() + "</font>";
+            txt_affiliate.setText(Html.fromHtml(sName), TextView.BufferType.SPANNABLE);
+            sUrl = App.mProduct.getLINK_AFFILIATE() + "?prc=" + App.mProduct.getCODE_PRODUCT() + "&uc=" + sUserName.getUSER_CODE();
+        }
     }
 
     private void initEvent() {

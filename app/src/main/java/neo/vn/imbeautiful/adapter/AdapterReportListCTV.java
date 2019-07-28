@@ -72,6 +72,13 @@ public class AdapterReportListCTV extends RecyclerView.Adapter<AdapterReportList
             } else
                 holder.txt_hoahong.setText("...");
         } else if (position == 0) {
+            holder.txt_doanhso.setTextColor(context.getResources().getColor(R.color.black));
+            holder.txt_hoahong.setTextColor(context.getResources().getColor(R.color.black));
+            holder.txt_name.setText("Tên CTV");
+            holder.txt_donhang.setText("Số ĐH");
+            holder.txt_doanhso.setText("Doanh số");
+            holder.txt_hoahong.setText("Hoa hồng");
+
             holder.txt_name.setGravity(Gravity.CENTER);
             holder.txt_hoahong.setGravity(Gravity.CENTER);
             holder.txt_doanhso.setGravity(Gravity.CENTER);

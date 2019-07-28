@@ -102,7 +102,7 @@ public class FragmentLeftMenu extends BaseFragment {
         mList.add(new ObjLeftMenu("Tin tức sự kiện", R.drawable.ic_left_menu_notify, 5));
         mList.add(new ObjLeftMenu("Thông báo", R.drawable.ic_left_menu_thongbao, 6));
         mList.add(new ObjLeftMenu("Giới thiệu I'm Beautiful Shop", R.drawable.ic_left_menu_introduct, 7));
-        mList.add(new ObjLeftMenu("Duyệt bài", R.drawable.ic_left_menu_dyetbai, 8));
+      //  mList.add(new ObjLeftMenu("Duyệt bài", R.drawable.ic_left_menu_dyetbai, 8));
         adapterService.notifyDataSetChanged();
     }
 

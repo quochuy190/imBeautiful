@@ -50,6 +50,7 @@ import neo.vn.imbeautiful.callback.TaskCompleted;
 import neo.vn.imbeautiful.config.Constants;
 import neo.vn.imbeautiful.fragment.product_detail.FragmenFacebookProductDetail;
 import neo.vn.imbeautiful.fragment.product_detail.FragmentContentProductDetil;
+import neo.vn.imbeautiful.models.ObjLogin;
 import neo.vn.imbeautiful.models.Products;
 import neo.vn.imbeautiful.models.PropetiObj;
 import neo.vn.imbeautiful.models.respon_api.ObjLisCart;
@@ -187,6 +188,20 @@ public class ActivityProductDetail extends BaseActivity
     }
 
     private void initData() {
+        ObjLogin objLogin = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USER_LOGIN, ObjLogin.class);
+        if (objLogin != null && objLogin.getGROUPS() != null) {
+            if (!objLogin.getGROUPS().equals("5")) {
+                btn_add_selected("Bạn không có quyền mua hàng");
+                img_cart.setVisibility(View.INVISIBLE);
+            } else {
+                img_cart.setVisibility(View.VISIBLE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    txt_add_cart.setBackground(getResources().getDrawable(R.drawable.spr_txt_title_fragment_home));
+                    txt_add_cart.setText("Thêm vào giỏ hàng");
+                }
+                txt_add_cart.setEnabled(true);
+            }
+        }
         mList = new ArrayList<>();
         String sUserName = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USERNAME, String.class);
         objLisCart = SharedPrefs.getInstance().get(Constants.KEY_SAVE_LIST_CART, ObjLisCart.class);
@@ -243,7 +258,7 @@ public class ActivityProductDetail extends BaseActivity
                 }
             }
             if (isClick) {
-                btn_add_selected();
+                btn_add_selected("Đã thêm vào giỏ hàng");
             }
             if (mProduct.getsUrlImage() != null) {
                 mLisImage.add(mProduct.getsUrlImage());
@@ -272,10 +287,10 @@ public class ActivityProductDetail extends BaseActivity
         }
     }
 
-    private void btn_add_selected() {
+    private void btn_add_selected(String sText) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             txt_add_cart.setBackground(getResources().getDrawable(R.drawable.spr_btn_add_product_selected));
-            txt_add_cart.setText("Đã thêm vào giỏ hàng");
+            txt_add_cart.setText(sText);
         }
         txt_add_cart.setEnabled(false);
     }
@@ -301,10 +316,10 @@ public class ActivityProductDetail extends BaseActivity
                     }
                     if (!isAddPro) {
                         mList.add(mProduct);
-                        btn_add_selected();
+                        btn_add_selected("Đã thêm vào giỏ hàng");
                     }
                 } else {
-                    btn_add_selected();
+                    btn_add_selected("Đã thêm vào giỏ hàng");
                     mList.add(mProduct);
                 }
                 ObjLisCart obj = new ObjLisCart(mList);
@@ -419,26 +434,39 @@ public class ActivityProductDetail extends BaseActivity
     public void show_get_properties(ResponGetPropeti obj) {
         hideDialogLoading();
         if (obj != null && obj.getsERROR().equals("0000")) {
+            txt_title_spinner_1.setVisibility(View.VISIBLE);
+            txt_title_spinner_2.setVisibility(View.VISIBLE);
+            spiner_type_1.setVisibility(View.VISIBLE);
+            spiner_type_2.setVisibility(View.VISIBLE);
             if (obj.getLisDistrict() != null) {
-                for (PropetiObj objPro : obj.getLisDistrict()) {
-                    if (objPro.getTYPE_ID().equals("1")) {
-                        txt_title_spinner_1.setText(objPro.getNAME());
-                        for (PropetiObj.PropetiDetail objDetail : objPro.getINFO()) {
-                            dataset.add(objDetail.getSUB_PROPERTIES());
-                        }
+                if (obj.getLisDistrict().size() > 0) {
+                    txt_title_spinner_2.setVisibility(View.GONE);
+                    spiner_type_2.setVisibility(View.GONE);
+                    PropetiObj objPro = obj.getLisDistrict().get(0);
+                    txt_title_spinner_1.setText(objPro.getNAME());
+                    for (PropetiObj.PropetiDetail objDetail : objPro.getINFO()) {
+                        dataset.add(objDetail.getSUB_PROPERTIES());
                     }
-                    if (objPro.getTYPE_ID().equals("2")) {
-                        txt_title_spinner_2.setText(objPro.getNAME());
-                        for (PropetiObj.PropetiDetail objDetail : objPro.getINFO()) {
-                            listPropeti_2.add(objDetail.getSUB_PROPERTIES());
-                        }
+                } else if (obj.getLisDistrict().size() > 1) {
+                    txt_title_spinner_2.setVisibility(View.VISIBLE);
+                    spiner_type_2.setVisibility(View.VISIBLE);
+                    PropetiObj objPro = obj.getLisDistrict().get(1);
+                    txt_title_spinner_2.setText(objPro.getNAME());
+                    for (PropetiObj.PropetiDetail objDetail : objPro.getINFO()) {
+                        listPropeti_2.add(objDetail.getSUB_PROPERTIES());
                     }
-
                 }
+
             }
+            set_data_spinner();
+            set_data_spinner_2();
+        } else {
+            txt_title_spinner_1.setVisibility(View.GONE);
+            txt_title_spinner_2.setVisibility(View.GONE);
+            spiner_type_1.setVisibility(View.GONE);
+            spiner_type_2.setVisibility(View.GONE);
         }
-        set_data_spinner();
-        set_data_spinner_2();
+
     }
 
 

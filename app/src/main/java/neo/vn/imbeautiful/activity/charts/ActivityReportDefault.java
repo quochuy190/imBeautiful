@@ -229,6 +229,11 @@ public class ActivityReportDefault extends BaseActivity implements InterfaceRepo
 
     }
 
+    @Override
+    public void show_get_report_fluctuations(ResponGetReportListCTV obj) {
+
+    }
+
     int month = Calendar.getInstance().get(Calendar.MONTH);
     int year = Calendar.getInstance().get(Calendar.YEAR);
 

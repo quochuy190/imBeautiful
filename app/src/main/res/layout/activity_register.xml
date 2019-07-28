@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.3" />
+        app:layout_constraintWidth_percent="0.27" />
 
     <ImageView
         android:id="@+id/img_title"
@@ -72,6 +72,7 @@
                 app:layout_constraintWidth_percent="0.8" />
 
             <EditText
+                android:focusable="false"
                 android:id="@+id/edt_phone_register"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -219,6 +220,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edt_pass_confirm_register"
                 app:layout_constraintWidth_percent="0.2" />
+            <Button
+                android:id="@+id/btn_update"
+                android:text="Cập nhật"
+                app:layout_constraintWidth_percent="0.3"
+                android:layout_marginTop="@dimen/margin_top_edt_register"
+                android:layout_marginBottom="@dimen/margin_top_edt_register"
+                android:background="@drawable/spr_btn_login"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_pass_confirm_register"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
@@ -230,7 +243,7 @@
         android:gravity="center"
         android:text="@string/txt_change_login"
         android:textColor="@color/white_click"
-        android:textSize="@dimen/txt_user"
+        android:textSize="@dimen/txt_14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.07"
