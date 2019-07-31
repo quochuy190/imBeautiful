@@ -32,6 +32,7 @@ import neo.vn.imbeautiful.R;
 import neo.vn.imbeautiful.adapter.AdapterProductInHistoryOrder;
 import neo.vn.imbeautiful.base.BaseActivity;
 import neo.vn.imbeautiful.callback.ItemClickCartListener;
+import neo.vn.imbeautiful.config.Config;
 import neo.vn.imbeautiful.config.Constants;
 import neo.vn.imbeautiful.models.ErrorApi;
 import neo.vn.imbeautiful.models.ObjLogin;
@@ -41,6 +42,7 @@ import neo.vn.imbeautiful.models.respon_api.ResponGetProduct;
 import neo.vn.imbeautiful.models.respon_api.ResponHistoryOrder;
 import neo.vn.imbeautiful.untils.SharedPrefs;
 import neo.vn.imbeautiful.untils.StringUtil;
+import neo.vn.imbeautiful.untils.TimeUtils;
 
 /**
  * Created by: Neo Company.
@@ -91,6 +93,8 @@ public class ActivityHistoryOrderDetail extends BaseActivity
     TextView txt_time_dukien;
     @BindView(R.id.txt_ship)
     EditText txt_ship;
+    @BindView(R.id.edt_gopy)
+    EditText edt_gopy;
     @BindView(R.id.btn_update)
     Button btn_update;
 
@@ -184,21 +188,33 @@ public class ActivityHistoryOrderDetail extends BaseActivity
             set_bg_status();
         }
 
+/*
         if (mLogin.getGROUPS().equals("5") && objOrder.getSTATUS().equals("1")) {
+            edt_gopy.setFocusable(false);
             ic_edit_product.setVisibility(View.VISIBLE);
-        } else
+            txt_ship.setFocusable(false);
+        } else {
+            txt_ship.setFocusable(true);
+            edt_gopy.setFocusable(true);
             ic_edit_product.setVisibility(View.INVISIBLE);
-        if (!mLogin.getGROUPS().equals("5")) {
-            if (objOrder.getSTATUS().equals("0") || objOrder.getSTATUS().equals("4")) {
+        }
+*/
+        ic_edit_product.setVisibility(View.INVISIBLE);
+        if (!mLogin.getGROUPS().equals(Config.GROUP_CONGTACVIEN)) {
+            txt_ship.setFocusable(true);
+            edt_gopy.setFocusable(true);
+            if (objOrder.getSTATUS().equals(Config.STATUS_ORDER_DAHOANTHANH)
+                    || objOrder.getSTATUS().equals(Config.STATUS_ORDER_DAHUY)) {
                 ic_edit_blue.setVisibility(View.INVISIBLE);
                 ic_edit_green.setVisibility(View.INVISIBLE);
             } else {
                 ic_edit_blue.setVisibility(View.VISIBLE);
                 ic_edit_green.setVisibility(View.VISIBLE);
             }
-
         } else {
-            ic_edit_green.setVisibility(View.INVISIBLE);
+            txt_ship.setFocusable(false);
+            edt_gopy.setFocusable(false);
+            ic_edit_blue.setVisibility(View.INVISIBLE);
             ic_edit_green.setVisibility(View.INVISIBLE);
         }
 
@@ -294,7 +310,7 @@ public class ActivityHistoryOrderDetail extends BaseActivity
         }
         txt_price.setText(StringUtil.conventMonney_Long("" + lPrice));
         txt_total.setText(StringUtil.conventMonney_Long("" + (lPrice + 30000)));
-        txt_ship.setText(StringUtil.conventMonney_Long("30000"));
+
 
     }
 
@@ -313,6 +329,11 @@ public class ActivityHistoryOrderDetail extends BaseActivity
     public void show_order_history_detail(ObjOrder objOrder) {
         hideDialogLoading_delay();
         if (objOrder != null && objOrder.getERROR().equals("0000")) {
+            if (objOrder.getEXTRA_SHIP() != null) {
+                txt_ship.setText(StringUtil.formatInteger(objOrder.getEXTRA_SHIP()));
+            }
+            if (objOrder.getNOTE() != null)
+                edt_gopy.setText(objOrder.getNOTE());
             if (objOrder.getFULL_NAME_CTV() != null) {
                 txt_name.setText("Tên CTV: " + objOrder.getFULL_NAME_CTV());
             } else {
@@ -329,9 +350,16 @@ public class ActivityHistoryOrderDetail extends BaseActivity
                 txt_email.setText("Email: ...");
             }
             if (objOrder.getCREATE_DATE() != null) {
-                txt_time.setText(objOrder.getCREATE_DATE());
+                txt_time.setText(TimeUtils.convent_date(objOrder.getCREATE_DATE(),
+                        "dd/MM/yyyy HH:mm:ss", "dd/MM/yyyy HH:mm"));
             } else {
                 txt_time.setText("...");
+            }
+            if (objOrder.getTIME_RECEIVER() != null) {
+                txt_time_dukien.setText(TimeUtils.convent_date(objOrder.getTIME_RECEIVER(),
+                        "dd/MM/yyyy HH:mm:ss", "dd/MM/yyyy"));
+            } else {
+
             }
             if (objOrder.getFULLNAME_RECEIVER() != null) {
                 sFullName = objOrder.getFULLNAME_RECEIVER();
@@ -371,6 +399,7 @@ public class ActivityHistoryOrderDetail extends BaseActivity
                     case "1":
                         sStatus = "1";
                         txt_item_order_status.setText("Đang xử lý");
+
                         break;
                     case "2":
                         sStatus = "2";
@@ -525,9 +554,9 @@ public class ActivityHistoryOrderDetail extends BaseActivity
         }
     }
 
-    String sExerShip = "", sStatus = "", sFullName = "", sPhone = "", sAddress = "", sCity = "", sDistrict = "",
+    String sTimeExerShip = "", sStatus = "", sFullName = "", sPhone = "", sAddress = "", sCity = "", sDistrict = "",
             sUsername = "", sCODE_PRODUCT = "", sAMOUNT = "", sPRICE = "", sMONEY = "", sBONUS = "",
-            sCode_Order = "", sTimeReceiver = "";
+            sCode_Order = "", sTimeReceiver = "", sNote = "";
 
     private void get_api_order() {
         if (mLisCateProduct != null && mLisCateProduct.size() > 0) {
@@ -562,9 +591,14 @@ public class ActivityHistoryOrderDetail extends BaseActivity
             sAMOUNT = sAMOUNT.substring(0, (sAMOUNT.length() - 1));
         if (sMONEY.length() > 1)
             sMONEY = sMONEY.substring(0, (sMONEY.length() - 1));
-        sExerShip = txt_time_dukien.getText().toString();
+        sTimeExerShip = txt_time_dukien.getText().toString();
+        if (edt_gopy.getText().toString().length() > 0) {
+            sNote = edt_gopy.getText().toString();
+        } else
+            sNote = "";
         showDialogLoading();
         mPresenter.api_edit_order_product(sUsername, sCODE_PRODUCT, sAMOUNT, sPRICE, sMONEY, sBONUS,
-                sFullName, sPhone, sCity, sDistrict, sAddress, sCode_Order, sStatus, "30000", sExerShip);
+                sFullName, sPhone, sCity, sDistrict, sAddress, sCode_Order, sStatus,
+                txt_ship.getText().toString().replaceAll("VND", ""), sTimeExerShip, sNote);
     }
 }

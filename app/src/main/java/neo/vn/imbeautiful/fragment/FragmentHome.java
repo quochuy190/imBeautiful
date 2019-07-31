@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -34,18 +35,21 @@ import neo.vn.imbeautiful.activity.commission.PresenterCommission;
 import neo.vn.imbeautiful.activity.login.ActivityLogin;
 import neo.vn.imbeautiful.activity.order.InterfaceOrder;
 import neo.vn.imbeautiful.activity.order.PresenterOrder;
+import neo.vn.imbeautiful.activity.products.ActivityListProduct;
 import neo.vn.imbeautiful.activity.products.ActivityProductDetail;
 import neo.vn.imbeautiful.activity.products.InterfaceProduct;
 import neo.vn.imbeautiful.activity.products.PresenterProduct;
 import neo.vn.imbeautiful.activity.tintuc.ActivityDetailNews;
 import neo.vn.imbeautiful.activity.tintuc.InterfaceTintuc;
 import neo.vn.imbeautiful.activity.tintuc.PresenterTintuc;
+import neo.vn.imbeautiful.adapter.AdapterCategoryProductHome;
 import neo.vn.imbeautiful.adapter.AdapterListProductHome;
 import neo.vn.imbeautiful.adapter.AdapterNewsHome;
 import neo.vn.imbeautiful.base.BaseFragment;
 import neo.vn.imbeautiful.callback.ClickDialog;
 import neo.vn.imbeautiful.callback.ItemClickListener;
 import neo.vn.imbeautiful.config.Constants;
+import neo.vn.imbeautiful.models.CategoryProductHome;
 import neo.vn.imbeautiful.models.ErrorApi;
 import neo.vn.imbeautiful.models.InfomationObj;
 import neo.vn.imbeautiful.models.MessageEvent;
@@ -63,7 +67,7 @@ import neo.vn.imbeautiful.untils.SharedPrefs;
 import neo.vn.imbeautiful.untils.StringUtil;
 
 public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
-        InterfaceOrder.View, InterfaceCommission.View, InterfaceTintuc.View {
+        InterfaceOrder.View, InterfaceCommission.View, InterfaceTintuc.View, SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "FragmentHome";
     public static FragmentHome fragment;
     private List<Products> mList;
@@ -90,7 +94,12 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
     TextView txt_viewall_product;
     @BindView(R.id.img_right_next_home_one)
     ImageView img_right_next_home_one;
-
+    //Khai báo list sản phẩm theo trend
+    List<CategoryProductHome> mLisProductTrend;
+    RecyclerView.LayoutManager mLayoutManagerProTrend;
+    AdapterCategoryProductHome adapterProductTrend;
+    @BindView(R.id.pull_refresh_product)
+    SwipeRefreshLayout pull_refresh_product;
 
     public static FragmentHome getInstance() {
         if (fragment == null) {
@@ -134,8 +143,10 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
         mPresenterOrder = new PresenterOrder(this);
         mPresenterCommission = new PresenterCommission(this);
         mPresenterTintuc = new PresenterTintuc(this);
+        initPulltoRefesh();
         get_all_history();
         init();
+        initProductTrend();
         initEvent();
         initData();
         initNew();
@@ -184,6 +195,39 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
         });
     }
 
+
+    private void initProductTrend() {
+        mLisProductTrend = new ArrayList<>();
+        adapterProductTrend = new AdapterCategoryProductHome(getContext(), mLisProductTrend,
+                new ItemClickListener() {
+                    @Override
+                    public void onClickItem(int position, Object item) {
+                        Intent intent = new Intent(getContext(), ActivityProductDetail.class);
+                        Products obj = (Products) item;
+                        intent.putExtra(Constants.KEY_SEND_OBJ_PRODUCTS, obj);
+                        startActivity(intent);
+                    }
+                }, false);
+        mLayoutManagerProTrend = new GridLayoutManager(getContext(), 1);
+        recycle_product.setHasFixedSize(true);
+        recycle_product.setLayoutManager(mLayoutManagerProTrend);
+        recycle_product.setItemAnimator(new DefaultItemAnimator());
+        recycle_product.setAdapter(adapterProductTrend);
+        adapterProductTrend.notifyDataSetChanged();
+        adapterProductTrend.setOnIListener(new ItemClickListener() {
+            @Override
+            public void onClickItem(int position, Object item) {
+               /* mLisShop.get(position).setHideSub(!mLisShop.get(position).isHideSub());
+                adapter.notifyDataSetChanged();*/
+                CategoryProductHome obj = (CategoryProductHome) item;
+                Intent intent = new Intent(getContext(), ActivityListProduct.class);
+                intent.putExtra(Constants.KEY_SEND_ID_PRODUCT_PARENT, obj.getID());
+                startActivity(intent);
+            }
+        });
+    }
+
+
     private String sFromDate = "", sToDate = "";
     String sUsername;
     ObjLogin mObjLogin;
@@ -203,6 +247,7 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
         sUsername = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USERNAME, String.class);
         if (sUsername != null) {
             showDialogLoading();
+            mPresenter.api_get_get_product_trend(sUsername);
             mPresenter.api_get_product_cat_detail(sUsername, "", "",
                     "1", "50");
             mPresenterTintuc.api_get_infomation(sUsername, "4", "");
@@ -423,7 +468,7 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
 
     @Override
     public void show_product_cat_detail(ResponGetProduct obj) {
-        hideDialogLoading_delay();
+      /*  hideDialogLoading_delay();
         if (obj != null && obj.getsERROR().equals("0000")) {
             mList.clear();
             mList.addAll(obj.getmList());
@@ -441,6 +486,75 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
 
                 }
             });
-        } else showAlertDialog("Thông báo", obj.getsRESULT());
+        } else showAlertDialog("Thông báo", obj.getsRESULT());*/
     }
+
+    private List<Products> mListProductNoibat = new ArrayList<>();
+    private List<Products> mListProductBanchay = new ArrayList<>();
+    private List<Products> mListProductMoi = new ArrayList<>();
+    private List<Products> mListProductKhuyenmai = new ArrayList<>();
+    private List<Products> mListProductBinhthuong = new ArrayList<>();
+
+    @Override
+    public void show_product_trend(CategoryProductHome obj) {
+        hideDialogLoading();
+        if (obj != null && obj.getsERROR().equals("0000")) {
+            if (obj.getmList() != null && obj.getmList().size() > 0) {
+                for (Products objPro : obj.getmList()) {
+                    if (objPro.getSTATUS_TREND() != null) {
+                        switch (objPro.getSTATUS_TREND()) {
+                            case "1":
+                                mListProductNoibat.add(objPro);
+                                break;
+                            case "2":
+                                mListProductBanchay.add(objPro);
+                                break;
+                            case "3":
+                                mListProductMoi.add(objPro);
+                                break;
+                            case "4":
+                                mListProductKhuyenmai.add(objPro);
+                                break;
+                            case "5":
+                                mListProductBinhthuong.add(objPro);
+                                break;
+                        }
+
+                    }
+                }
+                if (mListProductNoibat.size() > 0) {
+                    mLisProductTrend.add(new CategoryProductHome("SẢN PHẨM NỔI BẬT", mListProductNoibat));
+                }
+                if (mListProductBanchay.size() > 0) {
+                    mLisProductTrend.add(new CategoryProductHome("SẢN PHẨM BÁN CHẠY", mListProductBanchay));
+                }
+                if (mListProductMoi.size() > 0) {
+                    mLisProductTrend.add(new CategoryProductHome("SẢN PHẨM MỚI", mListProductMoi));
+                }
+                if (mListProductKhuyenmai.size() > 0) {
+                    mLisProductTrend.add(new CategoryProductHome("SẢN PHẨM KHUYẾN MẠI", mListProductKhuyenmai));
+                }
+                if (mListProductBinhthuong.size() > 0) {
+                    mLisProductTrend.add(new CategoryProductHome("SẢN PHẨM CHUNG", mListProductBinhthuong));
+                }
+            }
+        }
+        adapterProductTrend.notifyDataSetChanged();
+    }
+
+    private void initPulltoRefesh() {
+        pull_refresh_product.setOnRefreshListener(this);
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initData();
+                pull_refresh_product.setRefreshing(false);
+            }
+        }, 500);
+    }
+
 }

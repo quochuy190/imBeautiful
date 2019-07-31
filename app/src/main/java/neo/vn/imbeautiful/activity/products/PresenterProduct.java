@@ -9,6 +9,7 @@ import java.util.Map;
 
 import neo.vn.imbeautiful.apiservice_base.ApiServicePost;
 import neo.vn.imbeautiful.callback.CallbackData;
+import neo.vn.imbeautiful.models.CategoryProductHome;
 import neo.vn.imbeautiful.models.respon_api.ResponGetCat;
 import neo.vn.imbeautiful.models.respon_api.ResponGetProduct;
 import neo.vn.imbeautiful.models.respon_api.ResponSubProduct;
@@ -135,6 +136,33 @@ public class PresenterProduct implements InterfaceProduct.Presenter {
                 try {
                     ResponGetProduct obj = new Gson().fromJson(objT, ResponGetProduct.class);
                     mView.show_product_cat_detail(obj);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mView.show_error_api();
+                }
+            }
+        }, sService, mMap);
+    }
+
+    @Override
+    public void api_get_get_product_trend(String USERNAME) {
+        Map<String, String> mMap = new LinkedHashMap<>();
+        String sService = "get_product_trend";
+        mMap.put("USERNAME", USERNAME);
+
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
+            @Override
+            public void onGetDataErrorFault(Exception e) {
+                mView.show_error_api();
+                Log.i(TAG, "onGetDataErrorFault: " + e);
+            }
+
+            @Override
+            public void onGetDataSuccess(String objT) {
+                Log.i(TAG, "onGetDataSuccess: " + objT);
+                try {
+                    CategoryProductHome obj = new Gson().fromJson(objT, CategoryProductHome.class);
+                    mView.show_product_trend(obj);
                 } catch (Exception e) {
                     e.printStackTrace();
                     mView.show_error_api();

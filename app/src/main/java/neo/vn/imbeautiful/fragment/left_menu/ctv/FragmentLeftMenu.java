@@ -1,6 +1,9 @@
 package neo.vn.imbeautiful.fragment.left_menu.ctv;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +27,6 @@ import neo.vn.imbeautiful.activity.charts.ActivityReportCTVDetail;
 import neo.vn.imbeautiful.activity.collaborators.FragmentListCTV;
 import neo.vn.imbeautiful.activity.login.ActivityIntroduce;
 import neo.vn.imbeautiful.activity.login.Activity_Webview;
-import neo.vn.imbeautiful.activity.notify.ActivityNotify;
 import neo.vn.imbeautiful.activity.tintuc.ActivityListNews;
 import neo.vn.imbeautiful.adapter.AdapterLeftMenu;
 import neo.vn.imbeautiful.base.BaseFragment;
@@ -99,10 +101,10 @@ public class FragmentLeftMenu extends BaseFragment {
         mList.add(new ObjLeftMenu("Báo cáo", R.drawable.ic_left_menu_info_chart, 2));
         mList.add(new ObjLeftMenu("Chính sách", R.drawable.ic_left_menu_info_policy, 3));
         mList.add(new ObjLeftMenu("Đào tạo", R.drawable.ic_left_menu_traning, 4));
-        mList.add(new ObjLeftMenu("Tin tức sự kiện", R.drawable.ic_left_menu_notify, 5));
-        mList.add(new ObjLeftMenu("Thông báo", R.drawable.ic_left_menu_thongbao, 6));
-        mList.add(new ObjLeftMenu("Giới thiệu I'm Beautiful Shop", R.drawable.ic_left_menu_introduct, 7));
-      //  mList.add(new ObjLeftMenu("Duyệt bài", R.drawable.ic_left_menu_dyetbai, 8));
+        mList.add(new ObjLeftMenu("Giới thiệu Shop", R.drawable.ic_left_menu_introduct, 7));
+        mList.add(new ObjLeftMenu("Fanpage", R.drawable.ic_left_menu_notify, 5));
+        mList.add(new ObjLeftMenu("Cộng đồng", R.drawable.ic_left_menu_thongbao, 6));
+        //  mList.add(new ObjLeftMenu("Duyệt bài", R.drawable.ic_left_menu_dyetbai, 8));
         adapterService.notifyDataSetChanged();
     }
 
@@ -164,13 +166,14 @@ public class FragmentLeftMenu extends BaseFragment {
                 //  MainActivity.setback_toolbar();
                 break;
             case 5:
-                intent = new Intent(getActivity(), ActivityListNews.class);
+               /* intent = new Intent(getActivity(), ActivityListNews.class);
                 intent.putExtra(Constants.KEY_SEND_NEWS_TITLE, "Tin tức sự kiện");
-                intent.putExtra(Constants.KEY_SEND_NEWS_TYPE, "4");
-                //  MainActivity.setback_toolbar();
+                intent.putExtra(Constants.KEY_SEND_NEWS_TYPE, "4");*/
+                start_facebook("434513510026090");
                 break;
             case 6:
-                intent = new Intent(getActivity(), ActivityNotify.class);
+                start_facebook_group("kosocho");
+                // intent = new Intent(getActivity(), ActivityNotify.class);
                 //  MainActivity.setback_toolbar();
                 break;
           /*  case 3:
@@ -194,4 +197,39 @@ public class FragmentLeftMenu extends BaseFragment {
         MainActivity.close_drawer();
     }
 
+    private void start_facebook(String sIdPage) {
+        final String urlFb = "fb://page/" + sIdPage;
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(urlFb));
+
+        // If a Facebook app is installed, use it. Otherwise, launch
+        // a browser
+        final PackageManager packageManager = getContext().getPackageManager();
+        List<ResolveInfo> list =
+                packageManager.queryIntentActivities(intent,
+                        PackageManager.MATCH_DEFAULT_ONLY);
+        if (list.size() == 0) {
+            final String urlBrowser = "https://www.facebook.com/pages/" + sIdPage;
+            intent.setData(Uri.parse(urlBrowser));
+        }
+        startActivity(intent);
+    }
+
+    private void start_facebook_group(String id) {
+        final String urlFb = "fb://group/" + id;
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(urlFb));
+
+        // If a Facebook app is installed, use it. Otherwise, launch
+        // a browser
+        final PackageManager packageManager = getContext().getPackageManager();
+        List<ResolveInfo> list =
+                packageManager.queryIntentActivities(intent,
+                        PackageManager.MATCH_DEFAULT_ONLY);
+        if (list.size() == 0) {
+            final String urlBrowser = "https://www.facebook.com/group/" + id;
+            intent.setData(Uri.parse(urlBrowser));
+        }
+        startActivity(intent);
+    }
 }

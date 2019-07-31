@@ -218,19 +218,6 @@ public class ActivityProductDetail extends BaseActivity
                         load_image(sLink);
                 }
             }
-        } else {
-            if (mProduct.getsUrlImage() != null && mProduct.getsUrlImage().length() > 0) {
-                load_image(mProduct.getsUrlImage());
-            }
-            if (mProduct.getIMG1() != null && mProduct.getIMG1().length() > 0) {
-                load_image(mProduct.getIMG1());
-            }
-            if (mProduct.getIMG2() != null && mProduct.getIMG2().length() > 0) {
-                load_image(mProduct.getIMG2());
-            }
-            if (mProduct.getIMG3() != null && mProduct.getIMG3().length() > 0) {
-                load_image(mProduct.getIMG3());
-            }
         }
         if (mProduct.getID_PRODUCT_PROPERTIES() != null && mProduct.getID_PRODUCT_PROPERTIES().length() > 0) {
             mPresenterProperties.api_get_properties(sUserName, mProduct.getID_PRODUCT_PROPERTIES());

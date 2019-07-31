@@ -27,6 +27,7 @@ import neo.vn.imbeautiful.adapter.AdapterProducts;
 import neo.vn.imbeautiful.base.BaseFragment;
 import neo.vn.imbeautiful.callback.ItemClickListener;
 import neo.vn.imbeautiful.config.Constants;
+import neo.vn.imbeautiful.models.CategoryProductHome;
 import neo.vn.imbeautiful.models.ObjCategoryProduct;
 import neo.vn.imbeautiful.models.Products;
 import neo.vn.imbeautiful.models.respon_api.ResponGetCat;
@@ -223,6 +224,12 @@ public class FragmentListProducts extends BaseFragment implements InterfaceProdu
             }
         }
     }
+
+    @Override
+    public void show_product_trend(CategoryProductHome obj) {
+
+    }
+
 
     private void initPulltoRefesh() {
         pull_refresh_product.setOnRefreshListener(this);

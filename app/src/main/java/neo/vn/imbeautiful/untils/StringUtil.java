@@ -6,7 +6,9 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.Normalizer;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -40,6 +42,14 @@ public class StringUtil {
 
         }
     }
+
+    public static String formatInteger(String str) {
+        BigDecimal parsed = new BigDecimal(str);
+        DecimalFormat formatter =
+                new DecimalFormat("VND" + "#,###", new DecimalFormatSymbols(Locale.US));
+        return formatter.format(parsed);
+    }
+
 
     public static void onGoToAnotherInAppStore(Intent intent, String appPackageName, Context context) {
         try {
@@ -135,6 +145,7 @@ public class StringUtil {
             return "";
         number = number.replaceAll(" ", "");
         number = number.replaceAll(",", "");
+        number = number.replaceAll("\\.", "");
         if (number.matches("[0-9]+")) {
             //number = number.replaceAll(".", "");
             if (number.length() > 0) {
@@ -154,6 +165,7 @@ public class StringUtil {
             return "";
         number = number.replaceAll(" ", "");
         number = number.replaceAll(",", "");
+        number = number.replaceAll("\\.", "");
         if (number.matches("[0-9]+")) {
             //number = number.replaceAll(".", "");
             if (number.length() > 0) {

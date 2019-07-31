@@ -6,6 +6,12 @@ import java.io.Serializable;
 import java.util.List;
 
 public class CategoryProductHome implements Serializable, Comparable<CategoryProductHome> {
+    @SerializedName("ERROR")
+    private String sERROR;
+    @SerializedName("MESSAGE")
+    private String sMESSAGE;
+    @SerializedName("RESULT")
+    private String sRESULT;
     @SerializedName("ID")
     private String ID;
     @SerializedName("SUB_ID")
@@ -32,6 +38,29 @@ public class CategoryProductHome implements Serializable, Comparable<CategoryPro
         this.mList = mList;
     }
 
+    public String getsERROR() {
+        return sERROR;
+    }
+
+    public void setsERROR(String sERROR) {
+        this.sERROR = sERROR;
+    }
+
+    public String getsMESSAGE() {
+        return sMESSAGE;
+    }
+
+    public void setsMESSAGE(String sMESSAGE) {
+        this.sMESSAGE = sMESSAGE;
+    }
+
+    public String getsRESULT() {
+        return sRESULT;
+    }
+
+    public void setsRESULT(String sRESULT) {
+        this.sRESULT = sRESULT;
+    }
 
     public boolean isHideSub() {
         return isHideSub;

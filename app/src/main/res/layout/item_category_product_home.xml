@@ -17,7 +17,7 @@
         android:paddingTop="@dimen/pading_icon"
         android:paddingBottom="2dp"
         android:singleLine="true"
-        android:text="Mỹ phẩm làm sạch"
+
         android:textColor="@color/orange"
         android:textSize="@dimen/txt_user"
         app:layout_constraintEnd_toStartOf="@+id/txt_title_view_all"
@@ -46,12 +46,10 @@
         android:id="@+id/icon_down"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:src="@drawable/ic_right"
         android:tint="@color/blue_next_right"
         app:layout_constraintBottom_toBottomOf="@+id/txt_title_objservice"
-        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintDimensionRatio=".7:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/txt_title_objservice" />
 

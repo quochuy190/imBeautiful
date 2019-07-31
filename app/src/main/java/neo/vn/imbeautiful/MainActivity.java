@@ -31,13 +31,14 @@ import org.greenrobot.eventbus.ThreadMode;
 import butterknife.BindView;
 import neo.vn.imbeautiful.activity.collaborators.ActivityUpdateInfoCTV;
 import neo.vn.imbeautiful.activity.login.ActivityIntroduce;
-import neo.vn.imbeautiful.activity.login.ActivityRegister;
 import neo.vn.imbeautiful.activity.login.InterfaceLogin;
 import neo.vn.imbeautiful.activity.login.PresenterLogin;
+import neo.vn.imbeautiful.activity.notify.ActivityNotify;
 import neo.vn.imbeautiful.activity.products.ActivityCart;
 import neo.vn.imbeautiful.adapter.AdapterViewpager;
 import neo.vn.imbeautiful.base.BaseActivity;
 import neo.vn.imbeautiful.callback.ClickDialog;
+import neo.vn.imbeautiful.config.Config;
 import neo.vn.imbeautiful.config.Constants;
 import neo.vn.imbeautiful.fragment.FragmentCommissionsHome;
 import neo.vn.imbeautiful.fragment.FragmentHome;
@@ -105,9 +106,10 @@ public class MainActivity extends BaseActivity
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         initData();
         initEvent();
+        start_left_menu();
         if (App.isLoginHome) {
             loadFragmentHome();
-            start_left_menu();
+
             //  navigation.setSelectedItemId(R.id.navigation_order);
         } else {
             initLogin();
@@ -121,7 +123,7 @@ public class MainActivity extends BaseActivity
             @Override
             public void onClick(View v) {
                 ObjLogin objLogin = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USER_LOGIN, ObjLogin.class);
-                if (objLogin.getGROUPS().equals("5")){
+                if (objLogin.getGROUPS().equals("5")) {
                     Intent intent = new Intent(MainActivity.this, ActivityUpdateInfoCTV.class);
                     intent.putExtra(Constants.KEY_SEND_UPDATE_USER, true);
                     startActivity(intent);
@@ -281,9 +283,9 @@ public class MainActivity extends BaseActivity
         itemToHide = menu.findItem(R.id.action_settings);
         item_notify = menu.findItem(R.id.action_notify);
         if (mObjLogin != null && mObjLogin.getGROUPS() != null) {
-            if (mObjLogin.getGROUPS().equals("5")) {
+            if (mObjLogin.getGROUPS().equals(Config.GROUP_CONGTACVIEN)) {
                 itemToHide.setVisible(true);
-                item_notify.setVisible(false);
+                item_notify.setVisible(true);
             } else {
                 itemToHide.setVisible(false);
                 item_notify.setVisible(true);
@@ -297,9 +299,11 @@ public class MainActivity extends BaseActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if (item.getItemId() == R.id.action_settings) {
             startActivity(new Intent(MainActivity.this, ActivityCart.class));
+        }
+        if (item.getItemId() == R.id.action_notify) {
+            startActivity(new Intent(MainActivity.this, ActivityNotify.class));
         }
         return super.onOptionsItemSelected(item);
     }

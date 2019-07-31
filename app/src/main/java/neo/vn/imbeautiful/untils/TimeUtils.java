@@ -52,11 +52,11 @@ public class TimeUtils {
         DateFormat inputFormatter = new SimpleDateFormat(fomatDateinput);
         Date da = null;
         try {
-            inputFormatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+          //  inputFormatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+         //   inputFormatter.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
             da = (Date) inputFormatter.parse(sDateinput);
             DateFormat outputFormatter = new SimpleDateFormat(fomatDateoutput);
             strDateTime = outputFormatter.format(da);
-
             return strDateTime;
         } catch (ParseException e) {
             e.printStackTrace();

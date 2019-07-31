@@ -10,6 +10,21 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
+
+        <TextView
+
+            android:id="@+id/txt_guilid"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/pading_icon"
+            android:gravity="center"
+            android:text="@string/txt_guild_up_face"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/txt_11sp"
+            android:textStyle="italic"
+            app:layout_constraintStart_toEndOf="@+id/btn_share"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/btn_share"
             android:layout_width="0dp"
@@ -19,17 +34,17 @@
             android:src="@drawable/icon_up_face"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_guilid"
             app:layout_constraintWidth_percent="0.1" />
 
         <TextView
-
+            android:id="@+id/txt_update"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginLeft="@dimen/pading_icon"
             android:gravity="center_vertical"
             android:text="Up facebook nội dung này"
-            android:textColor="@color/blue_next_right"
+            android:textColor="@drawable/color_text"
             android:textSize="@dimen/txt_user"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="@+id/btn_share"
@@ -37,6 +52,8 @@
             app:layout_constraintTop_toTopOf="@+id/btn_share" />
 
         <TextView
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_15sp"
             android:id="@+id/txt_des_up_face"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

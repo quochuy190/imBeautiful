@@ -24,7 +24,7 @@ public interface InterfaceOrder {
         void api_edit_order_product(String USERNAME, String CODE_PRODUCT, String AMOUNT, String PRICE,
                                     String MONEY, String BONUS, String FULL_NAME, String MOBILE_RECEIVER,
                                     String ID_CITY, String ID_DISTRICT, String ADDRESS, String CODE_ORDER, String STATUS,
-                                    String EXTRA_SHIP, String TIME_RECEIVER);
+                                    String EXTRA_SHIP, String TIME_RECEIVER, String NOTE);
 
         void api_order_product(String USERNAME, String CODE_PRODUCT, String AMOUNT, String PRICE,
                                String MONEY, String BONUS, String FULL_NAME, String MOBILE_RECEIVER,

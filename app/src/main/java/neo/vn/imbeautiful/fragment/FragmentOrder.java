@@ -38,10 +38,12 @@ import butterknife.ButterKnife;
 import neo.vn.imbeautiful.App;
 import neo.vn.imbeautiful.R;
 import neo.vn.imbeautiful.activity.collaborators.FragmentListCTV;
+import neo.vn.imbeautiful.activity.order.ActivityHistoryOrderDetail;
 import neo.vn.imbeautiful.activity.order.InterfaceOrder;
 import neo.vn.imbeautiful.activity.order.PresenterOrder;
 import neo.vn.imbeautiful.adapter.AdapterDanhsachDathang;
 import neo.vn.imbeautiful.base.BaseFragment;
+import neo.vn.imbeautiful.callback.ItemClickListener;
 import neo.vn.imbeautiful.config.Constants;
 import neo.vn.imbeautiful.models.CustomEvent;
 import neo.vn.imbeautiful.models.ErrorApi;
@@ -235,7 +237,7 @@ public class FragmentOrder extends BaseFragment
         recycle_list_order.setLayoutManager(mLayoutManager);
         recycle_list_order.setItemAnimator(new DefaultItemAnimator());
         recycle_list_order.setAdapter(adapterService);
-       /* adapterService.setOnIListener(new ItemClickListener() {
+        adapterService.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
                 Intent intent = new Intent(getContext(), ActivityHistoryOrderDetail.class);
@@ -243,7 +245,7 @@ public class FragmentOrder extends BaseFragment
                 intent.putExtra(Constants.KEY_SAND_OBJ_ORDER, obj);
                 startActivityForResult(intent, Constants.RequestCode.GET_ADD_ORDER);
             }
-        });*/
+        });
 
         // loadmore
         recycle_list_order.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -255,26 +257,28 @@ public class FragmentOrder extends BaseFragment
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0) {
-                    GridLayoutManager layoutmanager = (GridLayoutManager) recyclerView
-                            .getLayoutManager();
-                    visibleItemCount = layoutmanager.getChildCount();
-                    totalItemCount = layoutmanager.getItemCount();
-                    pastVisiblesItems = layoutmanager.findFirstVisibleItemPosition();
-                    //Log.i(TAG, visibleItemCount + " " + totalItemCount + " " + presenter_detail_ringtunes);
-                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                        if (!isLoading) {
-                            isLoading = true;
-                            page++;
-                            mList.add(null);
-                            adapterService.notifyDataSetChanged();
-                            //  key = ed_key_search_fragment.getText().toString();
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    get_api();
-                                }
-                            }, 1000);
+                if (!isRefresh) {
+                    if (dy > 0) {
+                        GridLayoutManager layoutmanager = (GridLayoutManager) recyclerView
+                                .getLayoutManager();
+                        visibleItemCount = layoutmanager.getChildCount();
+                        totalItemCount = layoutmanager.getItemCount();
+                        pastVisiblesItems = layoutmanager.findFirstVisibleItemPosition();
+                        //Log.i(TAG, visibleItemCount + " " + totalItemCount + " " + presenter_detail_ringtunes);
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            if (!isLoading) {
+                                isLoading = true;
+                                page++;
+                                mList.add(null);
+                                adapterService.notifyDataSetChanged();
+                                //  key = ed_key_search_fragment.getText().toString();
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        get_api();
+                                    }
+                                }, 1000);
+                            }
                         }
                     }
                 }
@@ -286,12 +290,7 @@ public class FragmentOrder extends BaseFragment
     public void OnCustomEvent(CustomEvent event) {
         CustomEvent eventItem = event;
         if (eventItem.equals("0")) {
-            //  initData();
-            sFromDate = txt_date_start.getText().toString();
-            sToDate = txt_date_end.getText().toString();
-            sUserName = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USERNAME, String.class);
-            mPresenter.api_get_order_history(sUserName, sFromDate, sToDate, sUserCTV, sStatus,
-                    "" + page, "" + index);
+            get_api();
         }
     }
 
@@ -343,12 +342,13 @@ public class FragmentOrder extends BaseFragment
         if (objLogin != null && objLogin.getGROUPS() != null) {
             if (objLogin.getGROUPS().equals("5")) {
                 sStatus = "";
+                txt_item_order_status.setText("Tất cả trạng thái");
                 ll_filter_CTV.setVisibility(View.GONE);
             } else {
+                txt_item_order_status.setText("Đang xử lý");
                 sStatus = "1";
                 ll_filter_CTV.setVisibility(View.VISIBLE);
             }
-
         }
         sUserName = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USERNAME, String.class);
         mList.clear();
@@ -357,7 +357,7 @@ public class FragmentOrder extends BaseFragment
             txt_item_order_status.setText("Đang xử lý");
         }*/
 
-        txt_item_order_status.setText("Đang xử lý");
+
         showDialogLoading();
         get_api();
     }
@@ -500,11 +500,17 @@ public class FragmentOrder extends BaseFragment
         pull_refresh_product.setOnRefreshListener(this);
     }
 
+    boolean isRefresh = false;
+
     @Override
     public void onRefresh() {
+        recycle_list_order.setNestedScrollingEnabled(false);
+        isRefresh = true;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                recycle_list_order.setNestedScrollingEnabled(true);
+                isRefresh = false;
                 mList.clear();
                 page = 1;
                 get_api();

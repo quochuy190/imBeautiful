@@ -46,19 +46,29 @@ public class ActivityDetailNews extends BaseActivity {
         initData();
     }
 
+    TextView txt_title;
+
     private void initAppbar() {
         ImageView img_back = findViewById(R.id.img_back);
-        TextView txt_title = findViewById(R.id.txt_title);
+        txt_title = findViewById(R.id.txt_title);
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        txt_title.setText("Tin tức");
+
     }
 
+    String sTitle;
+
     private void initData() {
+        sTitle = getIntent().getStringExtra(Constants.KEY_SEND_NEWS_TITLE);
+        if (sTitle != null) {
+            txt_title.setText(sTitle);
+        } else {
+
+        }
         mInfo = (InfomationObj) getIntent().getSerializableExtra(Constants.KEY_SEND_NEWS_OBJ);
         if (mInfo != null) {
             if (mInfo.getTITLE() != null)

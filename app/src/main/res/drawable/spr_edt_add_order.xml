@@ -3,7 +3,7 @@
     <item android:state_pressed="false">
         <shape>
             <corners android:radius="@dimen/margin_top_fragment_order" />
-            <stroke android:width="@dimen/stoker_edt" android:color="#4CAC34" />
+            <stroke android:width="@dimen/dp1" android:color="#4CAC34" />
         </shape>
     </item>
 

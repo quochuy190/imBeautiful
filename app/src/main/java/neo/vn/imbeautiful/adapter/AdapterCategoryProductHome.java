@@ -22,15 +22,16 @@ public class AdapterCategoryProductHome extends
         RecyclerView.Adapter<AdapterCategoryProductHome.CategoryServiceViewHolder> {
     public static Context mContext;
     private List<CategoryProductHome> mLisCateService;
-
+    boolean isShowall = false;
     public static ItemClickListener onListenerItemClickObjService;
     private ItemClickListener OnIListener;
 
     public AdapterCategoryProductHome(Context context, List<CategoryProductHome> mLisCateService,
-                                      ItemClickListener onListenerItemClickObjService) {
+                                      ItemClickListener onListenerItemClickObjService, boolean isShowall) {
         this.onListenerItemClickObjService = onListenerItemClickObjService;
         mContext = context;
         this.mLisCateService = mLisCateService;
+        this.isShowall = isShowall;
     }
 
     public ItemClickListener getOnIListener() {
@@ -50,7 +51,9 @@ public class AdapterCategoryProductHome extends
 
     @Override
     public void onBindViewHolder(@NonNull final CategoryServiceViewHolder holder, final int position) {
-        if (mLisCateService.get(position).getSUB_NAME() != null)
+        if (mLisCateService.get(position).getsName() != null)
+            holder.title.setText(mLisCateService.get(position).getsName());
+        else if (mLisCateService.get(position).getSUB_NAME() != null)
             holder.title.setText(mLisCateService.get(position).getSUB_NAME());
         holder.horizontalAdapter.setData(mLisCateService.get(position).getmList()); // List of Strings
         // holder.horizontalAdapter.setRowIndex(position);
@@ -60,6 +63,13 @@ public class AdapterCategoryProductHome extends
                 OnIListener.onClickItem(position, mLisCateService.get(position));
             }
         });
+        if (isShowall) {
+            holder.txt_title_view_all.setVisibility(View.VISIBLE);
+            holder.icon_down.setVisibility(View.VISIBLE);
+        } else {
+            holder.txt_title_view_all.setVisibility(View.GONE);
+            holder.icon_down.setVisibility(View.GONE);
+        }
 
         holder.title.setOnClickListener(new View.OnClickListener() {
             @Override

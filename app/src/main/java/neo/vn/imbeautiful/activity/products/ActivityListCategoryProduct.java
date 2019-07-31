@@ -58,6 +58,7 @@ public class ActivityListCategoryProduct extends BaseActivity implements Interfa
     ImageView ic_search_appbar;
     @BindView(R.id.txt_title)
     TextView txt_title;
+
     @Override
     public int setContentViewId() {
         return R.layout.activity_list_product;
@@ -76,12 +77,14 @@ public class ActivityListCategoryProduct extends BaseActivity implements Interfa
         initEvent();
         //initDataProduct();
     }
+
     private void hide_search() {
         txt_title.setVisibility(View.VISIBLE);
         edt_search_service.setVisibility(View.GONE);
         img_search.setVisibility(View.VISIBLE);
         ic_search_appbar.setVisibility(View.GONE);
     }
+
     private void initEvent() {
 
 
@@ -130,7 +133,7 @@ public class ActivityListCategoryProduct extends BaseActivity implements Interfa
                 intent.putExtra(Constants.KEY_SEND_OBJ_PRODUCTS, obj);
                 startActivity(intent);
             }
-        });
+        }, true);
         mLayoutManagerProduct = new GridLayoutManager(this, 1);
         recycle_lis_product.setHasFixedSize(true);
         recycle_lis_product.setLayoutManager(mLayoutManagerProduct);
@@ -142,12 +145,19 @@ public class ActivityListCategoryProduct extends BaseActivity implements Interfa
             public void onClickItem(int position, Object item) {
                 CategoryProductHome obj = (CategoryProductHome) item;
                 Intent intent = new Intent(ActivityListCategoryProduct.this, ActivityListProduct.class);
+                String stitle = "";
+                if (obj.getsName() != null)
+                    stitle = obj.getsName();
+                else if (obj.getSUB_NAME() != null)
+                    stitle = obj.getSUB_NAME();
+                intent.putExtra(Constants.KEY_SEND_ID_PRODUCT_TITLE, stitle);
                 intent.putExtra(Constants.KEY_SEND_ID_PRODUCT_SUB, obj.getID());
                 intent.putExtra(Constants.KEY_SEND_ID_PRODUCT_PARENT, mCat.getIDD());
                 startActivity(intent);
             }
         });
     }
+
     @Override
     public void show_error_api() {
         hideDialogLoading();
@@ -177,6 +187,11 @@ public class ActivityListCategoryProduct extends BaseActivity implements Interfa
 
     @Override
     public void show_product_cat_detail(ResponGetProduct obj) {
+
+    }
+
+    @Override
+    public void show_product_trend(CategoryProductHome obj) {
 
     }
 }

@@ -19,6 +19,7 @@ import neo.vn.imbeautiful.callback.ILoadMore;
 import neo.vn.imbeautiful.callback.ItemClickListener;
 import neo.vn.imbeautiful.models.ObjOrder;
 import neo.vn.imbeautiful.untils.StringUtil;
+import neo.vn.imbeautiful.untils.TimeUtils;
 
 
 /**
@@ -65,7 +66,8 @@ public class AdapterListOrderHome extends RecyclerView.Adapter<AdapterListOrderH
             else
                 holder.txt_name_CTV.setText("...");
             if (obj.getCREATE_DATE() != null && obj.getCREATE_DATE().length() > 0)
-                holder.txt_time_start_order.setText(obj.getCREATE_DATE());
+                holder.txt_time_start_order.setText(TimeUtils.convent_date(obj.getCREATE_DATE(),
+                        "dd/MM/yyyy HH:mm:ss", "dd/MM/yyyy HH:mm"));
             else
                 holder.txt_time_start_order.setText("...");
             if (obj.getSTATUS() != null) {

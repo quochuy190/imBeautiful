@@ -56,11 +56,11 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.TopicV
         Products obj = mList.get(position);
         if (obj != null) {
             if (obj.getsName() != null && obj.getsName().length() > 0)
-                holder.txt_name.setText(Html.fromHtml(StringUtil.convert_html(obj.getsName().toLowerCase())));
+                holder.txt_name.setText(obj.getsName());
             else
                 holder.txt_name.setText("...");
             if (obj != null && obj.getsPrice().length() > 0)
-                holder.txt_prime.setText(StringUtil.conventMonney(obj.getsPrice()));
+                holder.txt_prime.setText("Giá: "+StringUtil.conventMonney_Long(obj.getsPrice()));
             else
                 holder.txt_prime.setText("...");
             Glide.with(context).load(obj.getsUrlImage()).into(holder.img_product);

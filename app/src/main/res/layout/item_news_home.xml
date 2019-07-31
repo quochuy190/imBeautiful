@@ -9,55 +9,57 @@
     android:padding="@dimen/pading_icon">
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Đào tạo bán hàng"
         android:textColor="@color/txt_introduce"
         android:textSize="@dimen/txt_user"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/img_right_next_home_one"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/img_right_next_home_one" />
 
     <TextView
-        android:layout_marginEnd="3dp"
-        android:textStyle="italic"
         android:id="@+id/txt_xemthem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="3dp"
         android:text="Xem thêm"
         android:textColor="@color/blue_click"
         android:textSize="@dimen/txt_13sp"
-        app:layout_constraintBottom_toBottomOf="@+id/img_right_next_home_one"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/img_right_next_home_one" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_content" />
 
 
     <ImageView
-        android:layout_margin="@dimen/dp1"
+        android:scaleType="centerCrop"
         android:id="@+id/img_news_home"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="@dimen/dp1"
+        android:adjustViewBounds="true"
         android:background="@drawable/spr_bg_item_product_home"
         android:padding="1dp"
         android:src="@drawable/img_defaul"
-        app:layout_constraintDimensionRatio="1.2:1"
+        app:layout_constraintDimensionRatio="1.1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.28" />
 
     <TextView
-        android:textStyle="bold"
         android:id="@+id/txt_tieude"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/pading_icon"
+        android:maxLines="2"
+        android:minLines="2"
         android:padding="1dp"
-        android:text="Tiêu đề bài viết"
         android:textColor="@color/black"
-        android:textSize="@dimen/txt_14sp"
-        app:layout_constraintEnd_toStartOf="@+id/txt_xemthem"
+        android:textSize="@dimen/txt_13sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/img_news_home"
         app:layout_constraintTop_toTopOf="@id/img_news_home" />
 
@@ -67,12 +69,10 @@
         android:layout_height="0dp"
         android:layout_marginLeft="@dimen/pading_icon"
         android:layout_marginBottom="8dp"
-        android:maxLines="4"
-        android:minLines="4"
+        android:maxLines="3"
         android:padding="2dp"
-        android:text="Motherland Argan oil Moringa oil Repair moisture Conditioner"
         android:textColor="@color/black"
-        android:textSize="@dimen/txt_14sp"
+        android:textSize="@dimen/txt_13sp"
         app:layout_constraintBottom_toBottomOf="@+id/img_news_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/img_news_home"

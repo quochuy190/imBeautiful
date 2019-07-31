@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -165,9 +164,14 @@ public class FragmentProduct extends BaseFragment implements InterfaceProduct.Vi
         adapterCategory = new AdapterCategoryProduct(getContext(), mLisShop, new OnListenerItemClickObjService() {
             @Override
             public void onClickListener(ObjCategoryProduct item) {
-
                 Intent intent = new Intent(getContext(), ActivityListProduct.class);
                 ObjCategoryProduct obj = (ObjCategoryProduct) item;
+                String stitle = "";
+                if (obj.getsName() != null)
+                    stitle = obj.getsName();
+                else if (obj.getSUB_NAME() != null)
+                    stitle = obj.getSUB_NAME();
+                intent.putExtra(Constants.KEY_SEND_ID_PRODUCT_TITLE, stitle);
                 intent.putExtra(Constants.KEY_SEND_OBJ_CATEGORY_SUB, obj);
                 startActivity(intent);
                 show_category();
@@ -208,14 +212,14 @@ public class FragmentProduct extends BaseFragment implements InterfaceProduct.Vi
         mLisCateProduct = new ArrayList<>();
         adapterProduct = new AdapterCategoryProductHome(getContext(), mLisCateProduct,
                 new ItemClickListener() {
-            @Override
-            public void onClickItem(int position, Object item) {
-                Intent intent = new Intent(getContext(), ActivityProductDetail.class);
-                Products obj = (Products) item;
-                intent.putExtra(Constants.KEY_SEND_OBJ_PRODUCTS, obj);
-                startActivity(intent);
-            }
-        });
+                    @Override
+                    public void onClickItem(int position, Object item) {
+                        Intent intent = new Intent(getContext(), ActivityProductDetail.class);
+                        Products obj = (Products) item;
+                        intent.putExtra(Constants.KEY_SEND_OBJ_PRODUCTS, obj);
+                        startActivity(intent);
+                    }
+                }, true);
         mLayoutManagerProduct = new GridLayoutManager(getContext(), 1);
         recycle_lis_product.setHasFixedSize(true);
         recycle_lis_product.setLayoutManager(mLayoutManagerProduct);
@@ -228,7 +232,13 @@ public class FragmentProduct extends BaseFragment implements InterfaceProduct.Vi
                /* mLisShop.get(position).setHideSub(!mLisShop.get(position).isHideSub());
                 adapter.notifyDataSetChanged();*/
                 CategoryProductHome obj = (CategoryProductHome) item;
+                String stitle = "";
+                if (obj.getsName() != null)
+                    stitle = obj.getsName();
+                else if (obj.getSUB_NAME() != null)
+                    stitle = obj.getSUB_NAME();
                 Intent intent = new Intent(getContext(), ActivityListProduct.class);
+                intent.putExtra(Constants.KEY_SEND_ID_PRODUCT_TITLE, stitle);
                 intent.putExtra(Constants.KEY_SEND_ID_PRODUCT_PARENT, obj.getID());
                 startActivity(intent);
             }
@@ -273,4 +283,10 @@ public class FragmentProduct extends BaseFragment implements InterfaceProduct.Vi
     public void show_product_cat_detail(ResponGetProduct obj) {
 
     }
+
+    @Override
+    public void show_product_trend(CategoryProductHome obj) {
+
+    }
+
 }

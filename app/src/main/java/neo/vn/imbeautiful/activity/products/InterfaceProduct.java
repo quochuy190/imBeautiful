@@ -1,5 +1,6 @@
 package neo.vn.imbeautiful.activity.products;
 
+import neo.vn.imbeautiful.models.CategoryProductHome;
 import neo.vn.imbeautiful.models.respon_api.ResponGetCat;
 import neo.vn.imbeautiful.models.respon_api.ResponGetProduct;
 import neo.vn.imbeautiful.models.respon_api.ResponSubProduct;
@@ -21,6 +22,7 @@ public interface InterfaceProduct {
 
         void api_get_product_cat_detail(String USERNAME, String SUB_ID_PARENT, String SUB_ID,
                                         String PAGE, String NUMOFPAGE);
+        void api_get_get_product_trend(String USERNAME);
     }
 
     interface View {
@@ -33,5 +35,7 @@ public interface InterfaceProduct {
         void show_product_sub_product_child(ResponSubProduct obj);
 
         void show_product_cat_detail(ResponGetProduct obj);
+
+        void show_product_trend(CategoryProductHome obj);
     }
 }

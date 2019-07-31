@@ -77,6 +77,7 @@ public class PresenterOrder implements InterfaceOrder.Presenter {
                 mView.show_error_api();
                 Log.i(TAG, "onGetDataErrorFault: " + e);
             }
+
             @Override
             public void onGetDataSuccess(String objT) {
                 Log.i(TAG, "onGetDataSuccess: " + objT);
@@ -123,7 +124,7 @@ public class PresenterOrder implements InterfaceOrder.Presenter {
     public void api_edit_order_product(String USERNAME, String CODE_PRODUCT, String AMOUNT, String PRICE,
                                        String MONEY, String BONUS, String FULL_NAME, String MOBILE_RECEIVER,
                                        String ID_CITY, String ID_DISTRICT, String ADDRESS, String CODE_ORDER,
-                                       String STATUS, String EXTRA_SHIP, String TIME_RECEIVER) {
+                                       String STATUS, String EXTRA_SHIP, String TIME_RECEIVER, String NOTE) {
         Map<String, String> mMap = new LinkedHashMap<>();
         String sService = "edit_order_product";
         mMap.put("USERNAME", USERNAME);
@@ -141,6 +142,7 @@ public class PresenterOrder implements InterfaceOrder.Presenter {
         mMap.put("STATUS", STATUS);
         mMap.put("EXTRA_SHIP", EXTRA_SHIP);
         mMap.put("TIME_RECEIVER", TIME_RECEIVER);
+        mMap.put("NOTE", NOTE);
 
         mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override

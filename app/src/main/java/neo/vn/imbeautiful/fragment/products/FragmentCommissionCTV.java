@@ -1,5 +1,6 @@
 package neo.vn.imbeautiful.fragment.products;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -208,6 +209,7 @@ public class FragmentCommissionCTV extends BaseFragment implements InterfaceComm
 
     };
 
+    @SuppressLint("WrongConstant")
     private void init() {
         mList = new ArrayList<>();
         adapterService = new AdapterHistoryCommissions(mList, getContext());

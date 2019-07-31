@@ -24,6 +24,7 @@ import neo.vn.imbeautiful.adapter.AdapterProducts;
 import neo.vn.imbeautiful.base.BaseActivity;
 import neo.vn.imbeautiful.callback.ItemClickListener;
 import neo.vn.imbeautiful.config.Constants;
+import neo.vn.imbeautiful.models.CategoryProductHome;
 import neo.vn.imbeautiful.models.ObjCategoryProduct;
 import neo.vn.imbeautiful.models.Products;
 import neo.vn.imbeautiful.models.respon_api.ResponGetCat;
@@ -159,9 +160,14 @@ public class ActivityListProduct extends BaseActivity implements InterfaceProduc
 
     }
 
-    String sIdParent = null, sSubid = "";
+    String sIdParent = null, sSubid = "", sTitle = "";
 
     private void initData() {
+        sTitle = getIntent().getStringExtra(Constants.KEY_SEND_ID_PRODUCT_TITLE);
+        if (sTitle != null) {
+            txt_title.setText(sTitle);
+        } else
+            txt_title.setText("Danh sách sản phẩm");
         sIdParent = getIntent().getStringExtra(Constants.KEY_SEND_ID_PRODUCT_PARENT);
         sSubid = getIntent().getStringExtra(Constants.KEY_SEND_ID_PRODUCT_SUB);
         sUser = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USERNAME, String.class);
@@ -180,7 +186,11 @@ public class ActivityListProduct extends BaseActivity implements InterfaceProduc
             mCat = (ObjCategoryProduct) getIntent().getSerializableExtra(Constants.KEY_SEND_OBJ_CATEGORY_SUB);
             if (mCat != null) {
                 showDialogLoading();
-                txt_title.setText(mCat.getsName());
+                if (mCat.getsName() != null)
+                    txt_title.setText(mCat.getsName());
+                else if (mCat.getSUB_NAME() != null)
+                    txt_title.setText(mCat.getSUB_NAME());
+                else txt_title.setText("Danh sách đơn hàng");
                 sIdParent = mCat.getSUB_ID_PARENT();
                 sSubid = mCat.getSUB_ID();
                 mPresenter.api_get_product_cat_detail(sUser, sIdParent, sSubid,
@@ -307,9 +317,15 @@ public class ActivityListProduct extends BaseActivity implements InterfaceProduc
                     adapterProduct.notifyDataSetChanged();
                 }
             } else {
-                showAlertDialog("Thông báo", obj.getsRESULT());
+                if (page == 1)
+                    showAlertDialog("Thông báo", obj.getsRESULT());
             }
         }
+    }
+
+    @Override
+    public void show_product_trend(CategoryProductHome obj) {
+
     }
 
     private void initPulltoRefesh() {

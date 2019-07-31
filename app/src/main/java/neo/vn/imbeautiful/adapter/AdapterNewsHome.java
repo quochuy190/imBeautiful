@@ -73,8 +73,8 @@ public class AdapterNewsHome extends RecyclerView.Adapter<AdapterNewsHome.TopicV
         if (obj.getTITLE() != null) {
             holder.txt_tieude.setText(obj.getTITLE());
         }
-        if (obj.getDESCRIPTION() != null) {
-            holder.txt_content.setText(Html.fromHtml(obj.getDESCRIPTION()));
+        if (obj.getCONTENT() != null) {
+            holder.txt_content.setText(Html.fromHtml(obj.getCONTENT()));
         }
 
     }

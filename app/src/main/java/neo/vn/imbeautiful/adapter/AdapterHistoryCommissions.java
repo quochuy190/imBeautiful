@@ -1,11 +1,13 @@
 package neo.vn.imbeautiful.adapter;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
@@ -60,18 +62,27 @@ public class AdapterHistoryCommissions extends RecyclerView.Adapter<AdapterHisto
             holder.txt_user_hh_item.setBackgroundResource(R.color.green_holde_2_table);
             holder.txt_total_hh.setBackgroundResource(R.color.green_holde_2_table);
         }
-        if (obj.getUPDATE_TIME() != null && obj.getUPDATE_TIME().length() > 0)
-            holder.txt_name_hh_item.setText(TimeUtils.convent_date(obj.getUPDATE_TIME(),
-                    "HH:mm:ss dd/MM/yyyy", "dd/MM/yyyy HH:mm"));
+        if (obj.getUPDATE_TIME() != null && obj.getUPDATE_TIME().length() > 0) {
+            String sTime = TimeUtils.convent_date(obj.getUPDATE_TIME(),
+                    "dd/MM/yyyy HH:mm:ss", "dd/MM/yyyy HH:mm");
+            String sComment = "<i>" + sTime + "</i><br></br>" + obj.getCOMMENTS();
+            holder.txt_name_hh_item.setText(Html.fromHtml(sComment));
+        }
+     /*   holder.txt_name_hh_item.setText(TimeUtils.convent_date(obj.getUPDATE_TIME(),
+                "dd/MM/yyyy HH:mm:ss", "dd/MM/yyyy HH:mm") + "\n"
+                + obj.getCOMMENTS()
+        );*/
         if (obj.getTRANSACTION_TYPE() != null) {
             if (obj.getTRANSACTION_TYPE().equals("1")) {
                 if (obj.getAMOUNT() != null && obj.getAMOUNT().length() > 0) {
-                    holder.txt_user_hh_item.setText("+" + StringUtil.conventMonney(obj.getAMOUNT()));
-                    holder.txt_total_hh.setText("");
+                    holder.txt_total_hh.setText("+" + StringUtil.conventMonney_Long(obj.getAMOUNT()));
+                    holder.txt_total_hh.setTextColor(context.getResources().getColor(R.color.blue_next_right));
+                  //  holder.txt_total_hh.setText("");
                 }
             } else if (obj.getAMOUNT() != null && obj.getAMOUNT().length() > 0) {
-                holder.txt_total_hh.setText("- " + StringUtil.conventMonney(obj.getAMOUNT()));
-                holder.txt_user_hh_item.setText("");
+                holder.txt_total_hh.setText("- " + StringUtil.conventMonney_Long(obj.getAMOUNT()));
+                holder.txt_total_hh.setTextColor(context.getResources().getColor(R.color.red));
+              //  holder.txt_user_hh_item.setText("");
             }
 
         }

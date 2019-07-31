@@ -62,11 +62,11 @@ public class AdapterProductInHistoryOrder extends RecyclerView.Adapter<AdapterPr
                 holder.txt_minus_num.setVisibility(View.GONE);
             }
             if (obj.getsName() != null && obj.getsName().length() > 0)
-                holder.txt_name.setText(obj.getsName().toLowerCase());
+                holder.txt_name.setText(obj.getsName());
             else
                 holder.txt_name.setText("...");
             if (obj != null && obj.getsPrice().length() > 0)
-                holder.txt_total_price.setText(StringUtil.conventMonney(obj.getMONEY()));
+                holder.txt_total_price.setText(StringUtil.conventMonney_Long(obj.getMONEY()));
             else
                 holder.txt_total_price.setText("...");
             if (obj.getNUM() != null && obj.getNUM().length() > 0) {

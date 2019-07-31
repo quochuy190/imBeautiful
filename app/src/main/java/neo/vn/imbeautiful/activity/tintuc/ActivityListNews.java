@@ -15,13 +15,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import neo.vn.imbeautiful.R;
-import neo.vn.imbeautiful.activity.products.ActivityProductDetail;
 import neo.vn.imbeautiful.adapter.AdapterNewsHome;
 import neo.vn.imbeautiful.base.BaseActivity;
 import neo.vn.imbeautiful.callback.ItemClickListener;
 import neo.vn.imbeautiful.config.Constants;
 import neo.vn.imbeautiful.models.InfomationObj;
-import neo.vn.imbeautiful.models.Products;
 import neo.vn.imbeautiful.models.respon_api.ResponseInfomation;
 import neo.vn.imbeautiful.untils.SharedPrefs;
 
@@ -73,13 +71,12 @@ public class ActivityListNews extends BaseActivity implements InterfaceTintuc.Vi
     String sUser;
 
     private void initData() {
-
         sTitle = getIntent().getStringExtra(Constants.KEY_SEND_NEWS_TITLE);
         sType = getIntent().getStringExtra(Constants.KEY_SEND_NEWS_TYPE);
         sUser = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USERNAME, String.class);
         if (sType != null && sType.length() > 0) {
             showDialogLoading();
-            mPresenter.api_get_infomation(sUser, sType, "" );
+            mPresenter.api_get_infomation(sUser, sType, "");
         }
 
 
@@ -100,6 +97,7 @@ public class ActivityListNews extends BaseActivity implements InterfaceTintuc.Vi
             public void onClickItem(int position, Object item) {
                 InfomationObj obj = (InfomationObj) item;
                 Intent intent = new Intent(ActivityListNews.this, ActivityDetailNews.class);
+                intent.putExtra(Constants.KEY_SEND_NEWS_TITLE, sTitle);
                 intent.putExtra(Constants.KEY_SEND_NEWS_OBJ, obj);
                 startActivity(intent);
             }

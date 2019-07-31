@@ -9,4 +9,16 @@ package neo.vn.imbeautiful.config;
  */
 public class Config {
     public static String BASE_URL_API = "http://node.f5sell.com";
+
+    public static String STATUS_ORDER_DANGXULY = "1";
+    public static String STATUS_ORDER_DATIEPNHAN = "2";
+    public static String STATUS_ORDER_DANGVANCHUYEN = "3";
+    public static String STATUS_ORDER_DAHOANTHANH = "0";
+    public static String STATUS_ORDER_DAHUY = "4";
+
+    public static String GROUP_ADMIN = "0";
+    public static String GROUP_SHOP = "3";
+    public static String GROUP_QUANLY = "4";
+    public static String GROUP_CONGTACVIEN = "5";
+    public static String GROUP_BIENTAPVIEN = "6";
 }

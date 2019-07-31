@@ -18,18 +18,21 @@
         app:layout_constraintWidth_percent="0.1" />
 
     <TextView
+        android:id="@+id/txt_share_affiliate"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginLeft="@dimen/pading_icon"
         android:gravity="center_vertical"
         android:text="Chia sẻ liên kết này"
-        android:textColor="@color/blue_next_right"
+        android:textColor="@drawable/color_text"
         android:textSize="@dimen/txt_user"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/btn_share_content"
         app:layout_constraintStart_toEndOf="@+id/btn_share_content"
         app:layout_constraintTop_toTopOf="@+id/btn_share_content" />
     <TextView
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_15sp"
         android:id="@+id/txt_affiliate"
         android:layout_marginLeft="@dimen/pading_icon"
         android:layout_width="0dp"
@@ -40,12 +43,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_share_content" />
 
+    <TextView
+        android:layout_marginEnd="@dimen/pading_icon"
+        android:id="@+id/txt_coppy_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/stoker_edt"
+        android:text="Coppy link"
+        android:textColor="@drawable/color_text"
+        android:textSize="@dimen/txt_15sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_affiliate" />
 
     <WebView
         android:layout_marginTop="@dimen/stoker_edt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_affiliate"
+        app:layout_constraintTop_toBottomOf="@+id/txt_coppy_link"
         android:id="@+id/webview_detail_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

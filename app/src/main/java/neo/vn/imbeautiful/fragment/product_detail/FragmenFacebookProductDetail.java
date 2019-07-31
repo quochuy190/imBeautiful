@@ -3,6 +3,7 @@ package neo.vn.imbeautiful.fragment.product_detail;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -16,12 +17,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareContent;
 import com.facebook.share.model.ShareMedia;
 import com.facebook.share.model.ShareMediaContent;
@@ -40,7 +46,10 @@ import neo.vn.imbeautiful.App;
 import neo.vn.imbeautiful.R;
 import neo.vn.imbeautiful.activity.products.ActivityProductDetail;
 import neo.vn.imbeautiful.base.BaseFragment;
+import neo.vn.imbeautiful.config.Constants;
+import neo.vn.imbeautiful.models.ObjLogin;
 import neo.vn.imbeautiful.models.Products;
+import neo.vn.imbeautiful.untils.SharedPrefs;
 
 import static neo.vn.imbeautiful.activity.products.ActivityProductDetail.mLisIma;
 
@@ -57,7 +66,8 @@ public class FragmenFacebookProductDetail extends BaseFragment {
     @BindView(R.id.btn_share)
     ImageView btn_share;
     @BindView(R.id.txt_des_up_face)
-    TextView txt_des_up_face;
+    TextView txt_des_up_face;    @BindView(R.id.txt_update)
+    TextView txt_update;
 
     @BindView(R.id.img_facebook_1)
     ImageView img_facebook_1;
@@ -89,6 +99,7 @@ public class FragmenFacebookProductDetail extends BaseFragment {
         ButterKnife.bind(this, view);
         initData();
         get_hash();
+        FacebookSdk.sdkInitialize(getContext());
         initFacebook();
         initEvent();
         return view;
@@ -151,8 +162,6 @@ public class FragmenFacebookProductDetail extends BaseFragment {
             } else {
                 txt_des_up_face.setText("Mô tả: ...");
             }
-
-
             if (mList.size() == 0)
                 mList.add("abc");
         }
@@ -204,12 +213,14 @@ public class FragmenFacebookProductDetail extends BaseFragment {
     }
 
     private void initEvent() {
-
-        txt_des_up_face.setOnClickListener(new View.OnClickListener() {
+        txt_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ObjLogin objLogin = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USER_LOGIN, ObjLogin.class);
+                String sString = txt_des_up_face.getText().toString() + "\n" + "Tư vấn bán hàng: " + objLogin.getUSERNAME();
                 ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("imBeautiful", txt_des_up_face.getText().toString());
+                ClipData clip = ClipData.newPlainText("imBeautiful",
+                        sString);
                 clipboard.setPrimaryClip(clip);
                 share_multil_image();
             }
@@ -217,8 +228,11 @@ public class FragmenFacebookProductDetail extends BaseFragment {
         btn_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ObjLogin objLogin = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USER_LOGIN, ObjLogin.class);
+                String sString = txt_des_up_face.getText().toString() + "\n" + "Tư vấn bán hàng: " + objLogin.getUSERNAME();
                 ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("imBeautiful", txt_des_up_face.getText().toString());
+                ClipData clip = ClipData.newPlainText("imBeautiful",
+                        sString);
                 clipboard.setPrimaryClip(clip);
                 share_multil_image();
             }
@@ -233,6 +247,27 @@ public class FragmenFacebookProductDetail extends BaseFragment {
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
         //  MessageDialog.show(this, getContext());
+        shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+            @Override
+            public void onSuccess(Sharer.Result result) {
+                // This doesn't work
+                hideDialogLoading();
+                Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancel() {
+                hideDialogLoading();
+                Toast.makeText(getContext(), "You Cancel", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+                // This doesn't work
+                hideDialogLoading();
+                e.printStackTrace();
+            }
+        });
     }
 
     public void share_multil_image() {
@@ -309,7 +344,15 @@ public class FragmenFacebookProductDetail extends BaseFragment {
                     .addMedium(shareVideo2)
                     .build();
         }
+        showDialogLoading();
         shareDialog.show(shareContent, ShareDialog.Mode.AUTOMATIC);
+
         //ShareDialog.show(this, content);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -46,11 +46,21 @@ public class ObjCommissions implements Serializable {
     String EMAIL;
     @SerializedName("AMOUNT")
     private String AMOUNT;
+    @SerializedName("COMMENTS")
+    private String COMMENTS;
 
     public ObjCommissions(String NAMECTV, String MA_CTV, String TOTAL_HH) {
         this.NAMECTV = NAMECTV;
         this.MA_CTV = MA_CTV;
         this.TOTAL_HH = TOTAL_HH;
+    }
+
+    public String getCOMMENTS() {
+        return COMMENTS;
+    }
+
+    public void setCOMMENTS(String COMMENTS) {
+        this.COMMENTS = COMMENTS;
     }
 
     public String getTRANSACTION_TYPE() {
@@ -77,6 +87,7 @@ public class ObjCommissions implements Serializable {
     public void setAMOUNT(String AMOUNT) {
         this.AMOUNT = AMOUNT;
     }
+
     public String getMOBILE() {
         return MOBILE;
     }

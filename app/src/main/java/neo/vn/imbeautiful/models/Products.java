@@ -61,6 +61,8 @@ public class Products implements Serializable {
     String LINK_AFFILIATE;
     @SerializedName("DESCRIPTION_HTML")
     String DESCRIPTION_HTML;
+    @SerializedName("STATUS_TREND")
+    String STATUS_TREND;
 
     private boolean isVisibleDelete;
     private boolean isVisibleButtonAdd;
@@ -69,6 +71,14 @@ public class Products implements Serializable {
         this.sName = sName;
         this.sPrice = sPrice;
         this.sUrlImage = sUrlImage;
+    }
+
+    public String getSTATUS_TREND() {
+        return STATUS_TREND;
+    }
+
+    public void setSTATUS_TREND(String STATUS_TREND) {
+        this.STATUS_TREND = STATUS_TREND;
     }
 
     public boolean isVisibleButtonAdd() {
