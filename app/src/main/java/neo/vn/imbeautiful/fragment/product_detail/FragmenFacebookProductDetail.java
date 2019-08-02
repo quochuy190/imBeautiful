@@ -1,5 +1,7 @@
 package neo.vn.imbeautiful.fragment.product_detail;
 
+import android.Manifest;
+import android.app.DownloadManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -8,7 +10,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.PowerManager;
@@ -25,6 +29,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
 import com.facebook.CallbackManager;
@@ -39,14 +44,7 @@ import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.ShareVideo;
 import com.facebook.share.widget.ShareDialog;
 
-import java.io.BufferedInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
+import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -55,6 +53,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import neo.vn.imbeautiful.App;
+import neo.vn.imbeautiful.BuildConfig;
 import neo.vn.imbeautiful.R;
 import neo.vn.imbeautiful.activity.products.ActivityProductDetail;
 import neo.vn.imbeautiful.base.BaseFragment;
@@ -96,7 +95,6 @@ public class FragmenFacebookProductDetail extends BaseFragment {
     Button btn_download;
     private Products mProduct;
     private List<String> mList;
-    private static String url = "https://3.bp.blogspot.com/-EFwVj5ztKtQ/V8Qs6Viyl6I/AAAAAAAADWs/031SPYFrUnM-wreztTT4fgPe1yQj3LFhgCPcB/s1600/developer.jpg";
 
     public static FragmenFacebookProductDetail getInstance() {
         if (fragment == null) {
@@ -113,6 +111,7 @@ public class FragmenFacebookProductDetail extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_facebook_product_detail, container, false);
         ButterKnife.bind(this, view);
+        btn_download.setEnabled(true);
         initData();
         get_hash();
         FacebookSdk.sdkInitialize(getContext());
@@ -229,11 +228,57 @@ public class FragmenFacebookProductDetail extends BaseFragment {
         }
     }
 
+    private static boolean hasPermissions(Context context, String... permissions) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void checkDiskPermission() {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getContext(), "No Permissions", Toast.LENGTH_LONG).show();
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    101);
+        } else {
+            start_download_media();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 101:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    start_download_media();
+                    Toast.makeText(getContext(), "Permission given",
+                            Toast.LENGTH_SHORT).show();
+                    //saveImage(finalBitmap, image_name); <- or whatever you want to do after permission was given . For instance, open gallery or something
+                } else {
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions,
+                        grantResults);
+        }
+    }
+
     private void initEvent() {
         btn_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DownloadTask().execute(url);
+                checkDiskPermission();
             }
         });
         txt_update.setOnClickListener(new View.OnClickListener() {
@@ -387,81 +432,96 @@ public class FragmenFacebookProductDetail extends BaseFragment {
 
         @Override
         protected String doInBackground(String... sUrl) {
-            InputStream input = null;
-            OutputStream output = null;
-            HttpURLConnection connection = null;
-            try {
-                URL url = new URL(sUrl[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-
-                // expect HTTP 200 OK, so we don't mistakenly save error report
-                // instead of the file
-                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                    return "Server returned HTTP " + connection.getResponseCode()
-                            + " " + connection.getResponseMessage();
-                }
-
-                // this will be useful to display download percentage
-                // might be -1: server did not report the length
-                int fileLength = connection.getContentLength();
-
-                // download the file
-                input = connection.getInputStream();
-                output = new FileOutputStream(Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_PICTURES) + "pics " + System.currentTimeMillis() + ".png");
-
-                byte data[] = new byte[4096];
-                long total = 0;
-                int count;
-                while ((count = input.read(data)) != -1) {
-                    // allow canceling with back button
-                    if (isCancelled()) {
-                        input.close();
-                        return null;
-                    }
-                    total += count;
-                    // publishing the progress....
-                    if (fileLength > 0) // only if total length is known
-                        publishProgress((int) (total * 100 / fileLength));
-                    output.write(data, 0, count);
-                }
-            } catch (Exception e) {
-                return e.toString();
-            } finally {
-                try {
-                    if (output != null)
-                        output.close();
-                    if (input != null)
-                        input.close();
-                } catch (IOException ignored) {
-                }
-
-                if (connection != null)
-                    connection.disconnect();
-            }
+            download_all(sUrl[0]);
             return null;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            // take CPU lock to prevent CPU from going off if the user
-            // presses the power button during download
-           /* PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-            mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                    getClass().getName());
-            mWakeLock.acquire();*/
-           // mProgressDialog.show();
+
         }
 
 
         @Override
         protected void onPostExecute(String result) {
-          //  mWakeLock.release();
+            //  mWakeLock.release();
             //mProgressDialog.dismiss();
         }
     }
 
+    public void start_download_media() {
+        if (mProduct.getMEDIA_FB() != null && mProduct.getMEDIA_FB().length() > 0) {
+            String[] arrayImage = mProduct.getMEDIA_FB().split("\\|\\|");
+            if (arrayImage.length > 0) {
+                for (String sLink : arrayImage) {
+                    if (sLink != null && sLink.length() > 0)
+                        //  new DownloadTask().execute(sLink);
+                        download_all(sLink);
+                }
+            }
+        }
+        if (mProduct.getVIDEO_FB() != null && mProduct.getVIDEO_FB().length() > 0) {
+            download_video(mProduct.getVIDEO_FB());
+        }
+    }
+
+    public void download_all(String sUrl) {
+        btn_download.setEnabled(false);
+        Toast.makeText(getContext(), "Bắt đầu tải ảnh về máy", Toast.LENGTH_SHORT).show();
+        String filename = "filename.jpg";
+        String downloadUrlOfImage = sUrl;
+        File direct =
+                new File(Environment
+                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                        .getAbsolutePath() + BuildConfig.APPLICATION_ID + "/");
+
+
+        if (!direct.exists()) {
+            direct.mkdir();
+            //     Log.d(LOG_TAG, "dir created for first time");
+        }
+        DownloadManager dm = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri downloadUri = Uri.parse(downloadUrlOfImage);
+        DownloadManager.Request request = new DownloadManager.Request(downloadUri);
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
+                .setAllowedOverRoaming(false)
+                .setTitle(filename)
+                .setMimeType("image/jpeg")
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES,
+                        File.separator + BuildConfig.APPLICATION_ID + File.separator + filename);
+
+        dm.enqueue(request);
+    }
+
+    public void download_video(String sUrl) {
+        btn_download.setEnabled(false);
+        Toast.makeText(getContext(), "Bắt đầu tải ảnh về máy", Toast.LENGTH_SHORT).show();
+        String filename = "filename.mp4";
+        String downloadUrlOfImage = sUrl;
+        File direct =
+                new File(Environment
+                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                        .getAbsolutePath() + "/" + BuildConfig.APPLICATION_ID + "/");
+
+
+        if (!direct.exists()) {
+            direct.mkdir();
+            //     Log.d(LOG_TAG, "dir created for first time");
+        }
+        DownloadManager dm = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri downloadUri = Uri.parse(downloadUrlOfImage);
+        DownloadManager.Request request = new DownloadManager.Request(downloadUri);
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
+                .setAllowedOverRoaming(false)
+                .setTitle(filename)
+                .setMimeType("video/mp4")
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES,
+                        File.separator + BuildConfig.APPLICATION_ID + File.separator + filename);
+
+        dm.enqueue(request);
+    }
 
 }
