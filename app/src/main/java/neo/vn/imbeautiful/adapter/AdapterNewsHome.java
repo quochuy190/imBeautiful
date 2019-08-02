@@ -71,7 +71,7 @@ public class AdapterNewsHome extends RecyclerView.Adapter<AdapterNewsHome.TopicV
             Glide.with(context).load(R.drawable.img_defaul).into(holder.img_news_home);
         }
         if (obj.getTITLE() != null) {
-            holder.txt_tieude.setText(obj.getTITLE());
+            holder.txt_tieude.setText(obj.getTITLE().trim());
         }
         if (obj.getCONTENT() != null) {
             holder.txt_content.setText(Html.fromHtml(obj.getCONTENT()));

@@ -21,6 +21,7 @@
         app:layout_constraintTop_toTopOf="@+id/img_right_next_home_one" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/txt_xemthem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,9 +47,10 @@
         app:layout_constraintDimensionRatio="1.1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.28" />
+        app:layout_constraintWidth_percent="0.3" />
 
     <TextView
+
         android:id="@+id/txt_tieude"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -57,20 +59,21 @@
         android:minLines="2"
         android:padding="1dp"
         android:textColor="@color/black"
-        android:textSize="@dimen/txt_13sp"
+        android:textSize="@dimen/txt_14sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/img_news_home"
         app:layout_constraintTop_toTopOf="@id/img_news_home" />
 
     <TextView
+        android:ellipsize="end"
         android:id="@+id/txt_content"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginLeft="@dimen/pading_icon"
-        android:layout_marginBottom="8dp"
         android:maxLines="3"
-        android:padding="2dp"
+        android:minLines="3"
+        android:padding="1dp"
         android:textColor="@color/black"
         android:textSize="@dimen/txt_13sp"
         app:layout_constraintBottom_toBottomOf="@+id/img_news_home"

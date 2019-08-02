@@ -2,8 +2,10 @@ package neo.vn.imbeautiful.activity.tintuc;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,8 +29,8 @@ import neo.vn.imbeautiful.models.InfomationObj;
 public class ActivityDetailNews extends BaseActivity {
     @BindView(R.id.txt_tieude)
     TextView txt_tieude;
-    @BindView(R.id.txt_content)
-    TextView txt_content;
+    @BindView(R.id.webview_news)
+    WebView webview_news;
     @BindView(R.id.img_tintuc)
     ImageView img_tintuc;
 
@@ -72,9 +74,10 @@ public class ActivityDetailNews extends BaseActivity {
         mInfo = (InfomationObj) getIntent().getSerializableExtra(Constants.KEY_SEND_NEWS_OBJ);
         if (mInfo != null) {
             if (mInfo.getTITLE() != null)
-                txt_tieude.setText(mInfo.getTITLE());
+                txt_tieude.setText(mInfo.getTITLE().trim());
             if (mInfo.getCONTENT() != null)
-                txt_content.setText(Html.fromHtml(mInfo.getCONTENT()));
+                initWebview(mInfo.getCONTENT(), webview_news);
+            // txt_content.setText(Html.fromHtml(mInfo.getCONTENT()));
             if (mInfo.getIMAGE_COVER() != null) {
                 Glide.with(this).load(mInfo.getIMAGE_COVER()).asBitmap()
                         .placeholder(R.drawable.img_defaul)
@@ -91,5 +94,28 @@ public class ActivityDetailNews extends BaseActivity {
 
         }
 
+    }
+
+    public static void initWebview(String sData, WebView webView) {
+        webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        webView.setScrollbarFadingEnabled(false);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(false);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings();
+        webView.clearHistory();
+        webView.clearFormData();
+        webView.clearCache(true);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+        webSettings.setDefaultFontSize(18);
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 2.5));
+        //  webView.loadUrl(sUrl);
+        webView.loadDataWithBaseURL("", sData,
+                "text/html", "UTF-8", "");
     }
 }

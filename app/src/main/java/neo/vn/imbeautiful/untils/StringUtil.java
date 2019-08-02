@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
@@ -178,12 +181,13 @@ public class StringUtil {
         }
         return sMonney;
     }
-   /* public static String removeAccent(String s) {
 
-        String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
-        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-        return pattern.matcher(temp).replaceAll("");
-    }*/
+    /* public static String removeAccent(String s) {
+
+         String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
+         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+         return pattern.matcher(temp).replaceAll("");
+     }*/
     public static String removeAccent(String s) {
 
         String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
@@ -422,5 +426,28 @@ public class StringUtil {
         date = dft.format(cal.getTime());
         //hiển thị lên giao diện
         return date;
+    }
+
+    public static void initWebview(String sData, WebView webView) {
+        webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        webView.setScrollbarFadingEnabled(false);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(false);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings();
+        webView.clearHistory();
+        webView.clearFormData();
+        webView.clearCache(true);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+        webSettings.setDefaultFontSize(18);
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 2.5));
+        //  webView.loadUrl(sUrl);
+        webView.loadDataWithBaseURL("", sData,
+                "text/html", "UTF-8", "");
     }
 }

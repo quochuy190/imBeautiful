@@ -6,6 +6,7 @@
     android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
@@ -64,6 +65,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btn_share" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll_bac"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="1:1"
@@ -144,6 +146,19 @@
                 app:layout_constraintTop_toBottomOf="@id/img_facebook_1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btn_download"
+            android:textColor="@color/white"
+            android:text="Tải về máy"
+            app:layout_constraintWidth_percent="0.4"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_bac"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/spr_btn_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
 
 
 
