@@ -1,30 +1,39 @@
 package neo.vn.imbeautiful.activity.products;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import neo.vn.imbeautiful.App;
 import neo.vn.imbeautiful.R;
 import neo.vn.imbeautiful.activity.order.ActivityAddOrder;
 import neo.vn.imbeautiful.adapter.AdapterCart;
 import neo.vn.imbeautiful.base.BaseActivity;
 import neo.vn.imbeautiful.callback.ClickDialog;
 import neo.vn.imbeautiful.callback.ItemClickCartListener;
+import neo.vn.imbeautiful.callback.ItemClickListener;
 import neo.vn.imbeautiful.config.Constants;
 import neo.vn.imbeautiful.models.Products;
+import neo.vn.imbeautiful.models.PropetiObj;
 import neo.vn.imbeautiful.models.respon_api.ObjLisCart;
 import neo.vn.imbeautiful.untils.SharedPrefs;
 import neo.vn.imbeautiful.untils.StringUtil;
@@ -52,13 +61,90 @@ public class ActivityCart extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initBottom();
         initAppbar();
         initProduct();
         initDataProduct();
         initEvent();
     }
 
+    BottomSheetDialog mBottomSheetDialog;
+    ImageView img_product_dialog;
+    TextView txt_name_pro_dialog;
+    TextView txt_price_pro_dialog;
+    TextView txt_code_pro_dialog;
+    TextView btn_comfirm;
+    ConstraintLayout ll_spinner_1, ll_spinner_2, ll_spinner_3, ll_spinner_4;
+    TextView txt_title_spinner_1, txt_title_spinner_2, txt_title_spinner_3, txt_title_spinner_4;
+    List<String> data_spinner_1, data_spinner_2, data_spinner_3, data_spinner_4;
+
+    private void initBottom() {
+        mBottomSheetDialog = new BottomSheetDialog(this);
+        View sheetView = getLayoutInflater().inflate(R.layout.dialog_bottom_sheet_cart, null);
+        mBottomSheetDialog.setContentView(sheetView);
+        img_product_dialog = sheetView.findViewById(R.id.img_product_dialog);
+        txt_name_pro_dialog = sheetView.findViewById(R.id.txt_name_product_dialog);
+        txt_price_pro_dialog = sheetView.findViewById(R.id.txt_price_cart);
+        txt_code_pro_dialog = sheetView.findViewById(R.id.txt_code_pro_dialog);
+        ll_spinner_1 = sheetView.findViewById(R.id.ll_spinner_1);
+        ll_spinner_2 = sheetView.findViewById(R.id.ll_spinner_2);
+        ll_spinner_3 = sheetView.findViewById(R.id.ll_spinner_3);
+        ll_spinner_4 = sheetView.findViewById(R.id.ll_spinner_4);
+
+        txt_title_spinner_1 = sheetView.findViewById(R.id.txt_title_spinner_1);
+        txt_title_spinner_2 = sheetView.findViewById(R.id.txt_title_spinner_2);
+        txt_title_spinner_3 = sheetView.findViewById(R.id.txt_title_spinner_3);
+        txt_title_spinner_4 = sheetView.findViewById(R.id.txt_title_spinner_4);
+    }
+
+    private void show_Bottom_Dialog(Products objProduct) {
+        if (objProduct.getsUrlImage() != null) {
+            Glide.with(this).load(objProduct.getsUrlImage()).asBitmap()
+                    .placeholder(R.drawable.img_defaul)
+                    .into(new BitmapImageViewTarget(img_product_dialog) {
+                        @Override
+                        public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                            super.onResourceReady(drawable, anim);
+                            //   progressBar.setVisibility(View.GONE);
+                        }
+                    });
+        } else
+            Glide.with(this).load(R.drawable.img_defaul).into(img_product_dialog);
+        if (objProduct.getsName() != null && objProduct.getsName().length() > 0)
+            txt_name_pro_dialog.setText(objProduct.getsName());
+        else
+            txt_name_pro_dialog.setText("...");
+        if (objProduct != null && objProduct.getsPrice().length() > 0)
+            txt_price_pro_dialog.setText(StringUtil.conventMonney(objProduct.getsPrice()));
+        else
+            txt_price_pro_dialog.setText("...");
+        if (objProduct != null && objProduct.getCODE_PRODUCT().length() > 0)
+            txt_code_pro_dialog.setText("Mã sản phẩm: " + objProduct.getCODE_PRODUCT());
+        else
+            txt_code_pro_dialog.setText("...");
+        if (objProduct.getmListThuoctinhTong() != null) {
+            if (objProduct.getmListThuoctinhTong().size() > 0) {
+                ll_spinner_1.setVisibility(View.VISIBLE);
+                PropetiObj objPro = objProduct.getmListThuoctinhTong().get(0);
+                txt_title_spinner_1.setText(objPro.getNAME());
+                for (PropetiObj.PropetiDetail objDetail : objPro.getINFO()) {
+                    objDetail.setNAME_PARENT(objPro.getNAME());
+                    data_spinner_1.add(objDetail.getSUB_PROPERTIES());
+                }
+            }
+
+
+        }
+        mBottomSheetDialog.show();
+    }
+
     private void initEvent() {
+        btn_comfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetDialog.dismiss();
+            }
+        });
         img_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +165,9 @@ public class ActivityCart extends BaseActivity {
                 }
                 if (isCheck) {
                     Intent intent = new Intent(ActivityCart.this, ActivityAddOrder.class);
-                    intent.putExtra(Constants.KEY_SEND_LIST_PRODUCT, (Serializable) mLisCateProduct);
+                    // intent.putExtra(Constants.KEY_SEND_LIST_PRODUCT, (Serializable) mLisCateProduct);
+                    App.mLisProductCart.clear();
+                    App.mLisProductCart.addAll(mLisCateProduct);
                     startActivityForResult(intent, Constants.RequestCode.GET_ADD_ORDER);
                 } else {
                     showDialogNotify("Thông báo", "Bạn chưa chọn sản phẩm nào để đặt hàng");
@@ -104,6 +192,14 @@ public class ActivityCart extends BaseActivity {
         recycle_lis_product.setItemAnimator(new DefaultItemAnimator());
         recycle_lis_product.setAdapter(adapterProduct);
         adapterProduct.notifyDataSetChanged();
+        adapterProduct.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClickItem(int position, Object item) {
+                Products objPro = (Products) item;
+                show_Bottom_Dialog(objPro);
+
+            }
+        });
         adapterProduct.setOnIListener(new ItemClickCartListener() {
             @Override
             public void onClickItem(int position, Object item) {
@@ -166,7 +262,6 @@ public class ActivityCart extends BaseActivity {
             }
         });
     }
-
 
 
     private void set_price_total() {

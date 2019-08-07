@@ -146,6 +146,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:visibility="gone"
             android:id="@+id/llct_chart_biendong"
             android:background="@drawable/spr_item_language"
             app:layout_constraintEnd_toEndOf="parent"

@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-
+        android:usesCleartextTraffic="true"
         android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,6 +24,11 @@
         </activity>
         <activity
             android:name=".activity.login.ActivityIntroduce"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".activity.charts.Activity_Fluctuations"
             android:screenOrientation="portrait">
 
         </activity>

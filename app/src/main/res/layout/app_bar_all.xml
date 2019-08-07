@@ -37,7 +37,7 @@
             />
         <ImageView
             android:visibility="invisible"
-            android:padding="@dimen/margin_top_fragment_order"
+            android:padding="5dp"
             android:src="@drawable/ic_delete_appbar"
             app:layout_constraintHeight_percent="0.8"
             android:id="@+id/img_home"

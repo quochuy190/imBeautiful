@@ -3,6 +3,7 @@ package neo.vn.imbeautiful.models;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by: Neo Company.
@@ -63,7 +64,9 @@ public class Products implements Serializable {
     String DESCRIPTION_HTML;
     @SerializedName("STATUS_TREND")
     String STATUS_TREND;
-
+    String sThuoctinh;
+    List<PropetiObj.PropetiDetail> mLisPropeti;
+    List<PropetiObj> mListThuoctinhTong;
     private boolean isVisibleDelete;
     private boolean isVisibleButtonAdd;
 
@@ -71,6 +74,30 @@ public class Products implements Serializable {
         this.sName = sName;
         this.sPrice = sPrice;
         this.sUrlImage = sUrlImage;
+    }
+
+    public List<PropetiObj> getmListThuoctinhTong() {
+        return mListThuoctinhTong;
+    }
+
+    public void setmListThuoctinhTong(List<PropetiObj> mListThuoctinhTong) {
+        this.mListThuoctinhTong = mListThuoctinhTong;
+    }
+
+    public List<PropetiObj.PropetiDetail> getmLisPropeti() {
+        return mLisPropeti;
+    }
+
+    public void setmLisPropeti(List<PropetiObj.PropetiDetail> mLisPropeti) {
+        this.mLisPropeti = mLisPropeti;
+    }
+
+    public String getsThuoctinh() {
+        return sThuoctinh;
+    }
+
+    public void setsThuoctinh(String sThuoctinh) {
+        this.sThuoctinh = sThuoctinh;
     }
 
     public String getSTATUS_TREND() {

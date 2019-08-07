@@ -78,7 +78,6 @@ public class ActivityChartListCTV extends BaseActivity implements InterfaceRepor
         init();
         initEvent();
     }
-
     private void initEvent() {
         img_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +109,6 @@ public class ActivityChartListCTV extends BaseActivity implements InterfaceRepor
             }
         });
     }
-
     private void init() {
         mList = new ArrayList<>();
         adapter = new AdapterReportListCTV(mList, this);

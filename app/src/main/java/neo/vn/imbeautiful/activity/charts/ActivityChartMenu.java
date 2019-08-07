@@ -2,10 +2,11 @@ package neo.vn.imbeautiful.activity.charts;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import butterknife.BindView;
 import neo.vn.imbeautiful.R;
@@ -97,7 +98,7 @@ public class ActivityChartMenu extends BaseActivity implements View.OnClickListe
                 intent = new Intent(ActivityChartMenu.this, Activity_Chart_By_Products.class);
                 break;
             case R.id.llct_chart_biendong:
-
+                intent = new Intent(ActivityChartMenu.this, Activity_Fluctuations.class);
                 break;
             case R.id.llct_chart_ctv:
                 if (mLogin.getGROUPS().equals("5")) {

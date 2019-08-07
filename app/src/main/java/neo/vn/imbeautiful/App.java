@@ -31,6 +31,7 @@ public class App extends Application {
     private static App sInstance;
     private Gson mGSon;
     public static List<City> mLisCity;
+    public static List<Products> mLisProductCart;
     public static List<ReportProduct> mLisReportProduct;
     public static ResponGetReportProduct mReportProduct;
     public static City mCity;
@@ -50,6 +51,7 @@ public class App extends Application {
         mGSon = new Gson();
         mLisCity = new ArrayList<>();
         mLisReportProduct = new ArrayList<>();
+        mLisProductCart = new ArrayList<>();
         isLoginHome = false;
         isLoadOrder = false;
         FileDownloader.setupOnApplicationOnCreate(this)

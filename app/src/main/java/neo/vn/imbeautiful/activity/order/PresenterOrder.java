@@ -205,6 +205,46 @@ public class PresenterOrder implements InterfaceOrder.Presenter {
     }
 
     @Override
+    public void api_order_product_2(String USERNAME, String CODE_PRODUCT, String AMOUNT, String PRICE, String MONEY,
+                                    String BONUS, String ID_PRODUCT_PROPERTIES, String FULL_NAME, String MOBILE_RECEIVER,
+                                    String ID_CITY, String ID_DISTRICT, String ADDRESS) {
+        Map<String, String> mMap = new LinkedHashMap<>();
+        String sService = "order_product2";
+        mMap.put("USERNAME", USERNAME);//
+        mMap.put("CODE_PRODUCT", CODE_PRODUCT);//VAKCBO#USYXBD
+        mMap.put("AMOUNT", AMOUNT);// 1#2
+        mMap.put("PRICE", PRICE);// giá sản phẩm VD: 95000#150000
+        mMap.put("MONEY", MONEY);//đơn giá sản phẩm VD:95000#300000
+        mMap.put("BONUS", BONUS);//19000#60000
+        mMap.put("ID_PRODUCT_PROPERTIES", ID_PRODUCT_PROPERTIES);//19000#60000
+        mMap.put("FULL_NAME", FULL_NAME);
+        mMap.put("MOBILE_RECEIVER", MOBILE_RECEIVER);
+        mMap.put("ID_CITY", ID_CITY);
+        mMap.put("ID_DISTRICT", ID_DISTRICT);
+        mMap.put("ADDRESS", ADDRESS);
+
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
+            @Override
+            public void onGetDataErrorFault(Exception e) {
+                mView.show_error_api();
+                Log.i(TAG, "onGetDataErrorFault: " + e);
+            }
+
+            @Override
+            public void onGetDataSuccess(String objT) {
+                Log.i(TAG, "onGetDataSuccess: " + objT);
+                try {
+                    ErrorApi obj = new Gson().fromJson(objT, ErrorApi.class);
+                    mView.show_order_product(obj);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mView.show_error_api();
+                }
+            }
+        }, sService, mMap);
+    }
+
+    @Override
     public void api_get_config_commission(String USERNAME, String VALUES) {
         Map<String, String> mMap = new LinkedHashMap<>();
         String sService = "get_config_commission";

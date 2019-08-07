@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,6 +30,7 @@ import neo.vn.imbeautiful.models.Districts;
 import neo.vn.imbeautiful.models.ErrorApi;
 import neo.vn.imbeautiful.models.ObjOrder;
 import neo.vn.imbeautiful.models.Products;
+import neo.vn.imbeautiful.models.PropetiObj;
 import neo.vn.imbeautiful.models.respon_api.ResponGetProduct;
 import neo.vn.imbeautiful.models.respon_api.ResponHistoryOrder;
 import neo.vn.imbeautiful.untils.KeyboardUtil;
@@ -100,9 +102,11 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
     }
 
     private void initData() {
-        mList = (List<Products>) getIntent().getSerializableExtra(Constants.KEY_SEND_LIST_PRODUCT);
-        set_price_total();
-
+        mList = new ArrayList<>();
+        if (App.mLisProductCart.size() > 0)
+            mList.addAll(App.mLisProductCart);
+        if (mList.size() > 0)
+            set_price_total();
     }
 
     City objCity;
@@ -134,14 +138,23 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
     }
 
     String sFullName = "", sPhone = "", sAddress = "", sCity = "", sDistrict = "", sUsername = "",
-            sCODE_PRODUCT = "", sAMOUNT = "", sPRICE = "", sMONEY = "", sBONUS = "";
+            sCODE_PRODUCT = "", sAMOUNT = "", sPRICE = "", sMONEY = "", sBONUS = "", sThuoctinh = "";
 
     private void get_api_order() {
         if (mList != null && mList.size() > 0) {
             for (int i = 0; i < mList.size(); i++) {
                 if (mList.get(i).getsQuantum() != null && mList.get(i).getsQuantum().length() > 0) {
+                    Products obj = mList.get(i);
+
                     int iQuantum = Integer.parseInt(mList.get(i).getsQuantum());
                     if (iQuantum > 0) {
+                        if (obj.getmLisPropeti().size() > 0) {
+                            String sPro = "";
+                            for (PropetiObj.PropetiDetail objPropeti : obj.getmLisPropeti()) {
+                                sPro = sPro + objPropeti.getSUB_ID() + ",";
+                            }
+                            sThuoctinh = sThuoctinh + sPro.substring(0, sPro.length() - 1) + "#";
+                        }
                         sCODE_PRODUCT = sCODE_PRODUCT + mList.get(i).getCODE_PRODUCT() + "#";
                         sAMOUNT = sAMOUNT + mList.get(i).getsQuantum() + "#";
                         sPRICE = sPRICE + mList.get(i).getsPrice() + "#";
@@ -159,7 +172,8 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
 
         }
         sUsername = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USERNAME, String.class);
-
+        if (sThuoctinh.length() > 1)
+            sThuoctinh = sThuoctinh.substring(0, (sThuoctinh.length() - 1));
         if (sCODE_PRODUCT.length() > 1)
             sCODE_PRODUCT = sCODE_PRODUCT.substring(0, (sCODE_PRODUCT.length() - 1));
         if (sBONUS.length() > 1)
@@ -202,13 +216,15 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
             showDialogNotify("Thông báo", "Mời nhập vào địa chỉ khách hàng");
         }
         showDialogLoading();
-        mPresenter.api_order_product(sUsername, sCODE_PRODUCT, sAMOUNT, sPRICE, sMONEY, sBONUS,
+        mPresenter.api_order_product_2(sUsername, sCODE_PRODUCT, sAMOUNT, sPRICE, sMONEY, sBONUS, sThuoctinh,
                 sFullName, sPhone, sCity, sDistrict, sAddress);
     }
 
     @Override
     public void show_error_api() {
-
+        delete_data();
+        hideDialogLoading();
+        showAlertErrorNetwork();
     }
 
     @Override
@@ -240,8 +256,26 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
             setResult(RESULT_OK, new Intent());
             EventBus.getDefault().post(new CustomEvent("0"));
             finish();
-        } else
+        } else {
+            delete_data();
             showDialogNotify("Thông báo", obj.getsRESULT());
+        }
+
+    }
+
+    private void delete_data() {
+        sFullName = "";
+        sPhone = "";
+        sAddress = "";
+        sCity = "";
+        sDistrict = "";
+        sUsername = "";
+        sCODE_PRODUCT = "";
+        sAMOUNT = "";
+        sPRICE = "";
+        sMONEY = "";
+        sBONUS = "";
+        sThuoctinh = "";
     }
 
     @Override
@@ -252,7 +286,7 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
                 int iComiss = Integer.parseInt(obj.getVALUE());
                 lCommission = (iComiss * lPrice) / 100;
                 txt_commission.setText(StringUtil.conventMonney_Long("" + lCommission));
-              //  txt_price.setText(StringUtil.conventMonney_Long("" + lCommission));
+                //  txt_price.setText(StringUtil.conventMonney_Long("" + lCommission));
             }
         }
     }
@@ -300,7 +334,7 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
         showDialogLoading();
         String sUserName = SharedPrefs.getInstance().get(Constants.KEY_SAVE_USERNAME, String.class);
         mPresenter.api_get_config_commission(sUserName, "" + lPrice);
-      //  txt_commission.setText(StringUtil.conventMonney_Long("" + lCommission));
+        //  txt_commission.setText(StringUtil.conventMonney_Long("" + lCommission));
         txt_price.setText(StringUtil.conventMonney_Long("" + lPrice));
     }
 }

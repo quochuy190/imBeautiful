@@ -48,6 +48,7 @@ public class PropetiObj {
         String SUB_ID;
         @SerializedName("SUB_PROPERTIES")
         String SUB_PROPERTIES;
+        String NAME_PARENT;
 
         public String getSUB_ID() {
             return SUB_ID;
@@ -63,6 +64,14 @@ public class PropetiObj {
 
         public void setSUB_PROPERTIES(String SUB_PROPERTIES) {
             this.SUB_PROPERTIES = SUB_PROPERTIES;
+        }
+
+        public String getNAME_PARENT() {
+            return NAME_PARENT;
+        }
+
+        public void setNAME_PARENT(String NAME_PARENT) {
+            this.NAME_PARENT = NAME_PARENT;
         }
     }
 }

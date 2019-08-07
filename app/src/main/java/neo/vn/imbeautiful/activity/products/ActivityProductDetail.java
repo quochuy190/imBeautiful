@@ -32,8 +32,6 @@ import com.liulishuo.filedownloader.util.FileDownloadUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
@@ -93,8 +91,16 @@ public class ActivityProductDetail extends BaseActivity
     Spinner spiner_type_1;
     @BindView(R.id.spiner_type_2)
     Spinner spiner_type_2;
+    @BindView(R.id.spiner_type_3)
+    Spinner spiner_type_3;
+    @BindView(R.id.spiner_type_4)
+    Spinner spiner_type_4;
     @BindView(R.id.txt_title_spinner_2)
     TextView txt_title_spinner_2;
+    @BindView(R.id.txt_title_spinner_3)
+    TextView txt_title_spinner_3;
+    @BindView(R.id.txt_title_spinner_4)
+    TextView txt_title_spinner_4;
     @BindView(R.id.txt_title_spinner_1)
     TextView txt_title_spinner_1;
     @BindView(R.id.img_home)
@@ -104,6 +110,8 @@ public class ActivityProductDetail extends BaseActivity
     private List<Products> mList;
     private ObjLisCart objLisCart;
     private PresenterProperties mPresenterProperties;
+    private String sThuoctinh1 = "", sThuoctinh2 = "", sThuoctinh3 = "", sThuoctinh4 = "";
+    private String sProperties = "";
 
     @Override
     public int setContentViewId() {
@@ -116,27 +124,44 @@ public class ActivityProductDetail extends BaseActivity
         setupViewPager(view_pager);
         dataset = new ArrayList<>();
         listPropeti_2 = new ArrayList<>();
+        listPropeti_3 = new ArrayList<>();
+        listPropeti_4 = new ArrayList<>();
+        mListThuoctinh1 = new ArrayList<>();
+        mListThuoctinh4 = new ArrayList<>();
+        mListThuoctinh3 = new ArrayList<>();
+        mListThuoctinh2 = new ArrayList<>();
+        mListPrppeti = new ArrayList<>();
         ll_tab_layout_content.setSelected(true);
         mPresenterProperties = new PresenterProperties(this);
         // DownloadImageFromPath("http://developer.android.com/images/activity_lifecycle.png");
         // new AsyncDownloadFile(ActivityProductDetail.this).execute("http://developer.android.com/images/activity_lifecycle.png");
+        ll_spinner_2.setVisibility(View.GONE);
+        ll_spinner_3.setVisibility(View.GONE);
+        ll_spinner_4.setVisibility(View.GONE);
+        ll_spinner.setVisibility(View.GONE);
         initAppbar();
         initData();
         initEvent();
         loadFragmentContentProductDetil();
     }
 
-    List<String> dataset, listPropeti_2;
+    List<String> dataset, listPropeti_2, listPropeti_3, listPropeti_4;
+    List<PropetiObj.PropetiDetail> mListThuoctinh1;
+    List<PropetiObj.PropetiDetail> mListThuoctinh2;
+    List<PropetiObj.PropetiDetail> mListThuoctinh3;
+    List<PropetiObj.PropetiDetail> mListThuoctinh4;
+    List<PropetiObj.PropetiDetail> mListPrppeti;
+    PropetiObj.PropetiDetail mObjPro1, mObjPro2, mObjPro3, mObjPro4;
 
     private void set_data_spinner() {
-
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.item_spinner, dataset);
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         spiner_type_1.setAdapter(adapter);
         spiner_type_1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                sThuoctinh1 = dataset.get(position);
+                mObjPro1 = mListThuoctinh1.get(position);
             }
 
             @Override
@@ -153,7 +178,44 @@ public class ActivityProductDetail extends BaseActivity
         spiner_type_2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sThuoctinh2 = listPropeti_2.get(position);
+                mObjPro2 = mListThuoctinh2.get(position);
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void set_data_spinner_3() {
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.item_spinner, listPropeti_3);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        spiner_type_3.setAdapter(adapter);
+        spiner_type_3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sThuoctinh3 = listPropeti_3.get(position);
+                mObjPro3 = mListThuoctinh3.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void set_data_spinner_4() {
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.item_spinner, listPropeti_4);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        spiner_type_4.setAdapter(adapter);
+        spiner_type_4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sThuoctinh4 = listPropeti_4.get(position);
+                mObjPro4 = mListThuoctinh4.get(position);
             }
 
             @Override
@@ -171,7 +233,6 @@ public class ActivityProductDetail extends BaseActivity
         viewPager.setAdapter(customPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
-
 
     TextView txt_title;
 
@@ -294,6 +355,32 @@ public class ActivityProductDetail extends BaseActivity
             @Override
             public void onClick(View v) {
                 boolean isAddPro = false;
+                if (sThuoctinh1.length() > 0) {
+                    sProperties = sThuoctinh1 + ",";
+                }
+                if (sThuoctinh2.length() > 0) {
+                    sProperties = sThuoctinh2 + ",";
+                }
+                if (sThuoctinh3.length() > 0) {
+                    sProperties = sThuoctinh3 + ",";
+                }
+                if (sThuoctinh4.length() > 0) {
+                    sProperties = sThuoctinh4 + ",";
+                }
+                if (mObjPro1 != null)
+                    mListPrppeti.add(mObjPro1);
+                if (mObjPro2 != null)
+                    mListPrppeti.add(mObjPro2);
+                if (mObjPro3 != null)
+                    mListPrppeti.add(mObjPro3);
+                if (mObjPro4 != null)
+                    mListPrppeti.add(mObjPro4);
+                if (mListPrppeti.size() > 0)
+                    mProduct.setmLisPropeti(mListPrppeti);
+                if (sProperties.length() > 0) {
+                    sProperties = sProperties.substring(0, sProperties.length() - 1);
+                    mProduct.setsThuoctinh(sProperties);
+                }
                 if (mList != null && mList.size() > 0) {
                     for (Products obj : mList) {
                         if (mProduct.getCODE_PRODUCT().equals(obj.getCODE_PRODUCT())) {
@@ -417,68 +504,75 @@ public class ActivityProductDetail extends BaseActivity
 
     }
 
+    @BindView(R.id.ll_spinner)
+    ConstraintLayout ll_spinner;
+    @BindView(R.id.ll_spinner_2)
+    ConstraintLayout ll_spinner_2;
+    @BindView(R.id.ll_spinner_3)
+    ConstraintLayout ll_spinner_3;
+    @BindView(R.id.ll_spinner_4)
+    ConstraintLayout ll_spinner_4;
+
     @Override
     public void show_get_properties(ResponGetPropeti obj) {
         hideDialogLoading();
         if (obj != null && obj.getsERROR().equals("0000")) {
-            txt_title_spinner_1.setVisibility(View.VISIBLE);
-            txt_title_spinner_2.setVisibility(View.VISIBLE);
-            spiner_type_1.setVisibility(View.VISIBLE);
-            spiner_type_2.setVisibility(View.VISIBLE);
             if (obj.getLisDistrict() != null) {
+                mProduct.setmListThuoctinhTong(obj.getLisDistrict());
                 if (obj.getLisDistrict().size() > 0) {
-                    txt_title_spinner_2.setVisibility(View.GONE);
-                    spiner_type_2.setVisibility(View.GONE);
+                    ll_spinner.setVisibility(View.VISIBLE);
                     PropetiObj objPro = obj.getLisDistrict().get(0);
                     txt_title_spinner_1.setText(objPro.getNAME());
                     for (PropetiObj.PropetiDetail objDetail : objPro.getINFO()) {
+                        objDetail.setNAME_PARENT(objPro.getNAME());
                         dataset.add(objDetail.getSUB_PROPERTIES());
+                        mListThuoctinh1.add(objDetail);
                     }
-                } else if (obj.getLisDistrict().size() > 1) {
+                }
+                if (obj.getLisDistrict().size() > 1) {
+                    ll_spinner_2.setVisibility(View.VISIBLE);
                     txt_title_spinner_2.setVisibility(View.VISIBLE);
                     spiner_type_2.setVisibility(View.VISIBLE);
                     PropetiObj objPro = obj.getLisDistrict().get(1);
                     txt_title_spinner_2.setText(objPro.getNAME());
                     for (PropetiObj.PropetiDetail objDetail : objPro.getINFO()) {
+                        objDetail.setNAME_PARENT(objPro.getNAME());
                         listPropeti_2.add(objDetail.getSUB_PROPERTIES());
+                        mListThuoctinh2.add(objDetail);
+                    }
+                }
+                if (obj.getLisDistrict().size() > 2) {
+                    ll_spinner_3.setVisibility(View.VISIBLE);
+                    PropetiObj objPro = obj.getLisDistrict().get(2);
+                    txt_title_spinner_3.setText(objPro.getNAME());
+                    for (PropetiObj.PropetiDetail objDetail : objPro.getINFO()) {
+                        objDetail.setNAME_PARENT(objPro.getNAME());
+                        listPropeti_3.add(objDetail.getSUB_PROPERTIES());
+                        mListThuoctinh3.add(objDetail);
+                    }
+                }
+                if (obj.getLisDistrict().size() > 3) {
+                    ll_spinner_4.setVisibility(View.VISIBLE);
+                    PropetiObj objPro = obj.getLisDistrict().get(3);
+                    txt_title_spinner_4.setText(objPro.getNAME());
+                    for (PropetiObj.PropetiDetail objDetail : objPro.getINFO()) {
+                        objDetail.setNAME_PARENT(objPro.getNAME());
+                        listPropeti_4.add(objDetail.getSUB_PROPERTIES());
+                        mListThuoctinh4.add(objDetail);
                     }
                 }
 
             }
-            set_data_spinner();
-            set_data_spinner_2();
         } else {
-            txt_title_spinner_1.setVisibility(View.GONE);
-            txt_title_spinner_2.setVisibility(View.GONE);
-            spiner_type_1.setVisibility(View.GONE);
-            spiner_type_2.setVisibility(View.GONE);
+            ll_spinner.setVisibility(View.GONE);
+            ll_spinner_2.setVisibility(View.GONE);
+            ll_spinner_3.setVisibility(View.GONE);
+            ll_spinner_4.setVisibility(View.GONE);
         }
-
-    }
-
-
-    public void DownloadImageFromPath(String path) {
-        InputStream in = null;
-        Bitmap bmp = null;
-        // ImageView iv = (ImageView)findViewById(R.id.img1);
-        int responseCode = -1;
-        try {
-            URL url = new URL(path);//"http://192.xx.xx.xx/mypath/img1.jpg
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setDoInput(true);
-            con.connect();
-            responseCode = con.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                //download
-                in = con.getInputStream();
-                bmp = BitmapFactory.decodeStream(in);
-                in.close();
-                //iv.setImageBitmap(bmp);
-            }
-
-        } catch (Exception ex) {
-            Log.e("Exception", ex.toString());
-        }
+        set_data_spinner();
+        set_data_spinner_2();
+        set_data_spinner_4();
+        set_data_spinner_3();
     }
 
     @Override

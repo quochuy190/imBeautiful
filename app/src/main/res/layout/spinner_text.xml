@@ -3,6 +3,7 @@
     android:layoutDirection="ltr"
     android:id="@android:id/text1"
     android:padding="@dimen/stoker_edt"
+    android:gravity="center_horizontal"
     style="@style/spinnerItemStyle"
     android:singleLine="true"
     android:layout_width="match_parent"
