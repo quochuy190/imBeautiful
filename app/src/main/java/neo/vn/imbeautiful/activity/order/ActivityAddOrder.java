@@ -141,6 +141,37 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
             sCODE_PRODUCT = "", sAMOUNT = "", sPRICE = "", sMONEY = "", sBONUS = "", sThuoctinh = "";
 
     private void get_api_order() {
+        if (edt_fullname_customer.getText().toString().length() > 0) {
+            sFullName = edt_fullname_customer.getText().toString();
+        } else {
+            showDialogNotify("Thông báo", "Mời nhập vào tên khách hàng");
+            KeyboardUtil.requestKeyboard(edt_fullname_customer);
+            return;
+        }
+        if (edt_phone_customer.getText().toString().length() > 0) {
+            sPhone = edt_phone_customer.getText().toString();
+        } else {
+            showDialogNotify("Thông báo", "Mời nhập vào số điện thoại khách hàng");
+            KeyboardUtil.requestKeyboard(edt_phone_customer);
+            return;
+        }
+        if (edt_address_customer.getText().toString().length() > 0) {
+            sAddress = edt_address_customer.getText().toString();
+        } else {
+            showDialogNotify("Thông báo", "Mời nhập vào địa chỉ khách hàng");
+            KeyboardUtil.requestKeyboard(edt_address_customer);
+            return;
+        }
+        if (objCity != null) {
+            sCity = objCity.getMATP();
+        } else {
+            showDialogNotify("Thông báo", "Mời nhập vào địa chỉ khách hàng");
+        }
+        if (objDistrict != null) {
+            sDistrict = objDistrict.getMAQH();
+        } else {
+            showDialogNotify("Thông báo", "Mời nhập vào địa chỉ khách hàng");
+        }
         if (mList != null && mList.size() > 0) {
             for (int i = 0; i < mList.size(); i++) {
                 if (mList.get(i).getsQuantum() != null && mList.get(i).getsQuantum().length() > 0) {
@@ -184,37 +215,7 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
             sAMOUNT = sAMOUNT.substring(0, (sAMOUNT.length() - 1));
         if (sMONEY.length() > 1)
             sMONEY = sMONEY.substring(0, (sMONEY.length() - 1));
-        if (edt_fullname_customer.getText().toString().length() > 0) {
-            sFullName = edt_fullname_customer.getText().toString();
-        } else {
-            showDialogNotify("Thông báo", "Mời nhập vào tên khách hàng");
-            KeyboardUtil.requestKeyboard(edt_fullname_customer);
-            return;
-        }
-        if (edt_phone_customer.getText().toString().length() > 0) {
-            sPhone = edt_phone_customer.getText().toString();
-        } else {
-            showDialogNotify("Thông báo", "Mời nhập vào số điện thoại khách hàng");
-            KeyboardUtil.requestKeyboard(edt_phone_customer);
-            return;
-        }
-        if (edt_address_customer.getText().toString().length() > 0) {
-            sAddress = edt_address_customer.getText().toString();
-        } else {
-            showDialogNotify("Thông báo", "Mời nhập vào địa chỉ khách hàng");
-            KeyboardUtil.requestKeyboard(edt_address_customer);
-            return;
-        }
-        if (objCity != null) {
-            sCity = objCity.getMATP();
-        } else {
-            showDialogNotify("Thông báo", "Mời nhập vào địa chỉ khách hàng");
-        }
-        if (objDistrict != null) {
-            sDistrict = objDistrict.getMAQH();
-        } else {
-            showDialogNotify("Thông báo", "Mời nhập vào địa chỉ khách hàng");
-        }
+
         showDialogLoading();
         mPresenter.api_order_product_2(sUsername, sCODE_PRODUCT, sAMOUNT, sPRICE, sMONEY, sBONUS, sThuoctinh,
                 sFullName, sPhone, sCity, sDistrict, sAddress);

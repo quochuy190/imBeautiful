@@ -58,8 +58,8 @@ public class AdapterProductInHistoryOrder extends RecyclerView.Adapter<AdapterPr
                 holder.txt_add_num.setVisibility(View.VISIBLE);
                 holder.txt_minus_num.setVisibility(View.VISIBLE);
             } else {
-                holder.txt_add_num.setVisibility(View.GONE);
-                holder.txt_minus_num.setVisibility(View.GONE);
+                holder.txt_add_num.setVisibility(View.INVISIBLE);
+                holder.txt_minus_num.setVisibility(View.INVISIBLE);
             }
             if (obj.getsName() != null && obj.getsName().length() > 0)
                 holder.txt_name.setText(obj.getsName());

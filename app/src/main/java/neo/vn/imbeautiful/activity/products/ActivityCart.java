@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -73,12 +77,17 @@ public class ActivityCart extends BaseActivity {
     TextView txt_name_pro_dialog;
     TextView txt_price_pro_dialog;
     TextView txt_code_pro_dialog;
-    TextView btn_comfirm;
+    Button btn_comfirm;
     ConstraintLayout ll_spinner_1, ll_spinner_2, ll_spinner_3, ll_spinner_4;
     TextView txt_title_spinner_1, txt_title_spinner_2, txt_title_spinner_3, txt_title_spinner_4;
     List<String> data_spinner_1, data_spinner_2, data_spinner_3, data_spinner_4;
+    Spinner spiner_type_1, spiner_type_2, spiner_type_3, spiner_type_4;
 
     private void initBottom() {
+        data_spinner_1 = new ArrayList<>();
+        data_spinner_2 = new ArrayList<>();
+        data_spinner_3 = new ArrayList<>();
+        data_spinner_4 = new ArrayList<>();
         mBottomSheetDialog = new BottomSheetDialog(this);
         View sheetView = getLayoutInflater().inflate(R.layout.dialog_bottom_sheet_cart, null);
         mBottomSheetDialog.setContentView(sheetView);
@@ -95,9 +104,26 @@ public class ActivityCart extends BaseActivity {
         txt_title_spinner_2 = sheetView.findViewById(R.id.txt_title_spinner_2);
         txt_title_spinner_3 = sheetView.findViewById(R.id.txt_title_spinner_3);
         txt_title_spinner_4 = sheetView.findViewById(R.id.txt_title_spinner_4);
+
+        spiner_type_1 = sheetView.findViewById(R.id.spiner_type_1);
+        spiner_type_2 = sheetView.findViewById(R.id.spiner_type_2);
+        spiner_type_3 = sheetView.findViewById(R.id.spiner_type_3);
+        spiner_type_4 = sheetView.findViewById(R.id.spiner_type_4);
+        btn_comfirm = sheetView.findViewById(R.id.btn_comfirm);
+
     }
 
+    private String sThuoctinh1 = "", sThuoctinh2 = "", sThuoctinh3 = "", sThuoctinh4 = "";
+    PropetiObj.PropetiDetail mObjPro1, mObjPro2, mObjPro3, mObjPro4;
+    Products mProductClick;
+
     private void show_Bottom_Dialog(Products objProduct) {
+        mProductClick = objProduct;
+        data_spinner_1.clear();
+        data_spinner_2.clear();
+        data_spinner_3.clear();
+        data_spinner_4.clear();
+
         if (objProduct.getsUrlImage() != null) {
             Glide.with(this).load(objProduct.getsUrlImage()).asBitmap()
                     .placeholder(R.drawable.img_defaul)
@@ -132,17 +158,153 @@ public class ActivityCart extends BaseActivity {
                     data_spinner_1.add(objDetail.getSUB_PROPERTIES());
                 }
             }
-
-
+            if (objProduct.getmListThuoctinhTong().size() > 1) {
+                ll_spinner_2.setVisibility(View.VISIBLE);
+                PropetiObj objPro = objProduct.getmListThuoctinhTong().get(1);
+                txt_title_spinner_2.setText(objPro.getNAME());
+                for (PropetiObj.PropetiDetail objDetail : objPro.getINFO()) {
+                    objDetail.setNAME_PARENT(objPro.getNAME());
+                    data_spinner_2.add(objDetail.getSUB_PROPERTIES());
+                }
+            }
+            if (objProduct.getmListThuoctinhTong().size() > 2) {
+                ll_spinner_3.setVisibility(View.VISIBLE);
+                PropetiObj objPro = objProduct.getmListThuoctinhTong().get(2);
+                txt_title_spinner_3.setText(objPro.getNAME());
+                for (PropetiObj.PropetiDetail objDetail : objPro.getINFO()) {
+                    objDetail.setNAME_PARENT(objPro.getNAME());
+                    data_spinner_3.add(objDetail.getSUB_PROPERTIES());
+                }
+            }
+            if (objProduct.getmListThuoctinhTong().size() > 3) {
+                ll_spinner_4.setVisibility(View.VISIBLE);
+                PropetiObj objPro = objProduct.getmListThuoctinhTong().get(3);
+                txt_title_spinner_4.setText(objPro.getNAME());
+                for (PropetiObj.PropetiDetail objDetail : objPro.getINFO()) {
+                    objDetail.setNAME_PARENT(objPro.getNAME());
+                    data_spinner_4.add(objDetail.getSUB_PROPERTIES());
+                }
+            }
         }
+        set_data_spinner_1();
+        set_data_spinner_2();
+        set_data_spinner_3();
+        set_data_spinner_4();
         mBottomSheetDialog.show();
     }
+
+    private void set_data_spinner_1() {
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.item_spinner, data_spinner_1);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        spiner_type_1.setAdapter(adapter);
+        spiner_type_1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sThuoctinh1 = data_spinner_1.get(position);
+                mObjPro1 = mProductClick.getmListThuoctinhTong().get(0).getINFO().get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void set_data_spinner_2() {
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.item_spinner, data_spinner_2);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        spiner_type_2.setAdapter(adapter);
+        spiner_type_2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sThuoctinh2 = data_spinner_2.get(position);
+                mObjPro2 = mProductClick.getmListThuoctinhTong().get(1).getINFO().get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void set_data_spinner_3() {
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.item_spinner, data_spinner_3);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        spiner_type_3.setAdapter(adapter);
+        spiner_type_3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sThuoctinh3 = data_spinner_3.get(position);
+                mObjPro3 = mProductClick.getmListThuoctinhTong().get(2).getINFO().get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void set_data_spinner_4() {
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.item_spinner, data_spinner_4);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        spiner_type_4.setAdapter(adapter);
+        spiner_type_4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sThuoctinh4 = data_spinner_4.get(position);
+                mObjPro4 = mProductClick.getmListThuoctinhTong().get(3).getINFO().get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
 
     private void initEvent() {
         btn_comfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mBottomSheetDialog.dismiss();
+                for (Products obj : mLisCateProduct) {
+                    if (obj.getCODE_PRODUCT().equals(mProductClick.getCODE_PRODUCT())) {
+                        String sProperties = "";
+                        List<PropetiObj.PropetiDetail> mListPrppeti = new ArrayList<>();
+                        if (sThuoctinh1.length() > 0) {
+                            sProperties = sThuoctinh1 + ",";
+                        }
+                        if (sThuoctinh2.length() > 0) {
+                            sProperties = sThuoctinh2 + ",";
+                        }
+                        if (sThuoctinh3.length() > 0) {
+                            sProperties = sThuoctinh3 + ",";
+                        }
+                        if (sThuoctinh4.length() > 0) {
+                            sProperties = sThuoctinh4 + ",";
+                        }
+                        if (mObjPro1 != null)
+                            mListPrppeti.add(mObjPro1);
+                        if (mObjPro2 != null)
+                            mListPrppeti.add(mObjPro2);
+                        if (mObjPro3 != null)
+                            mListPrppeti.add(mObjPro3);
+                        if (mObjPro4 != null)
+                            mListPrppeti.add(mObjPro4);
+                        if (mListPrppeti.size() > 0)
+                            obj.setmLisPropeti(mListPrppeti);
+                        if (sProperties.length() > 0) {
+                            sProperties = sProperties.substring(0, sProperties.length() - 1);
+                            obj.setsThuoctinh(sProperties);
+                        }
+                    }
+                }
+                set_price_total();
+                adapterProduct.notifyDataSetChanged();
             }
         });
         img_home.setOnClickListener(new View.OnClickListener() {

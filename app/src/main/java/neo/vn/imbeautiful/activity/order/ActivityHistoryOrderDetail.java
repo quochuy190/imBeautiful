@@ -214,8 +214,15 @@ public class ActivityHistoryOrderDetail extends BaseActivity
         } else {
             txt_ship.setFocusable(false);
             edt_gopy.setFocusable(false);
-            ic_edit_blue.setVisibility(View.INVISIBLE);
-            ic_edit_green.setVisibility(View.INVISIBLE);
+            if (objOrder.getSTATUS().equals(Config.STATUS_ORDER_DANGXULY)) {
+                ic_edit_blue.setVisibility(View.INVISIBLE);
+                ic_edit_green.setVisibility(View.VISIBLE);
+                ic_edit_product.setVisibility(View.VISIBLE);
+            } else {
+                ic_edit_blue.setVisibility(View.INVISIBLE);
+                ic_edit_green.setVisibility(View.INVISIBLE);
+            }
+
         }
 
 
@@ -229,12 +236,12 @@ public class ActivityHistoryOrderDetail extends BaseActivity
                         .getDrawable(R.drawable.spr_txt_status_order_orange));
                 break;
             case "1":
-                txt_item_order_status.setText("Đang xử lý");
+                txt_item_order_status.setText("Đã tiếp nhận");
                 txt_item_order_status.setBackground(getResources()
                         .getDrawable(R.drawable.spr_txt_status_order_blue));
                 break;
             case "2":
-                txt_item_order_status.setText("Đã tiếp nhận");
+                txt_item_order_status.setText("Đang xử lý");
                 txt_item_order_status.setBackground(getResources()
                         .getDrawable(R.drawable.spr_txt_status_order_green));
                 break;
@@ -393,25 +400,25 @@ public class ActivityHistoryOrderDetail extends BaseActivity
             if (objOrder.getSTATUS() != null) {
                 switch (objOrder.getSTATUS()) {
                     case "0":
-                        txt_item_order_status.setText("Đã hoàn thành");
+                        txt_item_order_status.setText(objOrder.getSTATUS_NAME());
                         sStatus = "0";
                         break;
                     case "1":
                         sStatus = "1";
-                        txt_item_order_status.setText("Đang xử lý");
+                        txt_item_order_status.setText(objOrder.getSTATUS_NAME());
 
                         break;
                     case "2":
                         sStatus = "2";
-                        txt_item_order_status.setText("Đã tiếp nhận");
+                        txt_item_order_status.setText(objOrder.getSTATUS_NAME());
                         break;
                     case "3":
                         sStatus = "3";
-                        txt_item_order_status.setText("Đang vận chuyển");
+                        txt_item_order_status.setText(objOrder.getSTATUS_NAME());
                         break;
                     case "4":
                         sStatus = "4";
-                        txt_item_order_status.setText("Đã huỷ");
+                        txt_item_order_status.setText(objOrder.getSTATUS_NAME());
                         break;
                 }
             }
@@ -515,6 +522,17 @@ public class ActivityHistoryOrderDetail extends BaseActivity
         txt_huy.setOnClickListener(this);
         txt_back.setOnClickListener(this);
         txt_datiepnhan.setOnClickListener(this);
+        if (mLogin.getGROUPS().equals(Config.GROUP_CONGTACVIEN)) {
+            txt_dangchoduyet.setVisibility(View.GONE);
+            txt_dangchuyen.setVisibility(View.GONE);
+            txt_hoanthanh.setVisibility(View.GONE);
+            txt_datiepnhan.setVisibility(View.GONE);
+        } else {
+            txt_dangchoduyet.setVisibility(View.VISIBLE);
+            txt_dangchuyen.setVisibility(View.VISIBLE);
+            txt_hoanthanh.setVisibility(View.VISIBLE);
+            txt_datiepnhan.setVisibility(View.VISIBLE);
+        }
         dialog_yes.show();
 
     }

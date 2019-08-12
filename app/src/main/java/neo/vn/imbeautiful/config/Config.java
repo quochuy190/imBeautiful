@@ -21,4 +21,6 @@ public class Config {
     public static String GROUP_QUANLY = "4";
     public static String GROUP_CONGTACVIEN = "5";
     public static String GROUP_BIENTAPVIEN = "6";
+
+    public static String ID_SHOP = "ABC123";
 }

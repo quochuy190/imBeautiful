@@ -50,6 +50,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/txt_15sp" />
     <TextView
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/txt_dangchoduyet"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

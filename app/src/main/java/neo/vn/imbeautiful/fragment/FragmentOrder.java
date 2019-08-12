@@ -363,7 +363,6 @@ public class FragmentOrder extends BaseFragment
     }
 
     private void get_api() {
-
         sFromDate = txt_date_start.getText().toString();
         sToDate = txt_date_end.getText().toString();
         mPresenter.api_get_order_history(sUserName, sFromDate, sToDate, sUserCTV, sStatus,

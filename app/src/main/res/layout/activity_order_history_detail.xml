@@ -173,7 +173,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0.5dp"
-                    android:layout_weight="1.5"
+                    android:layout_marginRight="0.5dp"
                     android:background="@color/white"
                     android:gravity="center"
                     android:padding="@dimen/pading_icon"
@@ -181,10 +181,11 @@
                     android:text="Sản phẩm"
                     android:textColor="@color/txt_introduce"
                     android:textSize="@dimen/txt_13sp"
+                    app:layout_constraintEnd_toStartOf="@+id/txt_lable_sl"
                     app:layout_constraintBottom_toBottomOf="@+id/txt_lable_image"
                     app:layout_constraintStart_toEndOf="@+id/txt_lable_image"
                     app:layout_constraintTop_toTopOf="@id/txt_lable_image"
-                    app:layout_constraintWidth_percent="0.416" />
+                  />
 
                 <TextView
                     android:id="@+id/txt_lable_sl"
@@ -199,12 +200,14 @@
                     android:text="SL"
                     android:textColor="@color/txt_introduce"
                     android:textSize="@dimen/txt_13sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="@id/txt_lable_sp"
-                    app:layout_constraintStart_toEndOf="@id/txt_lable_sp"
+
                     app:layout_constraintTop_toTopOf="@id/txt_lable_sp"
                     app:layout_constraintWidth_percent="0.083" />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0.5dp"

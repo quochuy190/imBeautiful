@@ -18,7 +18,6 @@ import neo.vn.imbeautiful.R;
 import neo.vn.imbeautiful.callback.ItemClickListener;
 import neo.vn.imbeautiful.models.ObjOrder;
 import neo.vn.imbeautiful.untils.StringUtil;
-import neo.vn.imbeautiful.untils.TimeUtils;
 
 /**
  * Created by: Neo Company.
@@ -77,8 +76,7 @@ public class AdapterDanhsachDathang extends RecyclerView.Adapter<RecyclerView.Vi
                 else
                     holder.txt_name_CTV.setText("...");
                 if (obj.getCREATE_DATE() != null && obj.getCREATE_DATE().length() > 0)
-                    holder.txt_time_start_order.setText(TimeUtils.convent_date(obj.getCREATE_DATE(),
-                            "dd/MM/yyyy HH:mm:ss", "dd/MM/yyyy HH:mm"));
+                    holder.txt_time_start_order.setText(obj.getCREATE_DATE());
                 else
                     holder.txt_time_start_order.setText("...");
                 if (obj.getSTATUS() != null) {
@@ -114,27 +112,27 @@ public class AdapterDanhsachDathang extends RecyclerView.Adapter<RecyclerView.Vi
                 if (obj.getSTATUS() != null) {
                     switch (obj.getSTATUS()) {
                         case "0":
-                            holder.txt_item_order_status.setText("Đã hoàn thành");
+                            holder.txt_item_order_status.setText(obj.getSTATUS_NAME());
                             holder.txt_item_order_status.setBackground(context.getResources()
                                     .getDrawable(R.drawable.spr_txt_status_order_orange));
                             break;
                         case "1":
-                            holder.txt_item_order_status.setText("Đang xử lý");
+                            holder.txt_item_order_status.setText(obj.getSTATUS_NAME());
                             holder.txt_item_order_status.setBackground(context.getResources()
                                     .getDrawable(R.drawable.spr_txt_status_order_blue));
                             break;
                         case "2":
-                            holder.txt_item_order_status.setText("Đã tiếp nhận");
+                            holder.txt_item_order_status.setText(obj.getSTATUS_NAME());
                             holder.txt_item_order_status.setBackground(context.getResources()
                                     .getDrawable(R.drawable.spr_txt_status_order_green));
                             break;
                         case "3":
-                            holder.txt_item_order_status.setText("Đang vận chuyển");
+                            holder.txt_item_order_status.setText(obj.getSTATUS_NAME());
                             holder.txt_item_order_status.setBackground(context.getResources()
                                     .getDrawable(R.drawable.spr_txt_status_order_green));
                             break;
                         case "4":
-                            holder.txt_item_order_status.setText("Đã huỷ");
+                            holder.txt_item_order_status.setText(obj.getSTATUS_NAME());
                             holder.txt_item_order_status.setBackground(context.getResources()
                                     .getDrawable(R.drawable.spr_txt_status_order_red));
                             break;

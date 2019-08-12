@@ -87,6 +87,10 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.TopicViewHoder
                 holder.txt_prime.setText(StringUtil.conventMonney(obj.getsPrice()));
             else
                 holder.txt_prime.setText("...");
+            if (obj != null && obj.getCODE_PRODUCT().length() > 0)
+                holder.txt_code_product.setText("Mã SP: "+obj.getCODE_PRODUCT());
+            else
+                holder.txt_code_product.setText("...");
             if (obj.getsUrlImage() != null) {
                 Glide.with(context).load(obj.getsUrlImage()).asBitmap()
                         .placeholder(R.drawable.img_defaul)
@@ -164,6 +168,8 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.TopicViewHoder
         ImageView img_delete;
         @BindView(R.id.txt_thuoctinh)
         TextView txt_thuoctinh;
+        @BindView(R.id.txt_code_product)
+        TextView txt_code_product;
 
         public TopicViewHoder(View itemView) {
             super(itemView);

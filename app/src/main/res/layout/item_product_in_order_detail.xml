@@ -18,7 +18,8 @@
         app:layout_constraintWidth_percent="0.27" />
 
     <LinearLayout
-
+        android:layout_marginRight="0.5dp"
+        app:layout_constraintEnd_toStartOf="@+id/txt_sl_product"
         android:id="@+id/ll_info_product"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -27,11 +28,9 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/img_product"
         app:layout_constraintStart_toEndOf="@+id/img_product"
-        app:layout_constraintTop_toTopOf="@id/img_product"
-        app:layout_constraintWidth_percent="0.416">
+        app:layout_constraintTop_toTopOf="@id/img_product">
 
         <TextView
-
             android:id="@+id/txt_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,33 +41,36 @@
             android:text="SL"
             android:textColor="@color/txt_introduce"
             android:textSize="@dimen/txt_14sp" />
+
         <TextView
             android:id="@+id/txt_thuoctinh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:singleLine="true"
             android:padding="@dimen/dp1"
+            android:singleLine="true"
             android:text="Thuộc tính: Đen - M"
             android:textColor="@color/txt_introduce"
             android:textSize="@dimen/txt_14sp" />
+
         <TextView
             android:id="@+id/txt_title_commission"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:singleLine="true"
             android:padding="@dimen/dp1"
+            android:singleLine="true"
             android:text="Hoa hồng: "
             android:textColor="@color/txt_introduce"
             android:textSize="@dimen/txt_14sp" />
+
         <TextView
             android:id="@+id/txt_title_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:singleLine="true"
             android:padding="@dimen/dp1"
+            android:singleLine="true"
             android:text="Giá: "
             android:textColor="@color/txt_introduce"
             android:textSize="@dimen/txt_14sp" />
@@ -86,12 +88,13 @@
         android:text="SL"
         android:textColor="@color/txt_introduce"
         android:textSize="@dimen/txt_13sp"
-        app:layout_constraintBottom_toBottomOf="@id/img_product"
-        app:layout_constraintStart_toEndOf="@id/ll_info_product"
-        app:layout_constraintTop_toTopOf="@id/img_product"
+        app:layout_constraintBottom_toTopOf="@id/txt_minus_num"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_add_num"
         app:layout_constraintWidth_percent="0.083" />
 
     <TextView
+
         android:id="@+id/txt_total_price"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -104,15 +107,17 @@
         android:text="SL"
         android:textColor="@color/txt_introduce"
         android:textSize="@dimen/txt_13sp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/img_product"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/txt_sl_product"
         app:layout_constraintTop_toTopOf="@id/img_product" />
 
     <TextView
+        app:layout_constraintDimensionRatio="1:1"
         android:id="@+id/txt_add_num"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@drawable/spr_item_language"
         android:gravity="center"
         android:padding="@dimen/pading_icon"
@@ -120,24 +125,24 @@
         android:textColor="@color/txt_introduce"
         android:textSize="@dimen/txt_15sp"
         android:textStyle="bold"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/txt_sl_product"
         app:layout_constraintStart_toStartOf="@+id/txt_sl_product"
-        app:layout_constraintTop_toTopOf="@+id/txt_sl_product" />
+        app:layout_constraintTop_toTopOf="@id/img_product" />
 
     <TextView
+        android:background="@drawable/spr_item_language"
         android:id="@+id/txt_minus_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/spr_item_language"
         android:gravity="center"
         android:padding="@dimen/pading_icon"
         android:text="-"
         android:textColor="@color/txt_introduce"
         android:textSize="@dimen/txt_15sp"
         android:textStyle="bold"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_sl_product"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/img_product"
         app:layout_constraintEnd_toEndOf="@+id/txt_sl_product"
         app:layout_constraintStart_toStartOf="@+id/txt_sl_product" />
 </androidx.constraintlayout.widget.ConstraintLayout>

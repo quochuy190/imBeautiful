@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import neo.vn.imbeautiful.callback.CallbackData;
+import neo.vn.imbeautiful.config.Config;
 import neo.vn.imbeautiful.config.Constants;
 import neo.vn.imbeautiful.models.ObjLogin;
 import neo.vn.imbeautiful.untils.SharedPrefs;
@@ -27,6 +28,7 @@ public class ApiServicePost {
 
     public void getApiService(final CallbackData<String> callbackData, String sService, Map<String, String> mData) {
         apiService = InterfaceApiPost.retrofit_restful.create(InterfaceApiPost.class);
+        mData.put("IDSHOP", Config.ID_SHOP);
         Call<ResponseBody> getApiservice = apiService.getApiServiceRest(sService, mData);
         getApiservice.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -64,8 +66,10 @@ public class ApiServicePost {
         if (objLogin != null && objLogin.getTOKEN() != null) {
             sToken = objLogin.getTOKEN();
         }
+        mData.put("IDSHOP", Config.ID_SHOP);
         apiRestFul_All = InterfaceApiPostAll.retrofit_restful_all.create(InterfaceApiPostAll.class);
         Call<ResponseBody> getApiservice = apiRestFul_All.getApiServiceRest("Bearer " + sToken, sService, mData);
+
         getApiservice.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

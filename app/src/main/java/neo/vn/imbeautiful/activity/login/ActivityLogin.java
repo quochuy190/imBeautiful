@@ -11,16 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.facebook.accountkit.AccessToken;
-import com.facebook.accountkit.AccountKit;
-import com.facebook.accountkit.AccountKitLoginResult;
-import com.facebook.accountkit.ui.AccountKitActivity;
-import com.facebook.accountkit.ui.AccountKitConfiguration;
-import com.facebook.accountkit.ui.LoginType;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -96,6 +89,7 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
         btn_login.setOnClickListener(this);
         img_showpass.setOnClickListener(this);
         txt_register.setOnClickListener(this);
+        txt_remember_pass.setOnClickListener(this);
     }
 
     private void start_activity() {
@@ -116,6 +110,9 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
             case R.id.txt_register:
                 start_activity();
                 break;
+            case R.id.txt_remember_pass:
+              showDialogNotify("Thông báo", "Mời bạn liên hệ với chủ shop để lấy lại mật khẩu.");
+                break;
         }
     }
 
@@ -133,6 +130,7 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
             isShowpass = !isShowpass;
         }
     }
+
     private void get_token_firebase() {
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
@@ -202,6 +200,7 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
     public void show_update_device(ErrorApi obj) {
 
     }
+
     private void goToMyLoggedInActivity() {
         Intent intent = new Intent(ActivityLogin.this, MainActivity.class);
         startActivity(intent);
