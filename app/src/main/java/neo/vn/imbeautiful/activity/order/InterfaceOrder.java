@@ -24,16 +24,16 @@ public interface InterfaceOrder {
         void api_edit_order_product(String USERNAME, String CODE_PRODUCT, String AMOUNT, String PRICE,
                                     String MONEY, String BONUS, String FULL_NAME, String MOBILE_RECEIVER,
                                     String ID_CITY, String ID_DISTRICT, String ADDRESS, String CODE_ORDER, String STATUS,
-                                    String EXTRA_SHIP, String TIME_RECEIVER, String NOTE);
+                                    String EXTRA_SHIP, String TIME_RECEIVER, String NOTE, String ID_PRODUCT_PROPERTIES);
 
         void api_order_product(String USERNAME, String CODE_PRODUCT, String AMOUNT, String PRICE,
                                String MONEY, String BONUS, String FULL_NAME, String MOBILE_RECEIVER,
                                String ID_CITY, String ID_DISTRICT, String ADDRESS);
 
         void api_order_product_2(String USERNAME, String CODE_PRODUCT, String AMOUNT, String PRICE,
-                               String MONEY, String BONUS, String ID_PRODUCT_PROPERTIES, String FULL_NAME,
-                               String MOBILE_RECEIVER,
-                               String ID_CITY, String ID_DISTRICT, String ADDRESS);
+                                 String MONEY, String BONUS, String ID_PRODUCT_PROPERTIES, String FULL_NAME,
+                                 String MOBILE_RECEIVER,
+                                 String ID_CITY, String ID_DISTRICT, String ADDRESS);
 
         void api_get_config_commission(String USERNAME, String VALUES);
     }

@@ -86,6 +86,7 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         edt_search_main = findViewById(R.id.edt_search_main);
         txt_title_main = findViewById(R.id.txt_title_main);
         toolbar = findViewById(R.id.toolbar);

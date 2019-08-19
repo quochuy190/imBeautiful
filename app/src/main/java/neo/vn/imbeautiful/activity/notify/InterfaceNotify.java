@@ -1,6 +1,5 @@
 package neo.vn.imbeautiful.activity.notify;
 
-import neo.vn.imbeautiful.models.respon_api.ResponGetCat;
 import neo.vn.imbeautiful.models.respon_api.ResponGetnotify;
 
 /**

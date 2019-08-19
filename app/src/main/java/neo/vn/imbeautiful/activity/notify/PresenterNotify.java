@@ -9,7 +9,6 @@ import java.util.Map;
 
 import neo.vn.imbeautiful.apiservice_base.ApiServicePost;
 import neo.vn.imbeautiful.callback.CallbackData;
-import neo.vn.imbeautiful.models.respon_api.ResponGetProduct;
 import neo.vn.imbeautiful.models.respon_api.ResponGetnotify;
 
 /**

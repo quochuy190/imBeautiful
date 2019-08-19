@@ -35,23 +35,9 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/gray" />
-
     <TextView
+        android:visibility="visible"
         app:layout_constraintTop_toBottomOf="@+id/view_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.7"
-        android:layout_width="0dp"
-        android:id="@+id/txt_dangchoduyet"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/margin_top_fragment_order"
-        android:text="Đang xử lý"
-        android:textColor="@color/black"
-        android:textSize="@dimen/txt_15sp" />
-    <TextView
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/txt_dangchoduyet"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.7"
@@ -65,8 +51,22 @@
         android:textColor="@color/black"
         android:textSize="@dimen/txt_15sp" />
     <TextView
-        android:id="@+id/txt_dangchuyen"
         app:layout_constraintTop_toBottomOf="@+id/txt_datiepnhan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.7"
+        android:layout_width="0dp"
+        android:id="@+id/txt_dangchoduyet"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/margin_top_fragment_order"
+        android:text="Đang xử lý"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_15sp" />
+
+    <TextView
+        android:id="@+id/txt_dangchuyen"
+        app:layout_constraintTop_toBottomOf="@+id/txt_dangchoduyet"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.7"

@@ -64,6 +64,9 @@ public class Products implements Serializable {
     String DESCRIPTION_HTML;
     @SerializedName("STATUS_TREND")
     String STATUS_TREND;
+    @SerializedName("OD_PRODUCT_PROPERTIES")
+    String OD_PRODUCT_PROPERTIES;
+
     String sThuoctinh;
     List<PropetiObj.PropetiDetail> mLisPropeti;
     List<PropetiObj> mListThuoctinhTong;
@@ -74,6 +77,14 @@ public class Products implements Serializable {
         this.sName = sName;
         this.sPrice = sPrice;
         this.sUrlImage = sUrlImage;
+    }
+
+    public String getOD_PRODUCT_PROPERTIES() {
+        return OD_PRODUCT_PROPERTIES;
+    }
+
+    public void setOD_PRODUCT_PROPERTIES(String OD_PRODUCT_PROPERTIES) {
+        this.OD_PRODUCT_PROPERTIES = OD_PRODUCT_PROPERTIES;
     }
 
     public List<PropetiObj> getmListThuoctinhTong() {

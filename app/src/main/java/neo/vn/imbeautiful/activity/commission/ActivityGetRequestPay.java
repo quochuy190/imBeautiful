@@ -1,5 +1,6 @@
 package neo.vn.imbeautiful.activity.commission;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -68,6 +69,7 @@ public class ActivityGetRequestPay extends BaseActivity implements InterfaceComm
         mPresenter.api_get_withdrawal(sUserName, "1", "30");
     }
 
+    @SuppressLint("WrongConstant")
     private void init() {
         mList = new ArrayList<>();
         adapter = new AdapterRequestPay(mList, this);

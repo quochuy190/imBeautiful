@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import neo.vn.imbeautiful.models.CategoryProductHome;
-import neo.vn.imbeautiful.models.Products;
 
 
 public class ResponSubProduct {

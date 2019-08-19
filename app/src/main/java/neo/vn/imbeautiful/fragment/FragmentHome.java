@@ -32,6 +32,8 @@ import butterknife.ButterKnife;
 import neo.vn.imbeautiful.R;
 import neo.vn.imbeautiful.activity.commission.InterfaceCommission;
 import neo.vn.imbeautiful.activity.commission.PresenterCommission;
+import neo.vn.imbeautiful.activity.home.InterfaceHome;
+import neo.vn.imbeautiful.activity.home.PresenterHome;
 import neo.vn.imbeautiful.activity.login.ActivityLogin;
 import neo.vn.imbeautiful.activity.order.InterfaceOrder;
 import neo.vn.imbeautiful.activity.order.PresenterOrder;
@@ -67,7 +69,8 @@ import neo.vn.imbeautiful.untils.SharedPrefs;
 import neo.vn.imbeautiful.untils.StringUtil;
 
 public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
-        InterfaceOrder.View, InterfaceCommission.View, InterfaceTintuc.View, SwipeRefreshLayout.OnRefreshListener {
+        InterfaceOrder.View, InterfaceCommission.View, InterfaceTintuc.View,
+        SwipeRefreshLayout.OnRefreshListener, InterfaceHome.View {
     private static final String TAG = "FragmentHome";
     public static FragmentHome fragment;
     private List<Products> mList;
@@ -100,6 +103,7 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
     AdapterCategoryProductHome adapterProductTrend;
     @BindView(R.id.pull_refresh_product)
     SwipeRefreshLayout pull_refresh_product;
+    PresenterHome mPresenterHome;
 
     public static FragmentHome getInstance() {
         if (fragment == null) {
@@ -143,6 +147,7 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
         mPresenterOrder = new PresenterOrder(this);
         mPresenterCommission = new PresenterCommission(this);
         mPresenterTintuc = new PresenterTintuc(this);
+        mPresenterHome = new PresenterHome(this);
         initPulltoRefesh();
         get_all_history();
         init();
@@ -248,6 +253,7 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
         if (sUsername != null) {
             showDialogLoading();
             mPresenter.api_get_get_product_trend(sUsername);
+            mPresenterHome.api_get_config(sUsername, "");
             mPresenter.api_get_product_cat_detail(sUsername, "", "",
                     "1", "50");
             mPresenterTintuc.api_get_infomation(sUsername, "4", "");
@@ -557,4 +563,8 @@ public class FragmentHome extends BaseFragment implements InterfaceProduct.View,
         }, 500);
     }
 
+    @Override
+    public void show_get_config() {
+
+    }
 }

@@ -1,4 +1,4 @@
-package neo.vn.imbeautiful.activity.products;
+package neo.vn.imbeautiful.activity.home;
 
 import android.util.Log;
 
@@ -9,36 +9,35 @@ import java.util.Map;
 
 import neo.vn.imbeautiful.apiservice_base.ApiServicePost;
 import neo.vn.imbeautiful.callback.CallbackData;
-import neo.vn.imbeautiful.models.respon_api.ResponGetPropeti;
+import neo.vn.imbeautiful.config.Config;
+import neo.vn.imbeautiful.models.respon_api.ResponseGetConfig;
 
 /**
  * Created by: Neo Company.
  * Developer: HuyNQ2
- * Date: 02-May-2019
- * Time: 10:44
+ * Date: 16-August-2019
+ * Time: 16:52
  * Version: 1.0
  */
-public class PresenterProperties implements InterfaceProperties.Presenter {
-    private static final String TAG = "PresenterProduct";
+public class PresenterHome implements InterfaceHome.Presenter {
+    private static final String TAG = "PresenterHome";
     ApiServicePost mApiService;
-    InterfaceProperties.View mView;
+    InterfaceHome.View mView;
 
-    public PresenterProperties(InterfaceProperties.View mView) {
+    public PresenterHome(InterfaceHome.View mView) {
         this.mView = mView;
         mApiService = new ApiServicePost();
     }
 
     @Override
-    public void api_get_properties(String USERNAME, String LIST_PROPERTIES) {
+    public void api_get_config(String sUserName, String sShopId) {
         Map<String, String> mMap = new LinkedHashMap<>();
-        String sService = "get_properties";
-        mMap.put("USERNAME", USERNAME);
-        mMap.put("LIST_PROPERTIES", LIST_PROPERTIES);
+        String sService = "get_config1";
+        mMap.put("USERNAME", sUserName);
 
         mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override
             public void onGetDataErrorFault(Exception e) {
-                mView.show_error_api();
                 Log.i(TAG, "onGetDataErrorFault: " + e);
             }
 
@@ -46,11 +45,12 @@ public class PresenterProperties implements InterfaceProperties.Presenter {
             public void onGetDataSuccess(String objT) {
                 Log.i(TAG, "onGetDataSuccess: " + objT);
                 try {
-                    ResponGetPropeti obj = new Gson().fromJson(objT, ResponGetPropeti.class);
-                    mView.show_get_properties(obj);
+                    ResponseGetConfig obj = new Gson().fromJson(objT, ResponseGetConfig.class);
+                    if (obj != null && obj.getmList() != null)
+                        Config.mLisConfigCommis = obj.getmList();
+                    Log.d(TAG, "onGetDataSuccess: " + obj.getmList());
                 } catch (Exception e) {
                     e.printStackTrace();
-                    mView.show_error_api();
                 }
             }
         }, sService, mMap);

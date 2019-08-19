@@ -9,7 +9,7 @@
 
     <application
         android:usesCleartextTraffic="true"
-        android:name=".App"
+        android:name="neo.vn.imbeautiful.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,85 +17,85 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="neo.vn.imbeautiful.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity
-            android:name=".activity.login.ActivityIntroduce"
+            android:name="neo.vn.imbeautiful.activity.login.ActivityIntroduce"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
-            android:name=".activity.charts.Activity_Fluctuations"
+            android:name="neo.vn.imbeautiful.activity.charts.Activity_Fluctuations"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
-            android:name=".activity.tintuc.ActivityListNews"
+            android:name="neo.vn.imbeautiful.activity.tintuc.ActivityListNews"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
-            android:name=".activity.collaborators.ActivityUpdateInfoCTV"
+            android:name="neo.vn.imbeautiful.activity.collaborators.ActivityUpdateInfoCTV"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
-            android:name=".activity.login.Activity_Webview"
+            android:name="neo.vn.imbeautiful.activity.login.Activity_Webview"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
-            android:name=".activity.charts.ActivityReportCTVDetail"
+            android:name="neo.vn.imbeautiful.activity.charts.ActivityReportCTVDetail"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
-            android:name=".activity.tintuc.ActivityDetailNews"
+            android:name="neo.vn.imbeautiful.activity.tintuc.ActivityDetailNews"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
-            android:name=".activity.charts.ActivityChartListCTV"
+            android:name="neo.vn.imbeautiful.activity.charts.ActivityChartListCTV"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
-            android:name=".activity.notify.ActivityNotify"
+            android:name="neo.vn.imbeautiful.activity.notify.ActivityNotify"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
-            android:name=".activity.commission.ActivityGetRequestPay"
+            android:name="neo.vn.imbeautiful.activity.commission.ActivityGetRequestPay"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.charts.ActivityReportDefault"
+            android:name="neo.vn.imbeautiful.activity.charts.ActivityReportDefault"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.order.ActivityAddOrder"
+            android:name="neo.vn.imbeautiful.activity.order.ActivityAddOrder"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.order.ActivityHistoryOrderDetail"
+            android:name="neo.vn.imbeautiful.activity.order.ActivityHistoryOrderDetail"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.charts.Activity_Chart_By_Products"
+            android:name="neo.vn.imbeautiful.activity.charts.Activity_Chart_By_Products"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.charts.ActivityChartMenu"
+            android:name="neo.vn.imbeautiful.activity.charts.ActivityChartMenu"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.products.ActivityCart"
+            android:name="neo.vn.imbeautiful.activity.products.ActivityCart"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.commission.ActivityHhDetail"
+            android:name="neo.vn.imbeautiful.activity.commission.ActivityHhDetail"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.login.ActivityLogin"
+            android:name="neo.vn.imbeautiful.activity.login.ActivityLogin"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.login.SplashScreen"
+            android:name="neo.vn.imbeautiful.activity.login.SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -103,27 +103,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.login.ActivityRegister"></activity>
-        <activity android:name=".activity.login.ActivityConfirmOTP"></activity>
-        <activity android:name=".activity.login.Menu_Search.ActivityListCity"></activity>
+        <activity android:name="neo.vn.imbeautiful.activity.login.ActivityRegister"></activity>
+        <activity android:name="neo.vn.imbeautiful.activity.login.ActivityConfirmOTP"></activity>
+        <activity android:name="neo.vn.imbeautiful.activity.login.Menu_Search.ActivityListCity"></activity>
         <activity
-            android:name=".activity.products.ActivityListCategoryProduct"
+            android:name="neo.vn.imbeautiful.activity.products.ActivityListCategoryProduct"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.products.ActivityProductDetail"
+            android:name="neo.vn.imbeautiful.activity.products.ActivityProductDetail"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
-            android:name=".activity.collaborators.FragmentListCTV"
+            android:name="neo.vn.imbeautiful.activity.collaborators.FragmentListCTV"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.collaborators.ActivityCtvDetail"
+            android:name="neo.vn.imbeautiful.activity.collaborators.ActivityCtvDetail"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.products.ActivityListProduct"
+            android:name="neo.vn.imbeautiful.activity.products.ActivityListProduct"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.login.Menu_Search.ActivityDistrict"></activity>
+        <activity android:name="neo.vn.imbeautiful.activity.login.Menu_Search.ActivityDistrict"></activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -144,7 +144,7 @@
         <meta-data android:name="com.facebook.accountkit.FacebookAppEventsEnabled"
             android:value="false"/>
 
-        <service android:name=".firebase_service.MyFirebaseMessagingService">
+        <service android:name="neo.vn.imbeautiful.firebase_service.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

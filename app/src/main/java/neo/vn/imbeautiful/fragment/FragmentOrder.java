@@ -345,7 +345,7 @@ public class FragmentOrder extends BaseFragment
                 txt_item_order_status.setText("Tất cả trạng thái");
                 ll_filter_CTV.setVisibility(View.GONE);
             } else {
-                txt_item_order_status.setText("Đang xử lý");
+                txt_item_order_status.setText("Đã tiếp nhận");
                 sStatus = "1";
                 ll_filter_CTV.setVisibility(View.VISIBLE);
             }
@@ -393,11 +393,11 @@ public class FragmentOrder extends BaseFragment
             case R.id.txt_dangchoduyet:
                 txt_item_order_status.setText("Đang xử lý");
                 dialog_yes.dismiss();
-                sStatus = "1";
+                sStatus = "2";
                 break;
             case R.id.txt_datiepnhan:
                 txt_item_order_status.setText("Đã tiếp nhận");
-                sStatus = "2";
+                sStatus = "1";
                 dialog_yes.dismiss();
                 break;
             case R.id.txt_dangchuyen:

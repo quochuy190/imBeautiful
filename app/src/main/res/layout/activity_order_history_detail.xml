@@ -188,6 +188,7 @@
                   />
 
                 <TextView
+                    android:layout_marginRight="1dp"
                     android:id="@+id/txt_lable_sl"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -241,6 +242,8 @@
             </androidx.recyclerview.widget.RecyclerView>
 
             <View
+                android:layout_marginLeft="@dimen/stoker_edt"
+                android:layout_marginRight="@dimen/stoker_edt"
                 android:id="@+id/view_rcv_product"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -255,7 +258,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/pading_icon"
                 android:gravity="right"
-                android:padding="@dimen/stoker_edt"
+                android:padding="@dimen/pading_icon"
 
                 android:textColor="@color/red"
                 android:textSize="@dimen/txt_14sp"
@@ -270,13 +273,42 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:padding="@dimen/stoker_edt"
+                android:padding="@dimen/pading_icon"
                 android:text="Tổng tiền đơn hàng:"
                 android:textColor="@color/txt_introduce"
                 android:textSize="@dimen/txt_14sp"
                 app:layout_constraintEnd_toStartOf="@+id/txt_price"
                 app:layout_constraintTop_toBottomOf="@id/view_rcv_product"
                 app:layout_constraintWidth_percent="0.3" />
+
+            <TextView
+
+                android:id="@+id/txt_hoahong_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:padding="@dimen/pading_icon"
+                android:text="Hoa hồng:"
+                android:textColor="@color/txt_introduce"
+                android:textSize="@dimen/txt_14sp"
+                app:layout_constraintEnd_toStartOf="@+id/txt_price"
+                app:layout_constraintTop_toBottomOf="@id/txt_price_lable"
+                app:layout_constraintWidth_percent="0.3" />
+
+            <TextView
+                android:id="@+id/txt_hoahong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/pading_icon"
+                android:gravity="right"
+                android:padding="@dimen/pading_icon"
+                android:textColor="@color/blue_next_right"
+                android:textSize="@dimen/txt_14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_price_lable"
+                app:layout_constraintWidth_percent="0.3" />
+
 
             <neo.vn.imbeautiful.models.CurrencyEditText
                 android:id="@+id/txt_ship"
@@ -286,12 +318,12 @@
                 android:backgroundTint="@color/white"
                 android:gravity="right"
                 android:inputType="number"
-                android:padding="@dimen/stoker_edt"
+                android:padding="@dimen/pading_icon"
                 android:textColor="@color/txt_introduce"
                 android:textSize="@dimen/txt_14sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txt_price"
+                app:layout_constraintTop_toBottomOf="@id/txt_hoahong_lable"
                 app:layout_constraintWidth_percent="0.3" />
 
             <TextView
@@ -300,12 +332,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:padding="@dimen/stoker_edt"
+                android:padding="@dimen/pading_icon"
                 android:text="Phí vận chuyển:"
                 android:textColor="@color/txt_introduce"
                 android:textSize="@dimen/txt_14sp"
                 app:layout_constraintEnd_toStartOf="@+id/txt_ship"
-                app:layout_constraintTop_toBottomOf="@id/txt_price"
+                app:layout_constraintTop_toBottomOf="@id/txt_hoahong_lable"
                 app:layout_constraintWidth_percent="0.3" />
 
             <ImageView
@@ -322,7 +354,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:padding="@dimen/stoker_edt"
+                android:padding="@dimen/pading_icon"
                 android:text="Tổng tiền thanh toán:"
                 android:textColor="@color/txt_introduce"
                 android:textSize="@dimen/txt_14sp"
@@ -336,7 +368,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/pading_icon"
                 android:gravity="right"
-                android:padding="@dimen/stoker_edt"
+                android:padding="@dimen/pading_icon"
                 android:textColor="@color/red"
                 android:textSize="@dimen/txt_14sp"
                 android:textStyle="bold"
@@ -505,7 +537,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/pading_icon"
                 android:gravity="center_vertical"
-                android:padding="@dimen/stoker_edt"
+                android:padding="@dimen/dp5"
                 android:text="Dự kiến giao hàng: "
                 android:textColor="@color/txt_introduce"
                 android:textSize="@dimen/txt_14sp"
@@ -519,7 +551,7 @@
                 android:layout_marginLeft="@dimen/pading_icon"
                 android:layout_marginTop="@dimen/pading_icon"
                 android:gravity="center_vertical"
-                android:padding="@dimen/stoker_edt"
+                android:padding="@dimen/dp5"
                 android:text="Trạng thái: "
                 android:textColor="@color/txt_introduce"
                 android:textSize="@dimen/txt_14sp"

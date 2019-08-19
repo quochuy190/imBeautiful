@@ -169,10 +169,10 @@ public class FragmentLeftMenu extends BaseFragment {
                /* intent = new Intent(getActivity(), ActivityListNews.class);
                 intent.putExtra(Constants.KEY_SEND_NEWS_TITLE, "Tin tức sự kiện");
                 intent.putExtra(Constants.KEY_SEND_NEWS_TYPE, "4");*/
-                start_facebook("228850824322249");
+                start_facebook("411146496150032");
                 break;
             case 6:
-                start_facebook_group("228850824322249");
+                start_facebook_group("155729797783234");
                 // intent = new Intent(getActivity(), ActivityNotify.class);
                 //  MainActivity.setback_toolbar();
                 break;

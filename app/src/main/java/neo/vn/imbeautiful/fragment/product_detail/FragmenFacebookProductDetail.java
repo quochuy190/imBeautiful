@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
@@ -93,6 +94,8 @@ public class FragmenFacebookProductDetail extends BaseFragment {
     ImageView img_facebook_5;
     @BindView(R.id.btn_download)
     Button btn_download;
+    @BindView(R.id.ll_bac)
+    ConstraintLayout ll_show_image;
     private Products mProduct;
     private List<String> mList;
 
@@ -182,6 +185,8 @@ public class FragmenFacebookProductDetail extends BaseFragment {
                 mList.add("abc");
         }
         if (mLisIma.size() > 0) {
+            ll_show_image.setVisibility(View.VISIBLE);
+            btn_download.setVisibility(View.VISIBLE);
             if (mLisIma.get(0) != null) {
                 img_facebook_1.setVisibility(View.VISIBLE);
                 img_facebook_1.setImageBitmap(mLisIma.get(0));
@@ -202,6 +207,9 @@ public class FragmenFacebookProductDetail extends BaseFragment {
                 img_facebook_5.setVisibility(View.VISIBLE);
                 img_facebook_5.setImageBitmap(mLisIma.get(4));
             }
+        } else {
+            ll_show_image.setVisibility(View.GONE);
+            btn_download.setVisibility(View.GONE);
         }
         if (mProduct.getVIDEO_FB() != null) {
             img_facebook_5.setVisibility(View.VISIBLE);

@@ -1,5 +1,9 @@
 package neo.vn.imbeautiful.config;
 
+import java.util.List;
+
+import neo.vn.imbeautiful.models.ObjConfigCommis;
+
 /**
  * Created by: Neo Company.
  * Developer: HuyNQ2
@@ -23,4 +27,6 @@ public class Config {
     public static String GROUP_BIENTAPVIEN = "6";
 
     public static String ID_SHOP = "ABC123";
+
+    public static List<ObjConfigCommis> mLisConfigCommis;
 }

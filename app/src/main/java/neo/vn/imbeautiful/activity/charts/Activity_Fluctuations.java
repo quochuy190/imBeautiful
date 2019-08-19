@@ -2,7 +2,6 @@ package neo.vn.imbeautiful.activity.charts;
 
 import android.os.Bundle;
 
-import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 
 import java.util.Calendar;

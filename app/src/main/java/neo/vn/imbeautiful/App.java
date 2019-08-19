@@ -16,7 +16,6 @@ import neo.vn.imbeautiful.models.ObjCTV;
 import neo.vn.imbeautiful.models.Products;
 import neo.vn.imbeautiful.models.ReportProduct;
 import neo.vn.imbeautiful.models.respon_api.ResponGetReportProduct;
-import okhttp3.OkHttpClient;
 
 /**
  * Created by: Neo Company.

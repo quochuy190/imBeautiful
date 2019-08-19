@@ -62,8 +62,8 @@ public class ActivityChartMenu extends BaseActivity implements View.OnClickListe
         } else {
             llct_chart_all.setVisibility(View.VISIBLE);
             ll_chart_2.setVisibility(View.VISIBLE);
-            llct_chart_time.setVisibility(View.VISIBLE);
-            llct_chart_biendong.setVisibility(View.VISIBLE);
+            llct_chart_time.setVisibility(View.GONE);
+            llct_chart_biendong.setVisibility(View.GONE);
         }
 
     }
@@ -83,7 +83,7 @@ public class ActivityChartMenu extends BaseActivity implements View.OnClickListe
     private void initEvent() {
         llct_chart_all.setOnClickListener(this);
         llct_chart_biendong.setOnClickListener(this);
-        llct_chart_time.setOnClickListener(this);
+        ll_chart_2.setOnClickListener(this);
         llct_chart_ctv.setOnClickListener(this);
     }
 
@@ -94,7 +94,7 @@ public class ActivityChartMenu extends BaseActivity implements View.OnClickListe
             case R.id.llct_chart_all:
                 intent = new Intent(ActivityChartMenu.this, ActivityReportDefault.class);
                 break;
-            case R.id.llct_chart_time:
+            case R.id.ll_chart_2:
                 intent = new Intent(ActivityChartMenu.this, Activity_Chart_By_Products.class);
                 break;
             case R.id.llct_chart_biendong:

@@ -124,7 +124,7 @@ public class PresenterOrder implements InterfaceOrder.Presenter {
     public void api_edit_order_product(String USERNAME, String CODE_PRODUCT, String AMOUNT, String PRICE,
                                        String MONEY, String BONUS, String FULL_NAME, String MOBILE_RECEIVER,
                                        String ID_CITY, String ID_DISTRICT, String ADDRESS, String CODE_ORDER,
-                                       String STATUS, String EXTRA_SHIP, String TIME_RECEIVER, String NOTE) {
+                                       String STATUS, String EXTRA_SHIP, String TIME_RECEIVER, String NOTE, String ID_PRODUCT_PROPERTIES) {
         Map<String, String> mMap = new LinkedHashMap<>();
         String sService = "edit_order_product";
         mMap.put("USERNAME", USERNAME);
@@ -143,6 +143,7 @@ public class PresenterOrder implements InterfaceOrder.Presenter {
         mMap.put("EXTRA_SHIP", EXTRA_SHIP);
         mMap.put("TIME_RECEIVER", TIME_RECEIVER);
         mMap.put("NOTE", NOTE);
+        mMap.put("ID_PRODUCT_PROPERTIES", ID_PRODUCT_PROPERTIES);
 
         mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override

@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import neo.vn.imbeautiful.models.City;
 import neo.vn.imbeautiful.models.Districts;
 
 

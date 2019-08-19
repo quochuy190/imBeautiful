@@ -176,15 +176,16 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
             for (int i = 0; i < mList.size(); i++) {
                 if (mList.get(i).getsQuantum() != null && mList.get(i).getsQuantum().length() > 0) {
                     Products obj = mList.get(i);
-
                     int iQuantum = Integer.parseInt(mList.get(i).getsQuantum());
                     if (iQuantum > 0) {
-                        if (obj.getmLisPropeti().size() > 0) {
+                        if (obj.getmLisPropeti() != null && obj.getmLisPropeti().size() > 0) {
                             String sPro = "";
                             for (PropetiObj.PropetiDetail objPropeti : obj.getmLisPropeti()) {
                                 sPro = sPro + objPropeti.getSUB_ID() + ",";
                             }
                             sThuoctinh = sThuoctinh + sPro.substring(0, sPro.length() - 1) + "#";
+                        } else {
+                            sThuoctinh = sThuoctinh + "" + "#";
                         }
                         sCODE_PRODUCT = sCODE_PRODUCT + mList.get(i).getCODE_PRODUCT() + "#";
                         sAMOUNT = sAMOUNT + mList.get(i).getsQuantum() + "#";
@@ -256,6 +257,8 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
             Toast.makeText(this, "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK, new Intent());
             EventBus.getDefault().post(new CustomEvent("0"));
+            if (App.mLisProductCart.size() > 0)
+                App.mLisProductCart.clear();
             finish();
         } else {
             delete_data();
@@ -321,7 +324,6 @@ public class ActivityAddOrder extends BaseActivity implements InterfaceOrder.Vie
     long lCommission = 0;
 
     private void set_price_total() {
-
         for (Products obj : mList) {
             if (obj != null && obj.getsQuantum() != null && obj.getsQuantum().length() > 0 && obj.getsPrice() != null) {
                 lPrice = lPrice + (Integer.parseInt(obj.getsQuantum()) * Integer.parseInt(obj.getsPrice()));

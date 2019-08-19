@@ -1,12 +1,13 @@
 package neo.vn.imbeautiful.adapter;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
@@ -17,6 +18,7 @@ import butterknife.ButterKnife;
 import neo.vn.imbeautiful.R;
 import neo.vn.imbeautiful.callback.ItemClickCartListener;
 import neo.vn.imbeautiful.models.Products;
+import neo.vn.imbeautiful.models.PropetiObj;
 import neo.vn.imbeautiful.untils.StringUtil;
 
 
@@ -57,14 +59,35 @@ public class AdapterProductInHistoryOrder extends RecyclerView.Adapter<AdapterPr
             if (obj.isVisibleButtonAdd()) {
                 holder.txt_add_num.setVisibility(View.VISIBLE);
                 holder.txt_minus_num.setVisibility(View.VISIBLE);
+                holder.txt_add_num.setText("+");
+                holder.txt_minus_num.setText("-");
+                holder.txt_add_num.setEnabled(true);
+                holder.txt_minus_num.setEnabled(true);
             } else {
-                holder.txt_add_num.setVisibility(View.INVISIBLE);
-                holder.txt_minus_num.setVisibility(View.INVISIBLE);
+                holder.txt_add_num.setVisibility(View.VISIBLE);
+                holder.txt_minus_num.setVisibility(View.VISIBLE);
+                holder.txt_add_num.setText("");
+                holder.txt_minus_num.setText("");
+                holder.txt_add_num.setEnabled(false);
+                holder.txt_minus_num.setEnabled(false);
             }
             if (obj.getsName() != null && obj.getsName().length() > 0)
                 holder.txt_name.setText(obj.getsName());
             else
                 holder.txt_name.setText("...");
+            if (obj.getCODE_PRODUCT() != null)
+                holder.txt_title_commission.setText("Mã SP: " + obj.getCODE_PRODUCT());
+            if (obj.getmLisPropeti() != null && obj.getmLisPropeti().size() > 0) {
+                String sThuoctinh = "";
+                for (PropetiObj.PropetiDetail objDetail : obj.getmLisPropeti()) {
+                    sThuoctinh = sThuoctinh + objDetail.getNAME_PARENT() + " - " + objDetail.getSUB_PROPERTIES() + ",";
+                }
+                if (sThuoctinh.length()>0){
+                    sThuoctinh = sThuoctinh.substring(0, sThuoctinh.length()-1);
+                    holder.txt_thuoctinh.setText("Thuộc tính: " + sThuoctinh);
+                }
+            } else if (obj.getPROPERTIES() != null)
+                holder.txt_thuoctinh.setText("Thuộc tính: " + obj.getPROPERTIES());
             if (obj != null && obj.getsPrice().length() > 0)
                 holder.txt_total_price.setText(StringUtil.conventMonney_Long(obj.getMONEY()));
             else
@@ -77,21 +100,21 @@ public class AdapterProductInHistoryOrder extends RecyclerView.Adapter<AdapterPr
                     holder.txt_total_price.setText(StringUtil.conventMonney("" + total));
                 }
                 holder.txt_sl_product.setText(obj.getNUM());
-                if (obj.getCOMMISSION() != null) {
+            /*    if (obj.getCOMMISSION() != null) {
                     int commission = Integer.parseInt(obj.getCOMMISSION());
                     int price = Integer.parseInt(obj.getNUM()) * Integer.parseInt(obj.getsPrice());
                     long com_price = (commission * price) / 100;
                     holder.txt_title_commission.setText("Hoa hồng: " + StringUtil.conventMonney_Long("" + com_price));
                 } else
-                    holder.txt_title_commission.setText("Hoa hồng: 0đ");
+                    holder.txt_title_commission.setText("Hoa hồng: 0đ");*/
             } else {
-                holder.txt_title_commission.setText("Hoa hồng: 0đ");
-                holder.txt_sl_product.setText("...");
+              /*  holder.txt_title_commission.setText("Hoa hồng: 0đ");
+                holder.txt_sl_product.setText("...");*/
             }
             if (obj.getsPrice() != null) {
-                holder.txt_title_price.setText("Giá: " + StringUtil.conventMonney_Long(obj.getsPrice()));
+                holder.txt_title_price.setText("Đơn giá: " + StringUtil.conventMonney_Long(obj.getsPrice()));
             } else
-                holder.txt_title_price.setText("Giá: 0đ");
+                holder.txt_title_price.setText("Đơn giá: 0đ");
             Glide.with(context).load(obj.getsUrlImage()).into(holder.img_product);
             holder.txt_minus_num.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -135,6 +158,8 @@ public class AdapterProductInHistoryOrder extends RecyclerView.Adapter<AdapterPr
         TextView txt_title_commission;
         @BindView(R.id.txt_title_price)
         TextView txt_title_price;
+        @BindView(R.id.txt_thuoctinh)
+        TextView txt_thuoctinh;
 
         public TopicViewHoder(View itemView) {
             super(itemView);

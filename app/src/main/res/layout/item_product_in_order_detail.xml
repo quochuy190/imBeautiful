@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+
     android:layout_height="wrap_content">
 
     <ImageView
@@ -10,6 +11,7 @@
         android:layout_height="0dp"
         android:layout_marginLeft="1dp"
         android:layout_marginTop="0.5dp"
+        android:layout_marginRight="0.5dp"
         android:background="@color/white"
         android:padding="@dimen/pading_icon"
         app:layout_constraintDimensionRatio="1:1.2"
@@ -18,15 +20,16 @@
         app:layout_constraintWidth_percent="0.27" />
 
     <LinearLayout
-        android:layout_marginRight="0.5dp"
-        app:layout_constraintEnd_toStartOf="@+id/txt_sl_product"
         android:id="@+id/ll_info_product"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginLeft="0.5dp"
-        android:background="@color/white"
+        android:layout_marginRight="0.5dp"
+        android:background="@drawable/spr_item_language"
+        android:gravity="center_vertical"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/img_product"
+        app:layout_constraintEnd_toStartOf="@+id/txt_sl_product"
         app:layout_constraintStart_toEndOf="@+id/img_product"
         app:layout_constraintTop_toTopOf="@id/img_product">
 
@@ -35,21 +38,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:ellipsize="end"
             android:maxLines="2"
-            android:minLines="2"
             android:padding="@dimen/dp1"
-            android:text="SL"
-            android:textColor="@color/txt_introduce"
-            android:textSize="@dimen/txt_14sp" />
-
-        <TextView
-            android:id="@+id/txt_thuoctinh"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="@dimen/dp1"
-            android:singleLine="true"
-            android:text="Thuộc tính: Đen - M"
             android:textColor="@color/txt_introduce"
             android:textSize="@dimen/txt_14sp" />
 
@@ -60,9 +51,10 @@
             android:background="@color/white"
             android:padding="@dimen/dp1"
             android:singleLine="true"
-            android:text="Hoa hồng: "
+
             android:textColor="@color/txt_introduce"
             android:textSize="@dimen/txt_14sp" />
+
 
         <TextView
             android:id="@+id/txt_title_price"
@@ -71,17 +63,29 @@
             android:background="@color/white"
             android:padding="@dimen/dp1"
             android:singleLine="true"
-            android:text="Giá: "
+
+            android:textColor="@color/txt_introduce"
+            android:textSize="@dimen/txt_14sp" />
+
+        <TextView
+            android:ellipsize="end"
+            android:id="@+id/txt_thuoctinh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:maxLines="2"
+            android:padding="@dimen/dp1"
             android:textColor="@color/txt_introduce"
             android:textSize="@dimen/txt_14sp" />
     </LinearLayout>
 
     <TextView
+        android:layout_marginRight="1dp"
         android:id="@+id/txt_sl_product"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginLeft="0.5dp"
-        android:background="@color/white"
+        android:background="@drawable/spr_item_language"
         android:gravity="center"
         android:padding="@dimen/pading_icon"
         android:singleLine="true"
@@ -107,14 +111,14 @@
         android:text="SL"
         android:textColor="@color/txt_introduce"
         android:textSize="@dimen/txt_13sp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/img_product"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/txt_sl_product"
         app:layout_constraintTop_toTopOf="@id/img_product" />
 
     <TextView
-        app:layout_constraintDimensionRatio="1:1"
+
         android:id="@+id/txt_add_num"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -126,15 +130,16 @@
         android:textSize="@dimen/txt_15sp"
         android:textStyle="bold"
         android:visibility="visible"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="@+id/txt_sl_product"
         app:layout_constraintStart_toStartOf="@+id/txt_sl_product"
         app:layout_constraintTop_toTopOf="@id/img_product" />
 
     <TextView
-        android:background="@drawable/spr_item_language"
         android:id="@+id/txt_minus_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/spr_item_language"
         android:gravity="center"
         android:padding="@dimen/pading_icon"
         android:text="-"

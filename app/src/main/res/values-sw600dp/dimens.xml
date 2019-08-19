@@ -11,6 +11,7 @@
     <dimen name="margin_top_btn_login">40dp</dimen>
     <dimen name="pading_icon">5dp</dimen>
     <dimen name="dp7">7.5dp</dimen>
+    <dimen name="dp5">5.5dp</dimen>
     <dimen name="txt_11sp">12sp</dimen>
     <dimen name="txt_user">18sp</dimen>
     <dimen name="txt_15sp">16.5sp</dimen>

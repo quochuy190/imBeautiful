@@ -4,16 +4,16 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import neo.vn.imbeautiful.models.InfomationObj;
+import neo.vn.imbeautiful.models.ObjConfigCommis;
 
 /**
  * Created by: Neo Company.
  * Developer: HuyNQ2
- * Date: 18-July-2019
- * Time: 10:01
+ * Date: 16-August-2019
+ * Time: 17:10
  * Version: 1.0
  */
-public class ResponseInfomation {
+public class ResponseGetConfig {
     @SerializedName("ERROR")
     private String ERROR;
     @SerializedName("MESSAGE")
@@ -21,7 +21,7 @@ public class ResponseInfomation {
     @SerializedName("RESULT")
     private String RESULT;
     @SerializedName("INFO")
-    private List<InfomationObj> mList;
+    private List<ObjConfigCommis> mList;
 
     public String getERROR() {
         return ERROR;
@@ -47,11 +47,11 @@ public class ResponseInfomation {
         this.RESULT = RESULT;
     }
 
-    public List<InfomationObj> getmList() {
+    public List<ObjConfigCommis> getmList() {
         return mList;
     }
 
-    public void setmList(List<InfomationObj> mList) {
+    public void setmList(List<ObjConfigCommis> mList) {
         this.mList = mList;
     }
 }

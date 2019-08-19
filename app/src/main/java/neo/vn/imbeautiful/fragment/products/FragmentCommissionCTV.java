@@ -285,7 +285,9 @@ public class FragmentCommissionCTV extends BaseFragment implements InterfaceComm
     public void show_get_request_withdrawal(ErrorApi obj) {
         hideDialogLoading();
         if (obj != null && obj.getsERROR().equals("0000")) {
+            edt_search_hh.setText("0");
             showAlertDialog("Thông báo", "Yêu cầu rút hoa hồng của bạn đã được gửi đến shop thành công.");
+
         } else {
             showAlertDialog("Thông báo", obj.getsRESULT());
         }

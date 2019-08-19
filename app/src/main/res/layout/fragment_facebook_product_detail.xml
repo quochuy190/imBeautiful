@@ -65,6 +65,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btn_share" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:visibility="gone"
             android:id="@+id/ll_bac"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -148,6 +149,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
+            android:visibility="gone"
             android:id="@+id/btn_download"
             android:textColor="@color/white"
             android:text="Tải về máy"
